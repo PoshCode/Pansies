@@ -1,2 +1,8 @@
-# Pansies
-Powershell ANSI Escape Sequences, functions for colored output, etc. 
+# <img src="https://github.com/Jaykul/Pansies/blob/resources/Pansies_64.gif?raw=true" alt="Pansies" />Pansies 
+
+<strong>P</strong>owershell <strong>ANSI E</strong>scape <strong>S</strong>equences 
+
+This module contains classes and functions for doing ANSI colored output and positioning using Virtual Terminal escape sequences on platforms where they are supported: Windows 10, Linux, OS X, etc.
+
+
+NOTE: We will make _some_ attempt to support older versions of PowerShell and Windows running in ConEmu with ANSI support, but it's not a priority.
