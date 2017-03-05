@@ -11,11 +11,20 @@ namespace Poshcode.Ansi
 {
     public static class RGB
     {
+        public static string GetForegroundCode(this Color color)
+        {
+            return string.Format(foregroundRgb, color.R, color.G, color.B);
+        }
+
+        public static string GetBackgroundCode(this Color color)
+        {
+            return string.Format(backgroundRgb, color.R, color.G, color.B);
+        }
+
         public static string GetCode(this Color? color, bool forBackground = false)
         {
-            string colorCode = color == null ? "Default" : color.ToString();
-
-            return string.Format(forBackground ? backgroundRgb : foregroundRgb, color.Value.R, color.Value.G, color.Value.B);
+            if(color == null) { return string.Empty; }
+            return forBackground ? color.Value.GetBackgroundCode() : color.Value.GetForegroundCode();
         }
 
         //static string reset           = "\u001B[27m"; // Use normal colors
