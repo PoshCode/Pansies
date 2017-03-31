@@ -53,6 +53,8 @@ namespace PoshCode.Pansies
         /// </summary>
         public int Length { get; private set; }
 
+        public bool Clear { get; set; } = true;
+
         /// <summary>
         /// This constructor is here so we can allow partial matches to the property names.
         /// </summary>
@@ -96,7 +98,7 @@ namespace PoshCode.Pansies
             {
                 return (string)Object;
             }
-            return GetString(ForegroundColor, BackgroundColor, (string)Object);
+            return GetString(ForegroundColor, BackgroundColor, (string)Object, Clear);
         }
 
         public static string GetString(Color foreground, Color background, object @object, bool clear = false)
