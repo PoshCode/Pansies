@@ -356,11 +356,18 @@ namespace PoshCode.Pansies
 
         public static bool operator ==(Color left, Color right)
         {
-            if (left is null && right is null) { return true; }
-            else 
-            if (left is null || right is null) { return false; }
-            else 
-            return (left.rgb == right.rgb) && (left._mode == right._mode);
+            if (left is null && right is null)
+            {
+                return true;
+            }
+            else if (left is null || right is null)
+            {
+                return false;
+            }
+            else
+            {
+                return (left.rgb == right.rgb) && (left._mode == right._mode);
+            }
         }
 
         public static bool operator !=(Color left, Color right)
