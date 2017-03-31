@@ -15,7 +15,7 @@ namespace PoshCode.Pansies
         public Color()
         {
             _mode = ColorMode.XTerm256;
-            RGB = -1;
+            rgb = -1;
         }
         public Color(byte xTerm256Index)
         {
@@ -44,12 +44,28 @@ namespace PoshCode.Pansies
             _mode = ColorMode.Rgb24Bit;
             RGB = rgb;
         }
+        public Color(int red, int green, int blue)
+        {
+            _mode = ColorMode.Rgb24Bit;
+            RGB = (red << 16) + (green << 8) + blue;
+        }
 
         public Color(byte red, byte green, byte blue)
         {
             _mode = ColorMode.Rgb24Bit;
             RGB = (red << 16) + (green << 8) + blue;
         }
+
+        public Color(int[] rgb)
+        {
+            if(rgb.Length != 3)
+            {
+                throw new ArgumentOutOfRangeException("rgb", "byte array must contain exactly three values: Red, Green, Blue");
+            }
+            _mode = ColorMode.Rgb24Bit;
+            RGB = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+        }
+
 
         public Color(string color)
         {
@@ -124,6 +140,16 @@ namespace PoshCode.Pansies
             if (inputData is int)
             {
                 return new Color((int)inputData);
+            }
+
+            if (inputData is int[])
+            {
+                return new Color(((int[])inputData)[0], ((int[])inputData)[1], ((int[])inputData)[2]);
+            }
+
+            if (inputData is byte[])
+            {
+                return new Color(((byte[])inputData)[0], ((byte[])inputData)[1], ((byte[])inputData)[2]);
             }
 
             return (Color)LanguagePrimitives.ConvertTo(inputData, typeof(Color));
@@ -274,6 +300,8 @@ namespace PoshCode.Pansies
 
         public string ToString(bool background = false)
         {
+            if(rgb == -1) { return string.Empty; }
+
             switch (_mode)
             {
                 case ColorMode.ConsoleColor:
@@ -328,14 +356,11 @@ namespace PoshCode.Pansies
 
         public static bool operator ==(Color left, Color right)
         {
-            try
-            {
-                return (left.rgb == right.rgb) && (left._mode == right._mode);
-            }
-            catch(NullReferenceException)
-            {
-                return false;
-            }
+            if (left is null && right is null) { return true; }
+            else 
+            if (left is null || right is null) { return false; }
+            else 
+            return (left.rgb == right.rgb) && (left._mode == right._mode);
         }
 
         public static bool operator !=(Color left, Color right)
