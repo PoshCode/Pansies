@@ -7,9 +7,11 @@ using System.Text.RegularExpressions;
 
 namespace PoshCode.Pansies
 {
-    public class TextSpan : IEquatable<TextSpan>
+    public class Text : IEquatable<Text>
     {
         private string _text;
+        private Regex _escapeCode = new Regex("\u001B\\P{L}+\\p{L}", RegexOptions.Compiled);
+
         /// <summary>
         /// Gets or sets the object. The Object will be converted to string when it's set, and this property always returns a string.
         /// </summary>
@@ -36,7 +38,6 @@ namespace PoshCode.Pansies
                 }
             }
         }
-        private Regex _escapeCode = new Regex("\u001B\\P{L}+\\p{L}", RegexOptions.Compiled);
 
         /// <summary>
         /// Gets or Sets the background color for the block
@@ -59,7 +60,7 @@ namespace PoshCode.Pansies
         /// This constructor is here so we can allow partial matches to the property names.
         /// </summary>
         /// <param name="values"></param>
-        public TextSpan(IDictionary values) : this()
+        public Text(IDictionary values) : this()
         {
             foreach (string key in values.Keys)
             {
@@ -83,13 +84,13 @@ namespace PoshCode.Pansies
             }
         }
         // Make sure we can output plain text
-        public TextSpan(string text) : this()
+        public Text(string text) : this()
         {
             Object = text;
         }
 
         // Make sure we support the default ctor
-        public TextSpan() { Length = -1; }
+        public Text() { Length = -1; }
 
         public override string ToString()
         {
@@ -135,7 +136,7 @@ namespace PoshCode.Pansies
             return output.ToString();
         }
 
-        public bool Equals(TextSpan other)
+        public bool Equals(Text other)
         {
             return other != null && (Object == other.Object && ForegroundColor == other.ForegroundColor && BackgroundColor == other.BackgroundColor);
         }

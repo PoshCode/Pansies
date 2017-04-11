@@ -11,17 +11,47 @@ namespace PoshCode.Pansies
     // like to add a ctor that takes a System.Drawing.Color.AntiqueWhite, etc.
     public class Color : IEquatable<Color>
     {
+        #region private ctors (to be removed?)
+            private Color(byte xTerm256Index)
+            {
+                // TODO: Need a SetXTermColor to set the actual RGB values
+                _mode = ColorMode.XTerm256;
+                rgb = xTerm256Index << 24;
+            }
+
+            private Color(int rgb)
+            {
+                if (rgb < 0 || rgb > 0x00FFFFFF)
+                {
+                    throw new ArgumentOutOfRangeException("rgb", "RGB color value must be between 0x000000 and 0xFFFFFF");
+                }
+                _mode = ColorMode.Rgb24Bit;
+                RGB = rgb;
+            }
+
+            private Color(int[] rgb)
+            {
+                if(rgb.Length != 3)
+                {
+                    throw new ArgumentOutOfRangeException("rgb", "byte array must contain exactly three values: Red, Green, Blue");
+                }
+                _mode = ColorMode.Rgb24Bit;
+                RGB = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+            }
+
+            public Color(int red, int green, int blue)
+            {
+                _mode = ColorMode.Rgb24Bit;
+                RGB = (red << 16) + (green << 8) + blue;
+            }
+
+        #endregion
+
         // Use this constructor to specify the default color
         public Color()
         {
             _mode = ColorMode.XTerm256;
             rgb = -1;
-        }
-        public Color(byte xTerm256Index)
-        {
-            // TODO: Need a SetXTermColor to set the actual RGB values
-            _mode = ColorMode.XTerm256;
-            rgb = xTerm256Index << 24;
         }
 
         public Color(Color color)
@@ -35,79 +65,154 @@ namespace PoshCode.Pansies
             SetConsoleColor(consoleColor);
         }
 
-        public Color(int rgb)
-        {
-            if (rgb < 0 || rgb > 0x00FFFFFF)
-            {
-                throw new ArgumentOutOfRangeException("rgb", "RGB color value must be between 0x000000 and 0xFFFFFF");
-            }
-            _mode = ColorMode.Rgb24Bit;
-            RGB = rgb;
-        }
-        public Color(int red, int green, int blue)
-        {
-            _mode = ColorMode.Rgb24Bit;
-            RGB = (red << 16) + (green << 8) + blue;
-        }
-
         public Color(byte red, byte green, byte blue)
         {
             _mode = ColorMode.Rgb24Bit;
             RGB = (red << 16) + (green << 8) + blue;
         }
 
-        public Color(int[] rgb)
-        {
-            if(rgb.Length != 3)
-            {
-                throw new ArgumentOutOfRangeException("rgb", "byte array must contain exactly three values: Red, Green, Blue");
-            }
-            _mode = ColorMode.Rgb24Bit;
-            RGB = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
-        }
-
-
         public Color(string color)
         {
+            Exception nested;
             if (string.IsNullOrWhiteSpace(color))
             {
                 throw new ArgumentException("Color value can't be an empty string.");
             }
+            color = color.Trim();
 
             // handle #rrggbb hex strings like CSS colors ....
-            if (color[0] == '#')
+            if (color[0] == '#' || (color[0] == '0' && (color[1] == 'x' || color[1] == 'X')))
             {
-                color = color.Substring(1);
+                try
+                {
+                    RGB = ParseRGB(color);
+                    _mode = ColorMode.Rgb24Bit;
+                    return;
+                }
+                catch(Exception ex)
+                {
+                    nested = ex;
+                }
+
+            }
+            else if (color[0] == 'x' && color[1] == 't')
+            {
+                try {
+                    var index = ParseXtermIndex(color.Substring(2));
+                    rgb = index << 24;
+                    _mode = ColorMode.XTerm256;
+                    return;
+                }
+                catch(Exception ex)
+                {
+                    nested = ex;
+                }
             }
 
-            int val;
-            if (int.TryParse(color, NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo, out val))
+            // three (or less) digit integers are an xterm index
+            if (color.Length <= 3)
             {
-
-                if (val < 0 || val > 0xffffff)
+                try
                 {
-                    throw new ArgumentOutOfRangeException("rgb", "RGB color value must be between #000000 and #FFFFFF");
+                    var index = ParseXtermIndex(color);
+                    rgb = index << 24;
+                    _mode = ColorMode.XTerm256;
+                    return;
                 }
-                _mode = ColorMode.Rgb24Bit;
-                RGB = val;
+                catch { }
+            }
+            // six digit hex integers are CSS colors
+            else if (color.Length == 6)
+            {
+                try
+                {
+                    RGB = ParseRGB(color);
+                    _mode = ColorMode.Rgb24Bit;
+                    return;
+                }
+                catch { }
+            }
+
+            // It could also be a named ConsoleColor
+            // TODO: Should we support all the named colors? They're very standard:
+            // https://en.wikipedia.org/wiki/X11_color_names
+            // https://msdn.microsoft.com/en-us/library/system.drawing.color
+            // https://en.wikipedia.org/wiki/Web_colors
+            // NOTE: the IsDefined is necessary to prevent numerical strings from being parsed as ConsoleColor...
+            if (Enum.TryParse(color, true, out ConsoleColor consoleColor) && Enum.IsDefined(typeof(ConsoleColor), consoleColor))
+            {
+                SetConsoleColor(consoleColor);
             }
             else
             {
-                // handle named ConsoleColor
-                ConsoleColor consoleColor;
-                if (Enum.TryParse(color, true, out consoleColor))
+                throw new ArgumentException("Unrecognized color: '" + color + "' if you're not using a ConsoleColor name, consider using #RRGGBB css-style colors");
+            }
+        }
+
+        private static int ParseRGB(string rgbHex)
+        {
+            rgbHex = rgbHex.TrimStart('#');
+            if (int.TryParse(rgbHex, NumberStyles.AllowHexSpecifier, NumberFormatInfo.InvariantInfo, out int val))
+            {
+                if (val < 0 || val > 0xffffff)
                 {
-                    SetConsoleColor(consoleColor);
+                    throw new ArgumentOutOfRangeException("rgbHex", "RGB color value must be between 000000 and FFFFFF");
+                }
+
+                return val;
+            }
+            else
+            {
+                throw new ArgumentException("rgbHex", "RGB color value must be in hex form, with two hex digits for each component: RRGGBB");
+            }
+        }
+
+        public static Color FromRGB(string rgbHex)
+        {
+            var result = ParseRGB(rgbHex);
+            return new Color {
+                _mode = ColorMode.Rgb24Bit,
+                RGB = result
+            };
+        }
+
+
+        private static int ParseXtermIndex(string xTermIndex)
+        {
+            if (int.TryParse(xTermIndex, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out int val))
+            {
+                if (val < 0 || val > 255)
+                {
+                    throw new ArgumentOutOfRangeException("xTermIndex", "xTerm index must be between 0 and 255");
+                }
+
+                return val;
+            }
+            else
+            {
+                throw new ArgumentException("xTermIndex", "xTerm index must be in the form xt123 where 123 is a number between 0 and 255");
+            }
+        }
+
+        public static Color FromXTermIndex(string xTermIndex)
+        {
+            // handle #rrggbb hex strings like CSS colors ....
+            if (xTermIndex[0] == 'x' || xTermIndex[0] == 'X')
+            {
+                if(xTermIndex[1] == 't' || xTermIndex[1] == 'T')
+                {
+                    xTermIndex = xTermIndex.Substring(2);
                 }
                 else
                 {
-                    // TODO: Should we support all the named colors? They're very standard:
-                    // https://en.wikipedia.org/wiki/X11_color_names
-                    // https://msdn.microsoft.com/en-us/library/system.drawing.color
-                    // https://en.wikipedia.org/wiki/Web_colors
-                    throw new ArgumentException("Unrecognized color name: " + color);
+                    xTermIndex = xTermIndex.Substring(1);
                 }
             }
+            var result = ParseXtermIndex(xTermIndex);
+            return new Color {
+                _mode = ColorMode.XTerm256,
+                rgb = result << 24
+        };
         }
 
         public static Color ConvertFrom(object inputData)

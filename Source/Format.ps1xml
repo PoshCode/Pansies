@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- *******************************************************************
+This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
+******************************************************************** -->
+<Configuration>
+    <SelectionSets>
+        <SelectionSet>
+            <Name>Text</Name>
+            <Types>
+                <TypeName>PoshCode.Pansies.Text</TypeName>
+                <TypeName>Microsoft.PowerShell.Console.Text</TypeName>
+            </Types>
+        </SelectionSet>
+    </SelectionSets>
+    <ViewDefinitions>
+        <View>
+            <Name>Text</Name>
+            <ViewSelectedBy>
+                <TypeName>PoshCode.Pansies.Text</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Width>15</Width>
+                        <Alignment>Left</Alignment>
+                        <Label>BackgroundColor</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>15</Width>
+                        <Alignment>Left</Alignment>
+                        <Label>ForegroundColor</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Text</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ToString</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <ScriptBlock>
+                                    $_.BackgroundColor.ToString($true) + " $([char]0x1B)[49m " + $_.BackgroundColor.ToString()
+                                </ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>
+                                    $_.ForegroundColor.ToString($true) + " $([char]0x1B)[49m " + $_.ForegroundColor.ToString()
+                                </ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Object</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>
+                                    $_.ToString()
+                                </ScriptBlock>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
