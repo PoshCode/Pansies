@@ -55,6 +55,7 @@ namespace PoshCode.Pansies
         public int Length { get; private set; }
 
         public bool Clear { get; set; } = true;
+        public bool Entities { get; set; } = true;
 
         /// <summary>
         /// This constructor is here so we can allow partial matches to the property names.
@@ -94,15 +95,10 @@ namespace PoshCode.Pansies
 
         public override string ToString()
         {
-            // If there's nothing but escape codes, don't bother outputting new colors
-            if (Length == 0)
-            {
-                return (string)Object;
-            }
-            return GetString(ForegroundColor, BackgroundColor, (string)Object, Clear);
+            return GetString(ForegroundColor, BackgroundColor, (string)Object, Clear, Entities);
         }
 
-        public static string GetString(Color foreground, Color background, object @object, bool clear = false)
+        public static string GetString(Color foreground, Color background, object @object, bool clear = true, bool entities = true)
         {
             var output = new StringBuilder();
 
@@ -133,7 +129,15 @@ namespace PoshCode.Pansies
                 // clear foreground
                 output.Append("\u001B[39m");
             }
-            return output.ToString();
+
+            if(entities)
+            {
+                return System.Net.WebUtility.HtmlDecode(output.ToString());
+            }
+            else
+            {
+                return output.ToString();
+            }
         }
 
         public bool Equals(Text other)
