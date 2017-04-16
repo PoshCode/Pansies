@@ -54,7 +54,7 @@ namespace PoshCode.Pansies
         /// </summary>
         public int Length { get; private set; }
 
-        public bool Clear { get; set; } = true;
+        public bool Clear { get; set; } = false;
         public bool Entities { get; set; } = true;
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace PoshCode.Pansies
                 }
                 else
                 {
-                    throw new ArgumentException("Unknown key '" + key + "' in hashtable. Allowed values are BackgroundColor, ForegroundColor, and Object (also called Content or Text)");
+                    throw new ArgumentException("Unknown key '" + key + "' in " + values.GetType().Name + ". Allowed values are BackgroundColor (or bg), ForegroundColor (or fg), and Object (also called Content or Text)");
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace PoshCode.Pansies
             return GetString(ForegroundColor, BackgroundColor, (string)Object, Clear, Entities);
         }
 
-        public static string GetString(Color foreground, Color background, object @object, bool clear = true, bool entities = true)
+        public static string GetString(Color foreground, Color background, object @object, bool clear = false, bool entities = true)
         {
             var output = new StringBuilder();
 
@@ -124,10 +124,16 @@ namespace PoshCode.Pansies
 
             if (clear)
             {
-                // clear background
-                output.Append("\u001B[49m");
-                // clear foreground
-                output.Append("\u001B[39m");
+                if (null != background)
+                {
+                    // clear background
+                    output.Append("\u001B[49m");
+                }
+                if (null != foreground)
+                {
+                    // clear foreground
+                    output.Append("\u001B[39m");
+                }
             }
 
             if(entities)

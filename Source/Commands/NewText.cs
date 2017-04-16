@@ -29,6 +29,12 @@ namespace PoshCode.Pansies.Commands
         [Alias("Fg")]
         public Color ForegroundColor { get; set; }
 
+        [Parameter]
+        public SwitchParameter ClearAfter { get; set; }
+
+        [Parameter]
+        public SwitchParameter IgnoreEntities { get; set; }
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
@@ -37,7 +43,9 @@ namespace PoshCode.Pansies.Commands
             {
                 BackgroundColor = BackgroundColor,
                 ForegroundColor = ForegroundColor,
-                Object = Object
+                Object = Object,
+                Clear = ClearAfter,
+                Entities = !IgnoreEntities
             };
             WriteObject(result);
         }
