@@ -176,7 +176,6 @@ namespace PoshCode.Pansies
             };
         }
 
-
         private static int ParseXtermIndex(string xTermIndex)
         {
             if (int.TryParse(xTermIndex, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out int val))
