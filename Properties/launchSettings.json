@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Pansies": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\PowerShell\\6.0.0.16\\powershell.exe",
+      "commandLineArgs": "-noProfile"
+    }
+  }
+}

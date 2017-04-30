@@ -3,12 +3,36 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net452</TargetFrameworks>
     <RootNamespace>PoshCode.Pansies</RootNamespace>
-    <OutputPath>lib\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Colourful" Version="1.1.2" />
     <PackageReference Include="System.Management.Automation" Version="6.0.0-alpha17" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ColorMine\ColorMine\ColorMine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The T4 TextTemplatingFileGenerator Service-->
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Source\Classes\Colors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Colors.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Source\Classes\Colors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Colors.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

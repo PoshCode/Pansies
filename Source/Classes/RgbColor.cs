@@ -1,77 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ColorMine.ColorSpaces;
+using PoshCode.Pansies.Palettes;
+using System;
 using System.Globalization;
-using System.Management.Automation;
-using System.Text;
 
 namespace PoshCode.Pansies
 {
 
     // Thinking about renaming this to AnsiColor to prevent collisions with System.Drawing.Color, as I would
     // like to add a ctor that takes a System.Drawing.Color.AntiqueWhite, etc.
-    public class Color : IEquatable<Color>
+    public partial class RgbColor : Rgb, IEquatable<RgbColor>
     {
+        private int index = -1;
+        private static ConsolePalette _consolePalette;
+        private static XTermPalette _xTermPalette;
+        public static ConsolePalette ConsolePalette
+        {
+            get
+            {
+                if(null == _consolePalette)
+                {
+                    _consolePalette = new ConsolePalette();
+                }
+                return _consolePalette;
+            }
+            set
+            {
+                _consolePalette = value;
+            }
+        }
+        public static XTermPalette XTermPalette
+        {
+            get
+            {
+                if (null == _xTermPalette)
+                {
+                    _xTermPalette = new XTermPalette();
+                }
+                return _xTermPalette;
+            }
+            set
+            {
+                _xTermPalette = value;
+            }
+        }
+
         #region private ctors (to be removed?)
-            private Color(byte xTerm256Index)
-            {
-                // TODO: Need a SetXTermColor to set the actual RGB values
-                _mode = ColorMode.XTerm256;
-                rgb = xTerm256Index << 24;
-            }
+        private RgbColor(byte xTerm256Index)
+        {
+            // TODO: Need a SetXTermColor to set the actual RGB values
+            _mode = ColorMode.XTerm256;
+            index = xTerm256Index;
+            Initialize(XTermPalette[index]);
+        }
 
-            private Color(int rgb)
+        private RgbColor(int rgb)
+        {
+            if (rgb < 0 || rgb > 0x00FFFFFF)
             {
-                if (rgb < 0 || rgb > 0x00FFFFFF)
-                {
-                    throw new ArgumentOutOfRangeException("rgb", "RGB color value must be between 0x000000 and 0xFFFFFF");
-                }
-                _mode = ColorMode.Rgb24Bit;
-                RGB = rgb;
+                throw new ArgumentOutOfRangeException("rgb", "RGB color value must be between 0x000000 and 0xFFFFFF");
             }
+            _mode = ColorMode.Rgb24Bit;
+            RGB = rgb;
+        }
 
-            private Color(int[] rgb)
+        private RgbColor(int[] rgb)
+        {
+            if (rgb.Length != 3)
             {
-                if(rgb.Length != 3)
-                {
-                    throw new ArgumentOutOfRangeException("rgb", "byte array must contain exactly three values: Red, Green, Blue");
-                }
-                _mode = ColorMode.Rgb24Bit;
-                RGB = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+                throw new ArgumentOutOfRangeException("rgb", "byte array must contain exactly three values: Red, Green, Blue");
             }
+            _mode = ColorMode.Rgb24Bit;
+            R = rgb[0];
+            G = rgb[1];
+            B = rgb[2];
+        }
 
-            public Color(int red, int green, int blue)
-            {
-                _mode = ColorMode.Rgb24Bit;
-                RGB = (red << 16) + (green << 8) + blue;
-            }
+        public RgbColor(int red, int green, int blue)
+        {
+            _mode = ColorMode.Rgb24Bit;
+            R = red;
+            G = green;
+            B = blue;
+        }
 
         #endregion
 
-        // Use this constructor to specify the default color
-        public Color()
-        {
-            _mode = ColorMode.XTerm256;
-            rgb = -1;
-        }
-
-        public Color(Color color)
+        public RgbColor(RgbColor color)
         {
             _mode = color._mode;
-            rgb = color.rgb;
+            RGB = color.RGB;
         }
 
-        public Color(ConsoleColor consoleColor)
+        public RgbColor(ConsoleColor consoleColor)
         {
             SetConsoleColor(consoleColor);
         }
 
-        public Color(byte red, byte green, byte blue)
+        public RgbColor(byte red, byte green, byte blue)
         {
             _mode = ColorMode.Rgb24Bit;
             RGB = (red << 16) + (green << 8) + blue;
         }
 
-        public Color(string color)
+        public RgbColor(string color)
         {
             Exception nested;
             if (string.IsNullOrWhiteSpace(color))
@@ -89,7 +120,7 @@ namespace PoshCode.Pansies
                     _mode = ColorMode.Rgb24Bit;
                     return;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     nested = ex;
                 }
@@ -97,13 +128,14 @@ namespace PoshCode.Pansies
             }
             else if (color[0] == 'x' && color[1] == 't')
             {
-                try {
-                    var index = ParseXtermIndex(color.Substring(2));
-                    rgb = index << 24;
+                try
+                {
+                    index = ParseXtermIndex(color.Substring(2));
                     _mode = ColorMode.XTerm256;
+                    RGB = XTermPalette[index].RGB;
                     return;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     nested = ex;
                 }
@@ -114,9 +146,9 @@ namespace PoshCode.Pansies
             {
                 try
                 {
-                    var index = ParseXtermIndex(color);
-                    rgb = index << 24;
+                    index = ParseXtermIndex(color);
                     _mode = ColorMode.XTerm256;
+                    RGB = XTermPalette[index].RGB;
                     return;
                 }
                 catch { }
@@ -167,15 +199,6 @@ namespace PoshCode.Pansies
             }
         }
 
-        public static Color FromRGB(string rgbHex)
-        {
-            var result = ParseRGB(rgbHex);
-            return new Color {
-                _mode = ColorMode.Rgb24Bit,
-                RGB = result
-            };
-        }
-
         private static int ParseXtermIndex(string xTermIndex)
         {
             if (int.TryParse(xTermIndex, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out int val))
@@ -193,12 +216,12 @@ namespace PoshCode.Pansies
             }
         }
 
-        public static Color FromXTermIndex(string xTermIndex)
+        public static RgbColor FromXTermIndex(string xTermIndex)
         {
             // handle #rrggbb hex strings like CSS colors ....
             if (xTermIndex[0] == 'x' || xTermIndex[0] == 'X')
             {
-                if(xTermIndex[1] == 't' || xTermIndex[1] == 'T')
+                if (xTermIndex[1] == 't' || xTermIndex[1] == 'T')
                 {
                     xTermIndex = xTermIndex.Substring(2);
                 }
@@ -208,165 +231,120 @@ namespace PoshCode.Pansies
                 }
             }
             var result = ParseXtermIndex(xTermIndex);
-            return new Color {
+            return new RgbColor
+            {
                 _mode = ColorMode.XTerm256,
-                rgb = result << 24
-        };
+                index = result
+            };
         }
 
-        public static Color ConvertFrom(object inputData)
+        public static RgbColor FromRgb(string rgbHex)
+        {
+            var result = ParseRGB(rgbHex);
+            return new RgbColor
+            {
+                _mode = ColorMode.Rgb24Bit,
+                RGB = result
+            };
+        }
+        public static RgbColor FromRgb(int red, int green, int blue)
+        {
+            return new RgbColor(red, green, blue);
+        }
+
+        public static RgbColor FromRgb(int rgb)
+        {
+            return new RgbColor(rgb);
+        }
+
+
+        public static RgbColor ConvertFrom(object inputData)
         {
             if (inputData == null)
             {
-                return new Color();
+                return new RgbColor();
             }
 
-            if (inputData is Color)
+            if (inputData is RgbColor)
             {
-                return (Color)inputData;
+                return (RgbColor)inputData;
             }
 
             if (inputData is ConsoleColor)
             {
-                return new Color((ConsoleColor)inputData);
+                return new RgbColor((ConsoleColor)inputData);
             }
 
             if (inputData is string)
             {
-                return new Color(inputData.ToString());
+                return new RgbColor(inputData.ToString());
             }
 
             if (inputData is byte)
             {
-                return new Color((byte)inputData);
+                return new RgbColor((byte)inputData);
             }
 
             if (inputData is int)
             {
-                return new Color((int)inputData);
+                return new RgbColor((int)inputData);
             }
 
             if (inputData is int[])
             {
-                return new Color(((int[])inputData)[0], ((int[])inputData)[1], ((int[])inputData)[2]);
+                return new RgbColor(((int[])inputData)[0], ((int[])inputData)[1], ((int[])inputData)[2]);
             }
 
             if (inputData is byte[])
             {
-                return new Color(((byte[])inputData)[0], ((byte[])inputData)[1], ((byte[])inputData)[2]);
+                return new RgbColor(((byte[])inputData)[0], ((byte[])inputData)[1], ((byte[])inputData)[2]);
             }
 
-            return (Color)LanguagePrimitives.ConvertTo(inputData, typeof(Color));
+            return new RgbColor();
         }
-
-
 
         private void SetConsoleColor(ConsoleColor color)
         {
             _mode = ColorMode.ConsoleColor;
-            rgb = ((int)color) << 24;
-
-            switch (color)
-            {
-                case ConsoleColor.Black:
-                    // ConsoleColor 0, XTerm 0
-                    rgb |=0x000000;
-                    break;
-                case ConsoleColor.DarkBlue:
-                    // ConsoleColor 1, XTerm 4
-                    rgb |=0x000080;
-                    break;
-                case ConsoleColor.DarkGreen:
-                    // ConsoleColor 2, XTerm 2
-                    rgb |=0x008000;
-                    break;
-                case ConsoleColor.DarkCyan:
-                    // ConsoleColor 3, XTerm 6
-                    rgb |=0x008080;
-                    break;
-                case ConsoleColor.DarkRed:
-                    // ConsoleColor 4, XTerm 1
-                    rgb |=0x800000;
-                    break;
-                case ConsoleColor.DarkMagenta:
-                    // ConsoleColor 5, XTerm 5
-                    rgb |=0x800080;
-                    break;
-                case ConsoleColor.DarkYellow:
-                    // ConsoleColor 6, XTerm 3
-                    rgb |=0x808000;
-                    break;
-                case ConsoleColor.Gray:
-                    // ConsoleColor 7, XTerm 6
-                    rgb |=0xc0c0c0;
-                    break;
-                case ConsoleColor.DarkGray:
-                    // ConsoleColor 8, XTerm 8
-                    rgb |=0x808080;
-                    break;
-                case ConsoleColor.Blue:
-                    // ConsoleColor 9, XTerm 12
-                    rgb |=0x0000ff;
-                    break;
-                case ConsoleColor.Green:
-                    // ConsoleColor 10, XTerm 10
-                    rgb |=0x00ff00;
-                    break;
-                case ConsoleColor.Cyan:
-                    // ConsoleColor 11, XTerm 14
-                    rgb |=0x00ffff;
-                    break;
-                case ConsoleColor.Red:
-                    // ConsoleColor 12, XTerm 9
-                    rgb |=0xff0000;
-                    break;
-                case ConsoleColor.Magenta:
-                    // ConsoleColor 13, XTerm 12
-                    rgb |=0xff00ff;
-                    break;
-                case ConsoleColor.Yellow:
-                    // ConsoleColor 14, XTerm 11
-                    rgb |=0xffff00;
-                    break;
-                case ConsoleColor.White:
-                    // ConsoleColor 15, XTerm 15
-                    rgb |=0xffffff;
-                    break;
-            }
+            index = (int)color;
+            RGB = ConsolePalette[index].RGB;
         }
 
         /// <summary>
         /// The default ColorMode for the console
         /// </summary>
         // TODO: Detect platform. Should default to RGB on Windows 10
-        public static ColorMode ColorMode { get; set; } = ColorMode.XTerm256;
+        public static ColorMode ColorMode { get; set; } = ColorMode.Rgb24Bit;
 
         /// <summary>
         /// An override mode for this color
         /// </summary>
         private ColorMode _mode = ColorMode;
 
-        /// <summary>
-        /// The actual value of the color
-        /// </summary>
-        private int rgb;
-
-        public int R => (rgb >> 16) & 0xff;
-
-        public int G => (rgb >> 8) & 0xff;
-
-        public int B => rgb & 0xff;
+        public int RGB
+        {
+            get
+            {
+                return (((int)R) << 16) + (((int)G) << 8) + (int)B;
+            }
+            set
+            {
+                R = (value >> 16) & 0xff;
+                G = (value >> 8) & 0xff;
+                B = value & 0xff;
+            }
+        }
 
         // TODO: Downsample to the nearest ConsoleColor
         public ConsoleColor ConsoleColor
         {
             get
             {
-                if(_mode != ColorMode.ConsoleColor)
+                if (_mode != ColorMode.ConsoleColor)
                 {
-                    throw new NotImplementedException("Downsampling to ConsoleColor not implemented yet");
+                    return (ConsoleColor)ConsolePalette.FindClosestColorIndex(this);
                 }
-                return (ConsoleColor)((rgb >> 24) & 0xFF);
+                return (ConsoleColor)index;
             }
         }
 
@@ -377,13 +355,12 @@ namespace PoshCode.Pansies
             {
                 if (_mode != ColorMode.XTerm256)
                 {
-                    throw new NotImplementedException("Downsampling to XTerm256 not implemented yet");
+                    return (byte)XTermPalette.FindClosestColorIndex(this);
                 }
-                return (byte)(rgb >> 24);
+                return (byte)index;
             }
         }
 
-        public int RGB { get => rgb & 0xffffff; set => rgb = value; }
 
         public override string ToString()
         {
@@ -396,20 +373,27 @@ namespace PoshCode.Pansies
                     return "XTerm256: " + this.XTerm256Index.ToString();
 
                 case ColorMode.Rgb24Bit:
+                default:
                     return String.Format("RGB: 0x{0:X6}", RGB);
-            }
 
-            return base.ToString();
+            }
         }
 
-        public string ToString(bool background = false)
+        public string ToVtEscapeSequence(bool background = false, ColorMode? mode = null)
         {
-            if(rgb == -1) { return string.Empty; }
+            if(!mode.HasValue)
+            {
+                mode = _mode;
+            }
 
-            switch (_mode)
+            switch (mode.Value)
             {
                 case ColorMode.ConsoleColor:
                 {
+                    if (index < 0)
+                    {
+                        return string.Empty;
+                    }
                     switch (this.ConsoleColor)
                     {
                         case ConsoleColor.Black:
@@ -450,15 +434,26 @@ namespace PoshCode.Pansies
                 }
 
                 case ColorMode.XTerm256:
-                    return string.Format(background ? "\u001B[48;5;{0}m" : "\u001B[38;5;{0}m", XTerm256Index);
+                {
+                    var format = string.Format(background ? "\u001B[48;5;{0}m" : "\u001B[38;5;{0}m", XTerm256Index);
+                    return format;
+                }
 
                 case ColorMode.Rgb24Bit:
                 default:
-                    return string.Format(background ? "\u001B[48;2;{0};{1};{2}m" : "\u001B[38;2;{0};{1};{2}m", R, G, B);
+                {
+                    if (RGB < 0)
+                    {
+                        return string.Empty;
+                    }
+
+                    var format = string.Format(background ? "\u001B[48;2;{0:n0};{1:n0};{2:n0}m" : "\u001B[38;2;{0:n0};{1:n0};{2:n0}m", R, G, B);
+                    return format;
+                }
             }
         }
 
-        public static bool operator ==(Color left, Color right)
+        public static bool operator ==(RgbColor left, RgbColor right)
         {
             if (left is null && right is null)
             {
@@ -470,21 +465,21 @@ namespace PoshCode.Pansies
             }
             else
             {
-                return (left.rgb == right.rgb) && (left._mode == right._mode);
+                return (left.RGB == right.RGB) && (left._mode == right._mode);
             }
         }
 
-        public static bool operator !=(Color left, Color right)
+        public static bool operator !=(RgbColor left, RgbColor right)
         {
             return !(left == right);
         }
 
         public override bool Equals(object obj)
         {
-            return (obj is Color) && Equals((Color)obj);
+            return (obj is RgbColor) && Equals((RgbColor)obj);
         }
 
-        public bool Equals(Color other)
+        public bool Equals(RgbColor other)
         {
             return this == other;
         }
@@ -494,12 +489,12 @@ namespace PoshCode.Pansies
             // For RGB and DefaultColor (-1 / 0xFFFFFFFF) _value is unique
             if (_mode == ColorMode.Rgb24Bit)
             {
-                return rgb;
+                return RGB;
             }
 
-            // For ConsoleColor / XTerm256, where value is pushed up to 0xFF000000, we just combine
+            // For ConsoleColor / XTerm256, push the index to 0xFF000000, and combine
             // the value with the mode in the lower nibble 0xFF0000FF to get a unique number.
-            return (int)(rgb & 0xFF000000) | (int)_mode;
+            return (int)(index << 24) | (int)_mode;
         }
     }
 }

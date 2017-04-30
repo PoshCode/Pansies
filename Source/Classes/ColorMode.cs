@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoshCode.Pansies
+﻿namespace PoshCode.Pansies
 {
     public enum ColorMode {
+        Automatic,
         ConsoleColor,
         XTerm256,
         Rgb24Bit

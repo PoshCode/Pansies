@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Management.Automation;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -9,50 +7,92 @@ namespace PoshCode.Pansies
 {
     public class Text : IEquatable<Text>
     {
-        private string _text;
         private Regex _escapeCode = new Regex("\u001B\\P{L}+\\p{L}", RegexOptions.Compiled);
 
         /// <summary>
-        /// Gets or sets the object. The Object will be converted to string when it's set, and this property always returns a string.
+        /// Gets or sets the object.
         /// </summary>
         /// <value>A string</value>
-        public object Object
-        {
-            get
-            {
-                return _text;
-            }
-            set
-            {
-                _text = (string)LanguagePrimitives.ConvertTo(value, typeof(string));
+        public object Object { get; set; }
 
-                // If there's actually no output, report a negative length to ignore this block
-                if (string.IsNullOrEmpty(_text))
+        public object Separator { get; set; } = " ";
+
+        /// <summary>
+        /// Copy the simple stringification from Write-Host instead of using LanguagePrimitives.ConvertTo
+        /// </summary>
+        /// <remarks>
+        ///     Specifically, Write-Host uses it's own <code>Separator</code> instead of $OFS
+        /// </remarks>
+        /// <param name="object">The object</param>
+        /// <param name="separator">The separator</param>
+        /// <returns>A simple string representation</returns>
+        public static string ConvertToString(object @object, string separator = " ")
+        {
+            if (@object != null)
+            {
+                string s = @object as string;
+                IEnumerable enumerable = null;
+                if (s != null)
                 {
-                    Length = -1;
+                    // strings are IEnumerable, so we special case them
+                    if (s.Length > 0)
+                    {
+                        return s;
+                    }
+                }
+                else if ((enumerable = @object as IEnumerable) != null)
+                {
+                    // unroll enumerables, including arrays.
+
+                    bool printSeparator = false;
+                    StringBuilder result = new StringBuilder();
+
+                    foreach (object element in enumerable)
+                    {
+                        if (printSeparator == true && separator != null)
+                        {
+                            result.Append(separator.ToString());
+                        }
+
+                        result.Append(ConvertToString(element, separator));
+                        printSeparator = true;
+                    }
+
+                    return result.ToString();
                 }
                 else
                 {
-                    // The Length is measured without escape sequences (Esc + non-letters + any letter)
-                    Length = _escapeCode.Replace(_text, "").Length;
+                    s = @object.ToString();
+
+                    if (s.Length > 0)
+                    {
+                        return s;
+                    }
                 }
             }
+
+            return null;
         }
 
         /// <summary>
         /// Gets or Sets the background color for the block
         /// </summary>
-        public Color BackgroundColor { get; set; }
+        public RgbColor BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or Sets the foreground color for the block
         /// </summary>
-        public Color ForegroundColor { get; set; }
+        public RgbColor ForegroundColor { get; set; }
 
         /// <summary>
         /// Gets the length of the text representation (without ANSI escape sequences).
         /// </summary>
-        public int Length { get; private set; }
+        public int Length {
+            get {
+                var result = ConvertToString(Object, Separator.ToString());
+                return result != null ? result.Length : 0 ;
+            }
+        }
 
         public bool Clear { get; set; } = false;
         public bool Entities { get; set; } = true;
@@ -68,11 +108,11 @@ namespace PoshCode.Pansies
                 var pattern = "^" + Regex.Escape(key);
                 if ("bg".Equals(key, StringComparison.OrdinalIgnoreCase) || Regex.IsMatch("BackgroundColor", pattern, RegexOptions.IgnoreCase))
                 {
-                    BackgroundColor = Color.ConvertFrom(values[key]);
+                    BackgroundColor = RgbColor.ConvertFrom(values[key]);
                 }
                 else if ("fg".Equals(key, StringComparison.OrdinalIgnoreCase) || Regex.IsMatch("ForegroundColor", pattern, RegexOptions.IgnoreCase))
                 {
-                    ForegroundColor = Color.ConvertFrom(values[key]);
+                    ForegroundColor = RgbColor.ConvertFrom(values[key]);
                 }
                 else if (Regex.IsMatch("text", pattern, RegexOptions.IgnoreCase) || Regex.IsMatch("Content", pattern, RegexOptions.IgnoreCase) || Regex.IsMatch("Object", pattern, RegexOptions.IgnoreCase))
                 {
@@ -91,30 +131,31 @@ namespace PoshCode.Pansies
         }
 
         // Make sure we support the default ctor
-        public Text() { Length = -1; }
+        public Text() { }
 
         public override string ToString()
         {
-            return GetString(ForegroundColor, BackgroundColor, (string)Object, Clear, Entities);
+            return GetString(ForegroundColor, BackgroundColor, Object, Separator.ToString(), Clear, Entities);
         }
 
-        public static string GetString(Color foreground, Color background, object @object, bool clear = false, bool entities = true)
+        public static string GetString(RgbColor foreground, RgbColor background, object @object, string separator = " ", bool clear = false, bool entities = true)
         {
             var output = new StringBuilder();
 
             if (null != background)
             {
-                output.Append(background.ToString(true));
+                output.Append(background.ToVtEscapeSequence(true));
             }
             if (null != foreground)
             {
-                output.Append(foreground.ToString(false));
+                output.Append(foreground.ToVtEscapeSequence(false));
             }
 
             if (null != @object)
             {
-                var scriptBlock = @object as ScriptBlock;
-                var text = (string)LanguagePrimitives.ConvertTo(scriptBlock != null ? scriptBlock.Invoke() : @object, typeof(string));
+                //var scriptBlock = @object as ScriptBlock;
+                //var text = (string)LanguagePrimitives.ConvertTo(scriptBlock != null ? scriptBlock.Invoke() : @object, typeof(string));
+                var text = ConvertToString(@object, separator);
 
                 if (!string.IsNullOrEmpty(text))
                 {

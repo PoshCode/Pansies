@@ -6,7 +6,7 @@ using System.Text;
 namespace PoshCode.Pansies.Commands
 {
     [Cmdlet("New","Text")]
-    public class NewText : Cmdlet
+    public class NewTextCommand : Cmdlet
     {
         /// <summary>
         /// Gets or sets the object. The Object will be converted to string when it's set, and this property always returns a string.
@@ -20,14 +20,18 @@ namespace PoshCode.Pansies.Commands
         /// </summary>
         [Parameter]
         [Alias("Bg")]
-        public Color BackgroundColor { get; set; }
+        public RgbColor BackgroundColor { get; set; }
+
+
+        [Parameter()]
+        public object Separator { get; set; } = " ";
 
         /// <summary>
         /// Gets or Sets the foreground color for the block
         /// </summary>
         [Parameter]
         [Alias("Fg")]
-        public Color ForegroundColor { get; set; }
+        public RgbColor ForegroundColor { get; set; }
 
         [Parameter]
         public SwitchParameter ClearAfter { get; set; }
@@ -43,9 +47,10 @@ namespace PoshCode.Pansies.Commands
             {
                 BackgroundColor = BackgroundColor,
                 ForegroundColor = ForegroundColor,
+                Separator = Separator,
                 Object = Object,
                 Clear = ClearAfter,
-                Entities = !IgnoreEntities
+                Entities = !IgnoreEntities,
             };
             WriteObject(result);
         }
