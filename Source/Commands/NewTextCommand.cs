@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PoshCode.Pansies.Commands
 {
-    [Cmdlet("New","Text")]
+    [Cmdlet("New","Text")][Alias("Text")]
     public class NewTextCommand : Cmdlet
     {
         /// <summary>

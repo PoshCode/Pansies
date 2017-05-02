@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ColorMine\ColorMine\ColorMine.csproj" />
+    <ProjectReference Include="..\ColorMine\ColorMine\ColorMine.csproj" />
   </ItemGroup>
 
   <ItemGroup>

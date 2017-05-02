@@ -42,8 +42,11 @@ NestedModules = @('lib\net452\Pansies.dll')
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-Gradient'
 
+# A default Prefix for for Cmdlets to export
+DefaultPrefix = "Pansies"
+
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = 'New-Text', 'Write-HostAnsi'
+CmdletsToExport = 'New-Text', 'Write-Host'
 
 # Variables to export from this module
 # VariablesToExport = '*'

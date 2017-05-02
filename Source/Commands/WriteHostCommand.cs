@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace PoshCode.Pansies.Commands
 {
-    [Cmdlet("Write","HostAnsi")]
+    [Cmdlet("Write","Host")]
     public class WriteHostCommand : PSCmdlet
     {
 
