@@ -5,7 +5,7 @@
 This module contains classes and functions for doing ANSI colored output and positioning using Virtual Terminal escape sequences in the console from .Net and PowerShell on platforms where they are supported: Windows 10, Linux, OS X, etc.
 
 ```
-I ♥ PS> function prompt { -join ("I ", (New-Text "&hearts;" -fg "DarkRed" -Clear), " PS> ")}
+I ♥ PS> function prompt { "I $(New-Text "&hearts;" -fg "DarkRed" -Clear) PS> " }
 ```
 
 The goal of this project is to experiment with some classes and interfaces to try and address [PowerShell #2381](https://github.com/PowerShell/PowerShell/issues/2381) and give PowerShell full RGB support for Write-Host, but also provide full color support in format files, etc.
