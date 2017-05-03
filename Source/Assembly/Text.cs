@@ -179,7 +179,7 @@ namespace PoshCode.Pansies
 
             if(entities)
             {
-                return System.Net.WebUtility.HtmlDecode(output.ToString());
+                return PoshCode.Pansies.Entities.Decode(output.ToString());
             }
             else
             {

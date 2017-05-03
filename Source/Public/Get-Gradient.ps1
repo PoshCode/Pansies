@@ -1,5 +1,3 @@
-using namespace PoshCode.Pansies
-using namespace ColorMine.ColorSpaces
 function Get-Gradient {
     <#
     .Synopsis

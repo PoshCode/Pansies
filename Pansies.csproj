@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Source\Classes\Colors.cs">
+    <Compile Update="Source\Assembly\Colors.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Colors.tt</DependentUpon>
@@ -29,7 +29,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Update="Source\Classes\Colors.tt">
+    <None Update="Source\Assembly\Colors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Colors.cs</LastGenOutput>
     </None>
