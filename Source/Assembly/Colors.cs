@@ -1,6 +1,4 @@
 ﻿// Note: This is a generated file.
-
- 
 using ColorMine.ColorSpaces.Conversions;
 using ColorMine.ColorSpaces;
 
@@ -13,7 +11,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public RgbColor(IRgb rgb)
 		{
 			Ordinals = rgb.Ordinals;
@@ -119,7 +116,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class XyzColor : ColorMine.ColorSpaces.Xyz
     {
 		public XyzColor(){}
@@ -127,7 +123,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public XyzColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -233,7 +228,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class HslColor : ColorMine.ColorSpaces.Hsl
     {
 		public HslColor(){}
@@ -241,7 +235,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public HslColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -347,7 +340,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class LabColor : ColorMine.ColorSpaces.Lab
     {
 		public LabColor(){}
@@ -355,7 +347,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public LabColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -461,7 +452,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class LchColor : ColorMine.ColorSpaces.Lch
     {
 		public LchColor(){}
@@ -469,7 +459,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public LchColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -575,7 +564,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class LuvColor : ColorMine.ColorSpaces.Luv
     {
 		public LuvColor(){}
@@ -583,7 +571,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public LuvColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -689,7 +676,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class YxyColor : ColorMine.ColorSpaces.Yxy
     {
 		public YxyColor(){}
@@ -697,7 +683,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public YxyColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -803,7 +788,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class CmyColor : ColorMine.ColorSpaces.Cmy
     {
 		public CmyColor(){}
@@ -811,7 +795,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public CmyColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -917,7 +900,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class CmykColor : ColorMine.ColorSpaces.Cmyk
     {
 		public CmykColor(){}
@@ -925,7 +907,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public CmykColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -1031,7 +1012,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class HsvColor : ColorMine.ColorSpaces.Hsv
     {
 		public HsvColor(){}
@@ -1039,7 +1019,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public HsvColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -1145,7 +1124,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class HsbColor : ColorMine.ColorSpaces.Hsb
     {
 		public HsbColor(){}
@@ -1153,7 +1131,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public HsbColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -1259,7 +1236,6 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
     public partial class HunterLabColor : ColorMine.ColorSpaces.HunterLab
     {
 		public HunterLabColor(){}
@@ -1267,7 +1243,6 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
 		public HunterLabColor(IRgb rgb)
 		{
 			Initialize(rgb.ToRgb());
@@ -1373,5 +1348,4 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-
 }

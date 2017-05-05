@@ -1,13 +1,10 @@
 ﻿<#@ template debug="true" hostspecific="true" language="C#" #>
 <#@ output extension=".cs" #>// Note: This is a generated file.
-<#@ assembly name="EnvDTE" #>
-<#@ assembly name="EnvDTE80" #>
 <#@ assembly name="System.Core" #>
-
-<#@ import namespace="EnvDTE" #> 
-<#@ import namespace="EnvDTE80" #>
+<#@ assembly name="System.Xml.dll" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
+<#@ import Namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
 using ColorMine.ColorSpaces.Conversions;
 using ColorMine.ColorSpaces;
@@ -15,20 +12,15 @@ using ColorMine.ColorSpaces;
 namespace PoshCode.Pansies
 {
 <#
-	var serviceProvider = (IServiceProvider)Host;
-	var dte = (DTE)serviceProvider.GetService(typeof(DTE));
+	var document2 = new XmlDocument();
+	var file2 = Host.ResolvePath("../../../ColorMine/ColorMine/ColorSpaces/ColorSpaces.xml");
+	document2.Load(file2);
+	var colorSpaces = document2.SelectSingleNode("colorSpaces");
 
-	var projectItem = (ProjectItem)dte.Solution.FindProjectItem("ColorSpaces.cs");
-    var codeModel = (FileCodeModel)projectItem.FileCodeModel;
-
-	var elements = (CodeElements)codeModel.CodeElements;
-	var nameSpace = (CodeNamespace)elements.OfType<CodeNamespace>().First();
-    var classes = (IEnumerable<CodeClass>)nameSpace.Children.OfType<CodeClass>();
-
-	foreach(var codeClass in classes)
-    {
-		var className = codeClass.Name;
-		var points = codeClass.Members;
+	foreach (XmlNode space in colorSpaces)
+	{
+		var className = space.Attributes["name"].Value;
+		var points = space.SelectNodes("dataPoints/dataPoint");
 #>
     public partial class <#=className#>Color : ColorMine.ColorSpaces.<#=className#>
     {
@@ -37,27 +29,28 @@ namespace PoshCode.Pansies
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-
-<#  foreach(var otherClass in classes) { #>
-		public <#=className#>Color(I<#=otherClass.Name#> <#=otherClass.Name.ToLower()#>)
+<# 
+	foreach (XmlNode otherSpace in colorSpaces)
+	{
+		var otherClassName = otherSpace.Attributes["name"].Value;
+#>
+		public <#=className#>Color(I<#=otherClassName#> <#=otherClassName.ToLower()#>)
 		{
-<# 	if(otherClass.Name == className) { #>
-			Ordinals = <#=otherClass.Name.ToLower()#>.Ordinals;
+<# 	if(otherClassName == className) { #>
+			Ordinals = <#=otherClassName.ToLower()#>.Ordinals;
 <#  } else { #>
-			Initialize(<#=otherClass.Name.ToLower()#>.ToRgb());
+			Initialize(<#=otherClassName.ToLower()#>.ToRgb());
 <#  } #>
 		}
 
-<# if(otherClass.Name != "Rgb") { #>
-        public I<#=otherClass.Name#> To<#=otherClass.Name#>()
+<# if(otherClassName != "Rgb") { #>
+        public I<#=otherClassName#> To<#=otherClassName#>()
 		{
-            return new <#=otherClass.Name#>Color(this);
+            return new <#=otherClassName#>Color(this);
 		}
-<# } #>
-<#
-    } 
+<# } 
+   } 
 #>
     }
-
 <# } #>
 }
