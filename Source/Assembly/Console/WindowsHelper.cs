@@ -6,15 +6,14 @@ using System.Runtime.InteropServices;
 namespace PoshCode.Pansies.Console
 {
     using static NativeMethods;
-    public class WindowHelper
+    public class WindowsHelper
     {
         private readonly IntPtr _consoleOutputHandle;
-
 
         /// <summary>
         /// Initializes new instance of ConsoleColorsHelper class
         /// </summary>
-        public WindowHelper()
+        public WindowsHelper()
         {
             // TODO: second instance created is crashing. Find out why and how to fix it / prevent. In the worst case - hidden control instance singleton
             // Not very important, can wait
@@ -37,7 +36,7 @@ namespace PoshCode.Pansies.Console
         /// <summary>
         /// Finalizes an instance of the <see cref="ConsoleController"/> class. 
         /// </summary>
-        ~WindowHelper()
+        ~WindowsHelper()
         {
             // NOTE: Leave out the finalizer altogether if this class doesn't 
             // own unmanaged resources itself, but leave the other methods
@@ -65,12 +64,12 @@ namespace PoshCode.Pansies.Console
 
         #endregion IDsiposable implementation
 
-        internal ConsoleScreenBufferInfoEx GetConsoleScreenBufferInfoEx()
+        internal ConsoleScreenBufferInfoEx GetConsoleScreenBuffer()
         {
             ConsoleScreenBufferInfoEx csbe = new ConsoleScreenBufferInfoEx();
             csbe.cbSize = Marshal.SizeOf(csbe); // 96 = 0x60
 
-            bool brc = NativeMethods.GetConsoleScreenBufferInfoEx(_consoleOutputHandle, ref csbe);
+            bool brc = GetConsoleScreenBufferInfoEx(_consoleOutputHandle, ref csbe);
             if (!brc)
             {
                 throw new System.Exception("GetConsoleScreenBufferInfoEx->WinError: #" + Marshal.GetLastWin32Error());
@@ -80,7 +79,7 @@ namespace PoshCode.Pansies.Console
 
         public IDictionary<ConsoleColor, RgbColor> GetCurrentColorset()
         {
-            var csbe = GetConsoleScreenBufferInfoEx();
+            var csbe = GetConsoleScreenBuffer();
             var result = new Dictionary<ConsoleColor, RgbColor>(16)
             {
                 { ConsoleColor.Black, csbe.Black.GetRgbColor() },
@@ -102,6 +101,18 @@ namespace PoshCode.Pansies.Console
             };
 
             return result;
+        }
+
+        public void EnableVirtualTerminalProcessing()
+        {
+            ConsoleOutputModes mode;
+            if (!GetConsoleMode(_consoleOutputHandle, out mode))
+            {
+                mode = ConsoleOutputModes.EnableProcessedOutput | ConsoleOutputModes.EnableWrapAtEOL;
+            }
+            mode |= ConsoleOutputModes.EnableVirtualTerminalProcessing;
+
+            SetConsoleMode(_consoleOutputHandle, (uint)mode);
         }
     }
 }

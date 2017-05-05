@@ -26,6 +26,15 @@ namespace PoshCode.Pansies.Console
             internal short Bottom;
         }
 
+        [Flags]
+        public enum ConsoleOutputModes : uint
+        {
+            EnableProcessedOutput = 1,
+            EnableWrapAtEOL = 2,
+            EnableVirtualTerminalProcessing = 4,
+            DisableNewlineAutoReturn = 8,
+            EnableLvbGridWorldwide = 10,
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct ColorReference
@@ -82,6 +91,12 @@ namespace PoshCode.Pansies.Console
             internal ColorReference White;
         }
 
+        [DllImport("kernel32.dll")]
+        internal static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        [DllImport("kernel32.dll")]
+        internal static extern bool GetConsoleMode(IntPtr hConsoleHandle, out ConsoleOutputModes mode);
+        
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern bool GetConsoleScreenBufferInfoEx(IntPtr hConsoleOutput, ref ConsoleScreenBufferInfoEx csbe);
 
