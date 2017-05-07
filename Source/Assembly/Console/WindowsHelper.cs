@@ -1,75 +1,34 @@
-﻿using PoshCode.Pansies;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace PoshCode.Pansies.Console
 {
     using static NativeMethods;
-    public class WindowsHelper
+    public static class WindowsHelper
     {
-        private readonly IntPtr _consoleOutputHandle;
+        private static readonly IntPtr ConsoleOutputHandle;
 
         /// <summary>
         /// Initializes new instance of ConsoleColorsHelper class
         /// </summary>
-        public WindowsHelper()
+        static WindowsHelper()
         {
             // TODO: second instance created is crashing. Find out why and how to fix it / prevent. In the worst case - hidden control instance singleton
             // Not very important, can wait
-            _consoleOutputHandle = GetStdHandle(StandardOutputHandle); // 7
-            if (_consoleOutputHandle == InvalidHandle)
+            ConsoleOutputHandle = GetStdHandle(StandardOutputHandle); // 7
+            if (ConsoleOutputHandle == InvalidHandle)
             {
                 throw new System.Exception("GetStdHandle->WinError: #" + Marshal.GetLastWin32Error());
             }
         }
 
-        #region IDsiposable implementation
-
-            /// <inheritdoc />
-            public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Finalizes an instance of the <see cref="ConsoleController"/> class. 
-        /// </summary>
-        ~WindowsHelper()
-        {
-            // NOTE: Leave out the finalizer altogether if this class doesn't 
-            // own unmanaged resources itself, but leave the other methods
-            // exactly as they are. 
-            this.Dispose(false);
-        }
-
-        /// <summary>
-        /// Actual disposing method
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-            }
-
-            // free native resources
-            if (_consoleOutputHandle != InvalidHandle)
-            {
-                CloseHandle(_consoleOutputHandle);
-            }
-        }
-
-        #endregion IDsiposable implementation
-
-        internal ConsoleScreenBufferInfoEx GetConsoleScreenBuffer()
+        internal static ConsoleScreenBufferInfoEx GetConsoleScreenBuffer()
         {
             ConsoleScreenBufferInfoEx csbe = new ConsoleScreenBufferInfoEx();
             csbe.cbSize = Marshal.SizeOf(csbe); // 96 = 0x60
 
-            bool brc = GetConsoleScreenBufferInfoEx(_consoleOutputHandle, ref csbe);
+            bool brc = GetConsoleScreenBufferInfoEx(ConsoleOutputHandle, ref csbe);
             if (!brc)
             {
                 throw new System.Exception("GetConsoleScreenBufferInfoEx->WinError: #" + Marshal.GetLastWin32Error());
@@ -77,7 +36,7 @@ namespace PoshCode.Pansies.Console
             return csbe;
         }
 
-        public IDictionary<ConsoleColor, RgbColor> GetCurrentColorset()
+        public static IDictionary<ConsoleColor, RgbColor> GetCurrentColorset()
         {
             var csbe = GetConsoleScreenBuffer();
             var result = new Dictionary<ConsoleColor, RgbColor>(16)
@@ -103,16 +62,16 @@ namespace PoshCode.Pansies.Console
             return result;
         }
 
-        public void EnableVirtualTerminalProcessing()
+        public static void EnableVirtualTerminalProcessing()
         {
             ConsoleOutputModes mode;
-            if (!GetConsoleMode(_consoleOutputHandle, out mode))
+            if (!GetConsoleMode(ConsoleOutputHandle, out mode))
             {
                 mode = ConsoleOutputModes.EnableProcessedOutput | ConsoleOutputModes.EnableWrapAtEOL;
             }
             mode |= ConsoleOutputModes.EnableVirtualTerminalProcessing;
 
-            SetConsoleMode(_consoleOutputHandle, (uint)mode);
+            SetConsoleMode(ConsoleOutputHandle, (uint)mode);
         }
     }
 }
