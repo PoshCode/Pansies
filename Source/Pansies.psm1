@@ -1,7 +1,11 @@
 if(-not $IsCoreCLR) {
-    Add-Type -Path lib\net452\Pansies.dll
+    Import-Module $PSScriptRoot\lib\net451\Pansies.dll
 } else {
-    Add-Type -Path lib\netstandard1.6\Pansies.dll
+    Import-Module $PSScriptRoot\lib\netstandard1.6\Pansies.dll
+}
+
+if(-not $IsLinux) {
+    [PoshCode.Pansies.Console.WindowsHelper]::EnableVirtualTerminalProcessing()
 }
 
 # dot source the functions

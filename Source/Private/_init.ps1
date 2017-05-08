@@ -2,7 +2,11 @@ using namespace PoshCode.Pansies
 using namespace ColorMine.ColorSpaces
 
 if(-not $IsCoreCLR) {
-    Add-Type -Path $PSScriptRoot\lib\net452\Pansies.dll
+    Import-Module $PSScriptRoot\lib\net451\Pansies.dll
 } else {
-    Add-Type -Path $PSScriptRoot\lib\netstandard1.6\Pansies.dll
+    Import-Module $PSScriptRoot\lib\netstandard1.6\Pansies.dll
+}
+
+if(-not $IsLinux) {
+    [PoshCode.Pansies.Console.WindowsHelper]::EnableVirtualTerminalProcessing()
 }

@@ -37,7 +37,7 @@ RequiredAssemblies = @()
 FormatsToProcess = @("Pansies.format.ps1xml")
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('lib\net452\Pansies.dll')
+# NestedModules = @('lib\net452\Pansies.dll')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-Gradient'
