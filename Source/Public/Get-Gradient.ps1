@@ -7,7 +7,7 @@ function Get-Gradient {
     param(
         # One or more colors to generate a gradient from
         [Parameter(Mandatory)]
-        [RgbColor[]]$Color,
+        [PoshCode.Pansies.RgbColor[]]$Color,
 
         [int]$Height = $Host.UI.RawUI.WindowSize.Height,
 
