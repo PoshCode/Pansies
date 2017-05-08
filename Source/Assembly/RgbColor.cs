@@ -316,6 +316,8 @@ namespace PoshCode.Pansies
         // TODO: Detect platform. Should default to RGB on Windows 10
         public static ColorMode ColorMode { get; set; } = ColorMode.Rgb24Bit;
 
+        public ColorMode Mode { get => _mode; set => _mode = value; }
+
         /// <summary>
         /// An override mode for this color
         /// </summary>
@@ -360,8 +362,7 @@ namespace PoshCode.Pansies
                 return (byte)index;
             }
         }
-
-
+        
         public override string ToString()
         {
             switch (_mode)
@@ -374,7 +375,7 @@ namespace PoshCode.Pansies
 
                 case ColorMode.Rgb24Bit:
                 default:
-                    return String.Format("RGB: 0x{0:X6}", RGB);
+                    return String.Format("RGB: #{0:X6}", RGB);
 
             }
         }

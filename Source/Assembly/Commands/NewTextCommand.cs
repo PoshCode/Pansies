@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using System.Text;
+﻿using System.Management.Automation;
 
 namespace PoshCode.Pansies.Commands
 {
@@ -34,7 +31,7 @@ namespace PoshCode.Pansies.Commands
         public RgbColor ForegroundColor { get; set; }
 
         [Parameter]
-        public SwitchParameter ClearAfter { get; set; }
+        public SwitchParameter LeaveColor { get; set; }
 
         [Parameter]
         public SwitchParameter IgnoreEntities { get; set; }
@@ -49,7 +46,7 @@ namespace PoshCode.Pansies.Commands
                 ForegroundColor = ForegroundColor,
                 Separator = Separator,
                 Object = Object,
-                Clear = ClearAfter,
+                Clear = !LeaveColor,
                 Entities = !IgnoreEntities,
             };
             WriteObject(result);

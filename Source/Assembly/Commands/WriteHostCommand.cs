@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using System.Text;
-using PoshCode.Pansies;
-using System.Collections;
+﻿using System.Management.Automation;
 
 namespace PoshCode.Pansies.Commands
 {

@@ -1,6 +1,4 @@
-﻿using ColorMine.ColorSpaces;
-using PoshCode.Pansies;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace PoshCode.Pansies.Console
