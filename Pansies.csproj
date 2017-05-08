@@ -1,38 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net452</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;net451</TargetFrameworks>
     <RootNamespace>PoshCode.Pansies</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Colourful" Version="1.1.2" />
     <PackageReference Include="System.Management.Automation" Version="6.0.0-alpha17" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ColorMine\ColorMine\ColorMine.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <!-- The T4 TextTemplatingFileGenerator Service-->
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Source\Assembly\Colors.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Colors.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  
-  <ItemGroup>
     <None Update="Source\Assembly\Colors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Colors.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
+  <ItemGroup>
+    <!-- My output folders start with numbers. Let's make sure we don't "build" them -->
+    <Compile Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
+    <EmbeddedResource Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
+    <None Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
+  </ItemGroup>
 </Project>
