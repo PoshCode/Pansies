@@ -12,35 +12,35 @@ Get a range of colors from one or more colors
 ## SYNTAX
 
 ```
-Get-Gradient [-Color] <RgbColor[]> [[-Height] <Int32>] [[-Width] <Int32>] [[-ColorSpace] <Object>] [-Reverse] [-Flatten]
+Get-Gradient [-StartColor] <RgbColor> [-EndColor] <RgbColor> [[-Height] <Int32>] [[-Width] <Int32>] [[-ColorSpace] <Object>] [-Reverse] [-Flatten]
 ```
 
 ## DESCRIPTION
-Get an array (or multiple arrays, one per line) of RgbColor values for a gradient from the first Color to the last Color.
+Get an array (or multiple arrays, one per line) of RgbColor values for a gradient from the start Color to the end Color.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> Get-Gradient Red, Blue -Height 1
+PS C:\> Get-Gradient Red Blue -Height 1
 ```
 
 Gets a simple gradient from the ConsoleColor Red to Blue with as many steps as the current width of the console.
 
 ### Example 2
 ```
-PS C:\> Get-Gradient Red, Blue
+PS C:\> Get-Gradient Red Blue
 ```
 
 Gets a 2D gradient from the ConsoleColor Red to Blue, with the width x height the current size of the console.
 
 ## PARAMETERS
 
-### -Color
-An array of colors to generate a gradient from. Currently only uses the first and last color.
+### -StartColor
+The left color to start the gradient from.
 
 ```yaml
-Type: RgbColor[]
+Type: RgbColor
 Parameter Sets: (All)
 Aliases: 
 
@@ -51,17 +51,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Height
-The number of rows to generate in the gradient. Defaults to the height of the console.
+
+### -EndColor
+The right color to end the gradient at.
 
 ```yaml
-Type: Int32
+Type: RgbColor
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
+Required: True
 Position: 2
-Default value: $Host.UI.RawUI.WindowSize.Height
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -72,11 +73,26 @@ The number of columns to generate in the gradient. Defaults to the width of the 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases: Length, Count, Steps
 
 Required: False
 Position: 3
 Default value: $Host.UI.RawUI.WindowSize.Width
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+The number of rows to generate in the gradient. Defaults to 1
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 4
+Default value: $Host.UI.RawUI.WindowSize.Height
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -91,7 +107,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 4
+Position: Named
 Default value: HunterLab
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -128,10 +144,16 @@ Accept wildcard characters: False
 ```
 
 ## INPUTS
-RgbColor[]
+
+### RgbColor
+
+You must pass a start and end RgbColor
 
 ## OUTPUTS
-RgbColor[]
+
+### RgbColor
+
+Returns an array of colors between the start and end color
 
 ## NOTES
 

@@ -31,6 +31,11 @@ try {
 
     Write-Host
     Write-Host "Module build finished." -ForegroundColor Green
+
+    Remove-Item "$($folder.FullName)\en-US" -Force -Recurse -ErrorAction SilentlyContinue
+    New-ExternalHelp -Path ".\Docs" -OutputPath  "$($folder.FullName)\en-US"
+    Write-Host "PlatyPS Documentation finished." -ForegroundColor Green
+
     $BuildTimer.Stop()
     Write-Host "Total Elapsed $($BuildTimer.Elapsed.ToString("hh\:mm\:ss\.ff"))"
 } catch {

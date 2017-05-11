@@ -1,5 +1,5 @@
 ﻿---
-external help file: Pansies.dll-Help.xml
+external help file: Pansies-help.xml
 online version: 
 schema: 2.0.0
 ---

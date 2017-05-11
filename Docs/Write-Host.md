@@ -1,10 +1,12 @@
 ---
-external help file: Pansies.dll-Help.xml
+external help file: Pansies-help.xml
 online version: 
 schema: 2.0.0
 ---
+# Write-Host
 
 ## SYNOPSIS
+
 Backwards compatible Write-Host replacement which writes customized output to a host, but using full RGB color values.
 
 ## SYNTAX
@@ -118,7 +120,7 @@ Console Color names:
 - White
 
 ```yaml
-Type: RgbColor
+Type: PoshCode.Pansies.RgbColor
 Parameter Sets: (All)
 Aliases: 
 
