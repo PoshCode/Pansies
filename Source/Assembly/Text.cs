@@ -143,27 +143,28 @@ namespace PoshCode.Pansies
             var output = new StringBuilder();
             // There's a bug in Conhost where an advanced 48;2 RGB code followed by a console code doesn't render the RGB value
             // So we try to put the ConsoleColor first, if it's there ...
-            if(foreground.Mode == ColorMode.ConsoleColor)
+            if (null != foreground)
             {
-                if (null != foreground)
+                if (foreground.Mode == ColorMode.ConsoleColor)
                 {
                     output.Append(foreground.ToVtEscapeSequence(false));
+                    if (null != background)
+                    {
+                        output.Append(background.ToVtEscapeSequence(true));
+                    }
                 }
-                if (null != background)
+                else
                 {
-                    output.Append(background.ToVtEscapeSequence(true));
+                    if (null != background)
+                    {
+                        output.Append(background.ToVtEscapeSequence(true));
+                    }
+                    output.Append(foreground.ToVtEscapeSequence(false));
                 }
             }
-            else
+            else if (null != background)
             {
-                if (null != background)
-                {
-                    output.Append(background.ToVtEscapeSequence(true));
-                }
-                if (null != foreground)
-                {
-                    output.Append(foreground.ToVtEscapeSequence(false));
-                }
+                output.Append(background.ToVtEscapeSequence(true));
             }
 
             if (null != @object)

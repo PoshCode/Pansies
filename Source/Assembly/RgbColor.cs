@@ -313,15 +313,15 @@ namespace PoshCode.Pansies
         /// <summary>
         /// The default ColorMode for the console
         /// </summary>
-        // TODO: Detect platform. Should default to RGB on Windows 10
-        public static ColorMode ColorMode { get; set; } = ColorMode.Rgb24Bit;
+        // TODO: Detect from platform. Should default to RGB on Windows 10, use TERM on others
+        public static ColorMode ColorMode { get; set; } = ColorMode.Automatic;
 
         public ColorMode Mode { get => _mode; set => _mode = value; }
 
         /// <summary>
         /// An override mode for this color
         /// </summary>
-        private ColorMode _mode = ColorMode;
+        private ColorMode _mode = ColorMode.Automatic;
 
         public int RGB
         {
@@ -382,19 +382,26 @@ namespace PoshCode.Pansies
 
         public string ToVtEscapeSequence(bool background = false, ColorMode? mode = null)
         {
-            if(!mode.HasValue)
+            if (!mode.HasValue)
             {
-                mode = _mode;
+                if (RgbColor.ColorMode != ColorMode.Automatic)
+                {
+                    mode = RgbColor.ColorMode;
+                }
+                else if(_mode != ColorMode.Automatic)
+                {
+                    mode = _mode;
+                }
+                else
+                {
+                    mode = ColorMode.Rgb24Bit;
+                }
             }
 
             switch (mode.Value)
             {
                 case ColorMode.ConsoleColor:
                 {
-                    if (index < 0)
-                    {
-                        return string.Empty;
-                    }
                     switch (this.ConsoleColor)
                     {
                         case ConsoleColor.Black:
