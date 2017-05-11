@@ -11,5 +11,5 @@ param(
     $ColorSpace = "LAB"
 )
 
-Get-Gradient -Color $LeftColor,$RightColor -ColorSpace $ColorSpace -Flatten |
-    ForEach-Object { Write-HostAnsi " " -BackgroundColor $_ -NoNewline}
+Get-Gradient $LeftColor $RightColor -ColorSpace $ColorSpace -Flatten |
+    ForEach-Object { Write-Host " " -BackgroundColor $_ -NoNewline}
