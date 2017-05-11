@@ -2,13 +2,19 @@
 
 <strong>P</strong>owershell <strong>ANSI E</strong>scape <strong>S</strong>equences
 
-This module contains classes and functions for doing ANSI colored output and positioning using Virtual Terminal escape sequences in the console from .Net and PowerShell on platforms where they are supported: Windows 10, Linux, OS X, etc.
+This module contains classes and functions for doing ANSI colored output using Virtual Terminal escape sequences in the console from .Net and PowerShell on platforms where they are supported: Windows 10, Linux, OS X, etc.
 
-```
+```posh
 I ♥ PS> function prompt { "I $(New-Text "&hearts;" -fg "DarkRed") PS> " }
 ```
 
 The goal of this project is to experiment with some classes and interfaces to try and address [PowerShell #2381](https://github.com/PowerShell/PowerShell/issues/2381) and give PowerShell full RGB support for Write-Host, but also provide full color support in format files, etc.
+
+You can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies) (but it may not work on your machine -- please file [issues](https://github.com/PoshCode/Pansies/issues):
+
+```posh
+Install-Module Pansies
+```
 
 ### Currently Pansies provides a couple of important classes:
 
@@ -16,7 +22,9 @@ The goal of this project is to experiment with some classes and interfaces to tr
 
 *Text* is a text class which contains BackgroundColor and ForegroundColor properties and a `ToString()` implementation based on VT escape sequences.  It also supports HTML named enties like the `&hearts;` example above.
 
-There are also *Palette* classes which support the XTerm 256 color palette and the default ConsoleColor 16 color palette, with the ability to find the closest match to any RgbColor.
+There are also *Palette* classes which support the XTerm 256 color palette and the default ConsoleColor 16 color palette (which currently supports loading the actual palette of the console in Windows, but may _therefore_ break off of Windows), with the ability to find the closest match to any RgbColor.
+
+You can play with setting `[PoshCode.Pansies.RgbColor]::ColorMode` to change how the colors are down-sampled.
 
 ### Pansies also provides two commands:
 
