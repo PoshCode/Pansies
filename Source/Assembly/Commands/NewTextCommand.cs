@@ -15,7 +15,7 @@ namespace PoshCode.Pansies.Commands
         /// <summary>
         /// Gets or Sets the background color for the block
         /// </summary>
-        [Parameter]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
         [Alias("Bg")]
         public RgbColor BackgroundColor { get; set; }
 
@@ -26,7 +26,7 @@ namespace PoshCode.Pansies.Commands
         /// <summary>
         /// Gets or Sets the foreground color for the block
         /// </summary>
-        [Parameter]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
         [Alias("Fg")]
         public RgbColor ForegroundColor { get; set; }
 

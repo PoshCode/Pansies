@@ -15,10 +15,10 @@ namespace PoshCode.Pansies.Commands
         [Parameter()]
         public object Separator { get; set; } = " ";
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
         public RgbColor ForegroundColor { get; set; }
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
         public RgbColor BackgroundColor { get; set; }
 
         protected override void ProcessRecord()
