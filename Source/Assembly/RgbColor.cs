@@ -362,7 +362,7 @@ namespace PoshCode.Pansies
                 return (byte)index;
             }
         }
-        
+
         public override string ToString()
         {
             switch (_mode)
@@ -371,11 +371,11 @@ namespace PoshCode.Pansies
                     return Enum.GetName(typeof(ConsoleColor), this.ConsoleColor);
 
                 case ColorMode.XTerm256:
-                    return "XTerm256: " + this.XTerm256Index.ToString();
+                    return "xt" + this.XTerm256Index.ToString();
 
                 case ColorMode.Rgb24Bit:
                 default:
-                    return String.Format("RGB: #{0:X6}", RGB);
+                    return String.Format("#{0:X6}", RGB);
 
             }
         }
