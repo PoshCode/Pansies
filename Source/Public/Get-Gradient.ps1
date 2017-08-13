@@ -4,6 +4,7 @@ function Get-Gradient {
         Get a range of colors from one or more colors
     #>
     [CmdletBinding()]
+    [OutputType([PoshCode.Pansies.RgbColor[][]],[PoshCode.Pansies.RgbColor[]])]
     param(
         # One or more colors to generate a gradient from
         [Parameter(Mandatory, Position=0)]
@@ -15,7 +16,7 @@ function Get-Gradient {
         [Parameter(Position=2)]
         [Alias("Length","Count","Steps")]
         [int]$Width = $Host.UI.RawUI.WindowSize.Width,
-        
+
         [Parameter(Position=3)]
         [int]$Height = 1,
         [ValidateSet("CMY","CMYK","LAB","LCH","LUV","HunterLAB","HSL","HSV","HSB","RGB","XYZ","YXY")]
@@ -29,7 +30,7 @@ function Get-Gradient {
 
     $Height = [Math]::Max(1, $Height)
     $Width = [Math]::Max(1, $Width)
-    $Colors = new-object Rgb[][] $Height, $Width
+    $Colors = new-object PoshCode.Pansies.RgbColor[][] $Height, $Width
     $C = [PSCustomObject]@{R = 0; G = 0; B = 0}
 
     # Simple pythagorean distance
@@ -90,7 +91,7 @@ function Get-Gradient {
             Write-Debug ("Step ${Line},${Column}: {0:N2}, {1:N2}, {2:N2}  =>  {3:N2}, {4:N2}, {5:N2}" -f $Ordinals1[0], $Ordinals1[1], $Ordinals1[2], $Ordinals2[0], $Ordinals2[1], $Ordinals2[2] )
         }
     }
-    
+
     if ($Flatten) {
         $Colors.GetEnumerator().GetEnumerator()
     } else {

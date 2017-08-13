@@ -28,15 +28,15 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>15</Width>
+            <Width>35</Width>
             <Label>BackgroundColor</Label>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Width>15</Width>
+            <Width>35</Width>
             <Label>ForegroundColor</Label>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Text</Label>
+            <Label>Object</Label>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>ToString</Label>
@@ -47,20 +47,22 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
             <TableColumnItems>
               <TableColumnItem>
                 <ScriptBlock>
-                  $_.BackgroundColor.ToVtEscapeSequence($true) + " $([char]0x1B)[49m " + $_.BackgroundColor.ToString()
+                  $_.BackgroundColor.ToVtEscapeSequence($true) + " $([char]27)[0m " + $_.BackgroundColor.ToString()
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
-                  $_.ForegroundColor.ToVtEscapeSequence($true) + " $([char]0x1B)[49m " + $_.ForegroundColor.ToString()
+                  $_.ForegroundColor.ToVtEscapeSequence($true) + " $([char]27)[0m " + $_.ForegroundColor.ToString()
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Object</PropertyName>
+                <ScriptBlock>
+                  [System.Management.Automation.LanguagePrimitives]::ConvertTo($_.Object, [string]) + "$([char]27)[0m"
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
-                  $_.ToString() + "$([char]0x1B)[49m$([char]0x1B)[39m"
+                  $_.ToString() + "$([char]27)[0m"
                 </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
@@ -104,7 +106,7 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
             <TableColumnItems>
               <TableColumnItem>
                 <ScriptBlock>
-                  $_.ToVtEscapeSequence($true) + " $([char]0x1B)[49m " + $_.Mode
+                  $_.ToVtEscapeSequence($true) + " $([char]27)[0m " + $_.Mode
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>

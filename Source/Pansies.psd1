@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -75,7 +75,11 @@ PrivateData = @{
         IconUri = 'https://github.com/PoshCode/Pansies/blob/resources/Pansies_32.gif?raw=true'
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Pre-release version with support for RGB colors'
+        ReleaseNotes = '
+        1.1.0: Support for serialization by the Configuration module
+               Fix output of "bright" color object in ConEmu (workaround ConEmu bug)
+        1.0.0: Pre-release version with support for RGB colors
+        '
 
     } # End of PSData hashtable
 

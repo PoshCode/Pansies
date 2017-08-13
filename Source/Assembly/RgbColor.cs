@@ -371,7 +371,7 @@ namespace PoshCode.Pansies
                     return Enum.GetName(typeof(ConsoleColor), this.ConsoleColor);
 
                 case ColorMode.XTerm256:
-                    return "xt" + this.XTerm256Index.ToString();
+                    return String.Format("xt{0:0}", this.XTerm256Index);
 
                 case ColorMode.Rgb24Bit:
                 default:
