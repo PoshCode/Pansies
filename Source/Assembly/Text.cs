@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Management.Automation;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -31,6 +32,7 @@ namespace PoshCode.Pansies
             if (@object != null)
             {
                 string s = @object as string;
+                ScriptBlock sb = null;
                 IEnumerable enumerable = null;
                 if (s != null)
                 {
@@ -59,6 +61,10 @@ namespace PoshCode.Pansies
                     }
 
                     return result.ToString();
+                }
+                else if((sb = @object as ScriptBlock) != null)
+                {
+                    return ConvertToString(sb.Invoke(), separator);
                 }
                 else
                 {
@@ -118,9 +124,21 @@ namespace PoshCode.Pansies
                 {
                     Object = values[key];
                 }
+                else if (Regex.IsMatch("clear", pattern, RegexOptions.IgnoreCase) )
+                {
+                    Clear = (bool)values[key];
+                }
+                else if (Regex.IsMatch("entities", pattern, RegexOptions.IgnoreCase) )
+                {
+                    Entities = (bool)values[key];
+                }
+                else if (Regex.IsMatch("separator", pattern, RegexOptions.IgnoreCase) )
+                {
+                    Separator = values[key].ToString();
+                }
                 else
                 {
-                    throw new ArgumentException("Unknown key '" + key + "' in " + values.GetType().Name + ". Allowed values are BackgroundColor (or bg), ForegroundColor (or fg), and Object (also called Content or Text)");
+                    throw new ArgumentException("Unknown key '" + key + "' in " + values.GetType().Name + ". Allowed values are BackgroundColor (or bg), ForegroundColor (or fg), and Object (also called Content or Text), or Separator, Clear, and Entities");
                 }
             }
         }
