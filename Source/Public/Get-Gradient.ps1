@@ -31,7 +31,6 @@ function Get-Gradient {
     $Height = [Math]::Max(1, $Height)
     $Width = [Math]::Max(1, $Width)
     $Colors = new-object PoshCode.Pansies.RgbColor[][] $Height, $Width
-    $C = [PSCustomObject]@{R = 0; G = 0; B = 0}
 
     # Simple pythagorean distance
     $Size = [Math]::Sqrt(($Height - 1) * ($Height - 1) + ($Width - 1) * ($Width - 1))
