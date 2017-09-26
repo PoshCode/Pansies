@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.0'
+ModuleVersion = '1.2.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -40,7 +40,7 @@ FormatsToProcess = @("Pansies.format.ps1xml")
 # NestedModules = @('lib\net452\Pansies.dll')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-Gradient'
+FunctionsToExport = 'Get-Gradient', 'Get-Complement'
 
 # A default Prefix for for Cmdlets to export
 # DefaultCommandPrefix = "Pansies"

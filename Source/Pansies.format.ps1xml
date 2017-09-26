@@ -78,8 +78,8 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>14</Width>
-            <Label>ColorMode</Label>
+            <Width>16</Width>
+            <Label>Mode</Label>
           </TableColumnHeader>
           <TableColumnHeader>
             <Width>9</Width>
