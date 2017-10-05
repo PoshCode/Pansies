@@ -73,5 +73,17 @@ namespace PoshCode.Pansies.Console
 
             SetConsoleMode(ConsoleOutputHandle, (uint)mode);
         }
+
+        public static void DisableVirtualTerminalProcessing()
+        {
+            ConsoleOutputModes mode;
+            if (!GetConsoleMode(ConsoleOutputHandle, out mode))
+            {
+                mode = ConsoleOutputModes.EnableProcessedOutput | ConsoleOutputModes.EnableWrapAtEOL;
+            }
+            mode &= ~ConsoleOutputModes.EnableVirtualTerminalProcessing;
+
+            SetConsoleMode(ConsoleOutputHandle, (uint)mode);
+        }
     }
 }

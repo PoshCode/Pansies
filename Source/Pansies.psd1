@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.1'
+ModuleVersion = '1.2.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -76,6 +76,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.2.0: Better support for using ConsoleColors
+               Added Get-Complement to calculate the HSL complement or contrasting colors
+               Fixed ConsolePalette so it reads the current console colors when possible
         1.1.0: Support for serialization by the Configuration module
                Fix output of "bright" color object in ConEmu (workaround ConEmu bug)
         1.0.0: Pre-release version with support for RGB colors

@@ -94,7 +94,7 @@ namespace PoshCode.Pansies.Console
 
         [DllImport("kernel32.dll")]
         internal static extern bool GetConsoleMode(IntPtr hConsoleHandle, out ConsoleOutputModes mode);
-        
+
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern bool GetConsoleScreenBufferInfoEx(IntPtr hConsoleOutput, ref ConsoleScreenBufferInfoEx csbe);
 
@@ -108,9 +108,9 @@ namespace PoshCode.Pansies.Console
         public static extern IntPtr GetStdHandle(int nStdHandle);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-#if NOTCORE
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [SuppressUnmanagedCodeSecurity]
+#if NET451
+        [System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
 #endif
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CloseHandle(IntPtr hObject);

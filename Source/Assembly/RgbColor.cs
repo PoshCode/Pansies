@@ -28,6 +28,12 @@ namespace PoshCode.Pansies
                 _consolePalette = value;
             }
         }
+
+        public static void ResetConsolePalette()
+        {
+            _consolePalette = new ConsolePalette();
+        }
+
         public static XTermPalette XTermPalette
         {
             get
