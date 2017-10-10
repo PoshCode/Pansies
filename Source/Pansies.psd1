@@ -25,7 +25,7 @@ Copyright = '(c) 2017 Joel Bennett. All rights reserved.'
 Description = 'A PowerShell module for handling color and cursor positioning via ANSI escape sequences'
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = if($PSEdition -eq "Core") { "lib\netstandard1.6\Pansies.dll" } else { "lib\net451\Pansies.dll" }
+# RequiredAssemblies =
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -37,7 +37,7 @@ RequiredAssemblies = if($PSEdition -eq "Core") { "lib\netstandard1.6\Pansies.dll
 FormatsToProcess = @("Pansies.format.ps1xml")
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @('lib\net452\Pansies.dll')
+NestedModules = if($PSEdition -eq "Core") { "lib\netstandard1.6\Pansies.dll" } else { "lib\net451\Pansies.dll" }
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-Gradient', 'Get-Complement'
