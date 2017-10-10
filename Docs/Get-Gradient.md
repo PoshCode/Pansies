@@ -1,13 +1,14 @@
 ---
 external help file: Pansies-help.xml
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-Gradient
 
 ## SYNOPSIS
-Get a range of colors from one or more colors
+
+Get a range of colors between two colors
 
 ## SYNTAX
 
@@ -16,33 +17,40 @@ Get-Gradient [-StartColor] <RgbColor> [-EndColor] <RgbColor> [[-Height] <Int32>]
 ```
 
 ## DESCRIPTION
+
 Get an array (or multiple arrays, one per line) of RgbColor values for a gradient from the start Color to the end Color.
 
 ## EXAMPLES
 
-### Example 1
+### ---- Example 1 -------------------------------------------------------------
+
 ```
-PS C:\> Get-Gradient Red Blue -Height 1
+PS C:\> Get-Gradient Red Blue -Count 10 -Flatten
 ```
 
-Gets a simple gradient from the ConsoleColor Red to Blue with as many steps as the current width of the console.
+Gets a simple array of ten colors between Red and Blue.
 
-### Example 2
+
+### ---- Example 2 -------------------------------------------------------------
+
 ```
 PS C:\> Get-Gradient Red Blue
 ```
 
 Gets a 2D gradient from the ConsoleColor Red to Blue, with the width x height the current size of the console.
 
+
+
 ## PARAMETERS
 
 ### -StartColor
+
 The left color to start the gradient from.
 
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -53,12 +61,13 @@ Accept wildcard characters: False
 
 
 ### -EndColor
+
 The right color to end the gradient at.
 
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -88,7 +97,7 @@ The number of rows to generate in the gradient. Defaults to 1
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -98,13 +107,13 @@ Accept wildcard characters: False
 ```
 
 ### -ColorSpace
-A color space to render the gradient in. Defaults to HunterLab, but can be any of 
+A color space to render the gradient in. Defaults to HunterLab, but can be any of
 CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +128,7 @@ For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient t
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +143,7 @@ Flattens the 2D array to a single array.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -153,9 +162,10 @@ You must pass a start and end RgbColor
 
 ### RgbColor
 
-Returns an array of colors between the start and end color
+With -Flatten, returns a simple array of colors between the start and end color
+
+Otherwise, returns a two dimensional array of colors of the specified height and width
 
 ## NOTES
 
 ## RELATED LINKS
- 

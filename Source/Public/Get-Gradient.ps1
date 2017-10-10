@@ -1,12 +1,10 @@
 function Get-Gradient {
     <#
-    .Synopsis
-        Get a range of colors from one or more colors
+    .EXTERNALHELP Pansies-help.xml
     #>
     [CmdletBinding()]
     [OutputType([PoshCode.Pansies.RgbColor[][]],[PoshCode.Pansies.RgbColor[]])]
     param(
-        # One or more colors to generate a gradient from
         [Parameter(Mandatory, Position=0)]
         [PoshCode.Pansies.RgbColor]$StartColor,
 
@@ -22,7 +20,6 @@ function Get-Gradient {
         [ValidateSet("CMY","CMYK","LAB","LCH","LUV","HunterLAB","HSL","HSV","HSB","RGB","XYZ","YXY")]
         $ColorSpace = "HunterLab",
 
-        # For color spaces with Hue (HSL, HSV), setting this generates the gradient the long way
         [switch]$Reverse,
 
         [switch]$Flatten

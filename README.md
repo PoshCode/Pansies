@@ -10,10 +10,23 @@ I ♥ PS> function prompt { "I $(New-Text "&hearts;" -fg "DarkRed") PS> " }
 
 The goal of this project is to experiment with some classes and interfaces to try and address [PowerShell #2381](https://github.com/PowerShell/PowerShell/issues/2381) and give PowerShell full RGB support for Write-Host, but also provide full color support in format files, etc.
 
-You can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies) (but it may not work on your machine -- please file [issues](https://github.com/PoshCode/Pansies/issues):
+## Installing
+
+It requires PowerShell 5 or higher and an ANSI-capable host like xTerm, the Windows 10 Console, or ConEmu. If you can satisfy those requirements, you can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies):
 
 ```posh
 Install-Module Pansies
+```
+
+If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/issues):
+
+## Building from source.
+
+Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module. With those dependencies preinstalled and on your path, you can just:
+
+```posh
+git clone https://github.com/PoshCode/Pansies.git
+.\Pansies\Build.ps1
 ```
 
 ### Currently Pansies provides a couple of important classes:
@@ -24,14 +37,16 @@ Install-Module Pansies
 
 There are also *Palette* classes which support the XTerm 256 color palette and the default ConsoleColor 16 color palette (which currently supports loading the actual palette of the console in Windows, but may _therefore_ break off of Windows), with the ability to find the closest match to any RgbColor.
 
-You can play with setting `[PoshCode.Pansies.RgbColor]::ColorMode` to change how the colors are down-sampled.
+You can play with setting `[PoshCode.Pansies.RgbColor]::ColorMode` to change how the colors are down-sampled, and modify the actual palettes in `[PoshCode.Pansies.RgbColor]::ConsolePalette` and `[PoshCode.Pansies.RgbColor]::XTermPalette`
 
-### Pansies also provides two commands:
+### Pansies also provides four commands:
 
-Cmdlet | Description
------- | -----------
-New-Text | Creates a `Text` object. Provides parameters for `BackgroundColor` and `ForegroundColor` properties, that renders in console
-Write-Host | Writes to host just like Write-Host, but with full RGBColor support
+Cmdlet         | Description
+------         | -----------
+New-Text       | Creates a `Text` object. Provides parameters for `BackgroundColor` and `ForegroundColor` properties, that renders in console
+Write-Host     | Writes to host just like Write-Host, but with full RGBColor support
+Get-Gradient   | Get a range of colors between two colors
+Get-Complement | Gets the Hue complement color
 
 ## Contribute
 

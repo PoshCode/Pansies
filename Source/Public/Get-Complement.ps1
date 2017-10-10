@@ -1,12 +1,9 @@
 function Get-Complement {
     <#
-    .SYNOPSIS
-        Get the Hue complement color
-
-    .DESCRIPTION
-        Rotate 180 degrees around the Hue of HSL
+    .EXTERNALHELP Pansies-help.xml
     #>
     [CmdletBinding()]
+    [OutputType([PoshCode.Pansies.RgbColor])]
     param(
         # The source color to calculate the complement of
         [Parameter(ValueFromPipeline, Mandatory)]

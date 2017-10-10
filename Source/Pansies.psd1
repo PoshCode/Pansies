@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.0'
+ModuleVersion = '1.2.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -76,6 +76,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.2.1: Fix cmdlet export so New-Text and Write-Host show back up
+               Make EXTERNALHELP work for functions
+               Provide help for Get-Complement
         1.2.0: Better support for using ConsoleColors
                Added Get-Complement to calculate the HSL complement or contrasting colors
                Fixed ConsolePalette so it reads the current console colors when possible
