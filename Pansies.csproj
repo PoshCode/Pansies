@@ -5,7 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Management.Automation" Version="6.0.0-alpha17" />
-    <ProjectReference Include="..\ColorMine\ColorMine\ColorMine.csproj" />
+    <ProjectReference Include=".\lib\ColorMine\ColorMine\ColorMine.csproj" />
+    <Compile Remove=".\lib\ColorMine\**"/>
   </ItemGroup>
   <ItemGroup>
     <!-- The T4 TextTemplatingFileGenerator Service-->
