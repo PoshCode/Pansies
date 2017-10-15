@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.1'
+ModuleVersion = '1.2.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -76,6 +76,7 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.2.2: Use full namespace + class name for RgbColor
         1.2.1: Fix cmdlet export so New-Text and Write-Host show back up
                Make EXTERNALHELP work for functions
                Provide help for Get-Complement

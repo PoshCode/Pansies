@@ -1,7 +1,7 @@
 using namespace PoshCode.Pansies
 using namespace ColorMine.ColorSpaces
 
-if(-not $IsLinux) {
+if(-not $IsLinux -and -not $IsMacOS) {
     [PoshCode.Pansies.Console.WindowsHelper]::EnableVirtualTerminalProcessing()
 }
 

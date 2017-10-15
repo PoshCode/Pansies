@@ -3,10 +3,10 @@ using namespace PoshCode.Pansies
 param(
     [Object]$Object = "Hello World",
 
-    [RgbColor]
+    [PoshCode.Pansies.RgbColor]
     $StartColor = "xt33",
 
-    [RgbColor]
+    [PoshCode.Pansies.RgbColor]
     $EndColor = "xt199",
 
     [ValidateSet("CMYK","LAB","LUV","HunterLAB","HSL","HSLReverse","HSV","RGB","XYZ")]
@@ -19,7 +19,7 @@ process {
 
     for($c = 0; $c -lt $Color.Length; $c++) {
         # Fun twist: use HSL or LAB to pick a darker version of the color:
-        $LAB = ([RgbColor]$Color[$c]).ToHunterLab()
+        $LAB = ([PoshCode.Pansies.RgbColor]$Color[$c]).ToHunterLab()
         # Invert the color
         $LAB.L = 100 - $LAB.L
         # And then push it to make it darker or lighter
@@ -32,7 +32,7 @@ process {
 
         $LAB | Out-String | Write-Verbose
         # # Or just rotate the Hue:
-        # $HSL = ([RgbColor]$Color[$c]).ToHsl()
+        # $HSL = ([PoshCode.Pansies.RgbColor]$Color[$c]).ToHsl()
         # $HSL.H = ($HSL.H + 180) % 360
         # $HSL.S = 100
         # if($HSL.L -gt .4) {
