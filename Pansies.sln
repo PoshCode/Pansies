@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pansies", "Pansies.csproj", "{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorMine", "lib\ColorMine\ColorMine\ColorMine.csproj", "{25D4CBB8-B010-4768-95D5-F21B54547FB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Paths", "lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj", "{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Provider", "lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj", "{3D3741C8-A7A9-4532-A84A-0E7C90214800}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Management.Automation-lib", "lib\PowerShellStandard\src\5\System.Management.Automation-lib.csproj", "{36D26164-2F3E-4F6D-8096-9443833C9C27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C72D6C9-5E8B-4B1E-B720-D3027AF44178}
+	EndGlobalSection
+EndGlobal

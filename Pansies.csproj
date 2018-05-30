@@ -1,12 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net451</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>PoshCode.Pansies</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Management.Automation" Version="6.0.0-alpha17" />
-    <ProjectReference Include=".\lib\ColorMine\ColorMine\ColorMine.csproj" />
-    <Compile Remove=".\lib\ColorMine\**"/>
+    <ProjectReference Include="lib\PowerShellStandard\src\5\System.Management.Automation-lib.csproj" />
+</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="lib\ColorMine\ColorMine\ColorMine.csproj" />
+    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
+    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- The T4 TextTemplatingFileGenerator Service-->
@@ -24,6 +27,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <!-- I wouldn't want to double-compile the stuff in here -->
+    <Compile Remove="lib\**" />
     <!-- My output folders start with numbers. Let's make sure we don't "build" them -->
     <Compile Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
     <EmbeddedResource Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
