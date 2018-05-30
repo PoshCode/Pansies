@@ -15,13 +15,15 @@ try {
     $folder = mkdir $version -Force
 
     # dotnet restore
-    dotnet build -c $Configuration -f net451 -o "$($folder.FullName)\lib\net451"
-    dotnet build -c $Configuration -f netstandard1.6 -o "$($folder.FullName)\lib\netstandard1.6"
+    dotnet build -c $Configuration -o "$($folder.FullName)\lib"
 
+    # Never ship SMA
+    Get-ChildItem "$($folder.FullName)\lib" -Filter "System.Management.Automation-lib*" |
+        Remove-Item
 
     Get-ChildItem Source -filter "${ModuleName}.*" |
-        Copy-Item -Dest $folder.FullName -PassThru | 
-        ForEach { 
+        Copy-Item -Dest $folder.FullName -PassThru |
+        ForEach {
             Write-Host "  $($_.Name) -> $($_.FullName)"
         }
     Get-ChildItem Source\Private, Source\Public -Filter *.ps1 -Recurse |
