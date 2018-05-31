@@ -12,40 +12,42 @@ using System.Text;
 
 namespace PoshCode.Pansies.Provider
 {
+    enum RgbColorMode { Foreground, Background }
+
     class RgbColorContainer : PathNodeBase
     {
-        private bool Background;
+        private RgbColorMode RgbColorMode;
 
-        public RgbColorContainer(bool background)
+        public RgbColorContainer(RgbColorMode mode)
         {
-            Background = background;
+            RgbColorMode = mode;
         }
 
         public override IPathValue GetNodeValue()
         {
-            return new ContainerPathValue(Background, Name);
+            return new ContainerPathValue(RgbColorMode, Name);
         }
 
         public override string Name
         {
-            get { return Background ? "BackgroundColor" : "ForegroundColor"; }
+            get { return RgbColorMode.ToString(); }
         }
 
         public override IEnumerable<IPathNode> GetNodeChildren(CodeOwls.PowerShell.Provider.PathNodeProcessors.IProviderContext providerContext)
         {
-            return new XTermPalette().Select(color => new RgbColorItem(color, Background));
+            return new XTermPalette().Select(color => new RgbColorItem(color, RgbColorMode));
         }
     }
 
     class ColorContentReader : IContentReader
     {
         private RgbColor Color;
-        private bool Background;
+        private RgbColorMode RgbColorMode;
 
-        public ColorContentReader(RgbColor color, bool background)
+        public ColorContentReader(RgbColor color, RgbColorMode mode)
         {
             Color = color;
-            Background = background;
+            RgbColorMode = mode;
         }
         public void Close()
         {
@@ -57,7 +59,21 @@ namespace PoshCode.Pansies.Provider
 
         public IList Read(long readCount)
         {
-            return new[] { Color.ToVtEscapeSequence(Background) };
+            if (Color == null)
+            {
+                if (RgbColorMode == RgbColorMode.Background)
+                {
+                    return new[] { "\u001B[49m" };
+                }
+                else
+                {
+                    return new[] { "\u001B[39m" };
+                }
+            }
+            else
+            {
+                return new[] { Color.ToVtEscapeSequence(RgbColorMode == RgbColorMode.Background) };
+            }
         }
 
         public void Seek(long offset, SeekOrigin origin)
@@ -69,13 +85,15 @@ namespace PoshCode.Pansies.Provider
 
     class RgbColorItem : PathNodeBase, IGetItemContent
     {
+        private readonly String name;
         private RgbColor Color;
-        private bool Background;
+        private RgbColorMode RgbColorMode;
 
-        public RgbColorItem(RgbColor color, bool background)
+        public RgbColorItem(RgbColor color, RgbColorMode mode, string name = null)
         {
             Color = color;
-            Background = background;
+            RgbColorMode = mode;
+            this.name = name ?? Color.ToString();
         }
 
         /// <summary>
@@ -95,7 +113,7 @@ namespace PoshCode.Pansies.Provider
 
         public IContentReader GetContentReader(IProviderContext providerContext)
         {
-            return new ColorContentReader(Color, Background);
+            return new ColorContentReader(Color, RgbColorMode);
         }
 
         public object GetContentReaderDynamicParameters(IProviderContext providerContext)
@@ -108,7 +126,7 @@ namespace PoshCode.Pansies.Provider
         /// </summary>
         public override string Name
         {
-            get { return Color.ToString(); }
+            get { return name; }
         }
     }
 }

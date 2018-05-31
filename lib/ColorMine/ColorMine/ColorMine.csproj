@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net451;netstandard1.6</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyTitle>ColorMine</AssemblyTitle>
     <RootNamespace>ColorMine</RootNamespace>
     <Version>1.2.0</Version>
     <FileVersion>1.2.0</FileVersion>
-    <Description>.NET library that makes converting betwewen color spaces and comparing colors easy</Description>
+    <Description>.NET library that makes converting between color spaces and comparing colors easy</Description>
     <Company>Continuous Automation LLC</Company>
     <Copyright>Copyright © 2017 Joe Zack</Copyright>
   </PropertyGroup>
