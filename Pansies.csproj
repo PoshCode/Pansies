@@ -4,12 +4,9 @@
     <RootNamespace>PoshCode.Pansies</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="lib\PowerShellStandard\src\5\System.Management.Automation-lib.csproj" />
-</ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="lib\ColorMine\ColorMine\ColorMine.csproj" />
-    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
-    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj" />
+    <PackageReference Include="System.Management.Automation" Version="6.0.0-alpha17" />
+    <ProjectReference Include=".\lib\ColorMine\ColorMine\ColorMine.csproj" />
+    <Compile Remove=".\lib\ColorMine\**"/>
   </ItemGroup>
   <ItemGroup>
     <!-- The T4 TextTemplatingFileGenerator Service-->
@@ -34,4 +31,13 @@
     <EmbeddedResource Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
     <None Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-03" />
+  </ItemGroup>
 </Project>
+    <ProjectReference Include="lib\PowerShellStandard\src\5\System.Management.Automation-lib.csproj" />
+</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="lib\ColorMine\ColorMine\ColorMine.csproj" />
+    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
+    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj" />
