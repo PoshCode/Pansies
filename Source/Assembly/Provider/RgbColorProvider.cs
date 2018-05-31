@@ -8,11 +8,12 @@ using System.Text;
 
 namespace PoshCode.Pansies.Provider
 {
-    [CmdletProvider("RgbColorProvider", ProviderCapabilities.ShouldProcess)]
-    class RgbColorProvider : CodeOwls.PowerShell.Provider.Provider
-    {        /// <summary>
+    [CmdletProvider("RgbColor", ProviderCapabilities.None)]
+    public class RgbColorProvider : CodeOwls.PowerShell.Provider.Provider
+    {
+             /// <summary>
              /// a required P2F override
-             /// 
+             ///
              /// supplies P2F with the path processor for this provider
              /// </summary>
         protected override CodeOwls.PowerShell.Paths.Processors.IPathResolver PathResolver
@@ -28,10 +29,10 @@ namespace PoshCode.Pansies.Provider
             return new Collection<PSDriveInfo>
             {
                 new RgbColorDrive(
-                    new PSDriveInfo( "Fg", ProviderInfo, "RgbColor::Foreground", "Foreground Colors", null )
+                    new PSDriveInfo( "Fg", ProviderInfo, "RgbColor::Foreground:\\", "Foreground Colors", null )
                 ),
                 new RgbColorDrive(
-                    new PSDriveInfo( "Bg", ProviderInfo, "RgbColor::Background", "Background Colors", null )
+                    new PSDriveInfo( "Bg", ProviderInfo, "RgbColor::Background:\\", "Background Colors", null )
                 )
             };
         }

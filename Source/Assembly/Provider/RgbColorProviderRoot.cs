@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CodeOwls.PowerShell.Provider.PathNodes;
+using PoshCode.Pansies.Palettes;
 
 namespace PoshCode.Pansies.Provider
 {
@@ -20,7 +22,25 @@ namespace PoshCode.Pansies.Provider
 
         public override IEnumerable<IPathNode> GetNodeChildren(CodeOwls.PowerShell.Provider.PathNodeProcessors.IProviderContext providerContext)
         {
-            return new[] { new RgbColorContainer(false), new RgbColorContainer(true) };
+            var color = providerContext.Path.Split(new[] { '\\' }, 2).Last();
+            var mode = providerContext.Path.StartsWith("RgbColor::Background:\\") ? RgbColorMode.Background : RgbColorMode.Foreground;
+
+            if (string.IsNullOrEmpty(color) || color.Contains("*"))
+            {
+                return new XTermPalette().Select(xColor => new RgbColorItem(xColor, mode));
+            }
+            else if(StringComparer.OrdinalIgnoreCase.Equals(color, "clear"))
+            {
+                return new[] {
+                    new RgbColorItem(null, mode, color)
+                };
+            }
+            else
+            {
+                return new[] {
+                    new RgbColorItem(new RgbColor(color), mode, color)
+                };
+            }
         }
         #endregion
 
