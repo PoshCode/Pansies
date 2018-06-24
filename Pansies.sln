@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Paths",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Provider", "lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj", "{3D3741C8-A7A9-4532-A84A-0E7C90214800}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Management.Automation-lib", "lib\PowerShellStandard\src\5\System.Management.Automation-lib.csproj", "{36D26164-2F3E-4F6D-8096-9443833C9C27}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36D26164-2F3E-4F6D-8096-9443833C9C27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
