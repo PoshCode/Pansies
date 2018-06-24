@@ -11,3 +11,5 @@
 # ignore visual studio artifacts
 *.suo
 /.vs/
+
+*.zip
