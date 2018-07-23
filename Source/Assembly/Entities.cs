@@ -19,16 +19,16 @@ namespace PoshCode.Pansies
             { "Clear", "\u001B[0m" }
         };
 
-        public static Dictionary<string, char> ExtendedCharacters = new Dictionary<string, char>
+        public static Dictionary<string, string> ExtendedCharacters = new Dictionary<string, string>
         {
-            { "ColorSeparator", '\u258C'}, // ▌
-            { "ReverseColorSeparator", '\u2590'}, // ▐
-            { "Separator", '\u25BA'}, // ►
-            { "ReverseSeparator", '\u25C4'}, // ◄
-            { "Branch", '\ue0a0'}, // Branch symbol
-            { "Lock", '\ue0a2'}, // Padlock
-            { "Gear", '\u26ef'}, // The settings icon, I use it for debug
-            { "Power", '\u26a1'}, // The Power lightning-bolt icon
+            { "ColorSeparator", "\u258C"}, // ▌
+            { "ReverseColorSeparator", "\u2590"}, // ▐
+            { "Separator", "\u25BA"}, // ►
+            { "ReverseSeparator", "\u25C4"}, // ◄
+            { "Branch", "\ue0a0"}, // Branch symbol
+            { "Lock", "\ue0a2"}, // Padlock
+            { "Gear", "\u26ef"}, // The settings icon, I use it for debug
+            { "Power", "\u26a1"}, // The Power lightning-bolt icon
         };
 
         public static string Decode(string value)

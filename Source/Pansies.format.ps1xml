@@ -78,7 +78,7 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>16</Width>
+            <Width>14</Width> <!-- LightGoldenrodYellow? -->
             <Label>Mode</Label>
           </TableColumnHeader>
           <TableColumnHeader>
@@ -87,9 +87,14 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
             <Label>RGB (hex)</Label>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Width>12</Width>
+            <Width>20</Width>
             <Alignment>Left</Alignment>
-            <Label>ConsoleColor</Label>
+            <Label>X11ColorName</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Alignment>Left</Alignment>
+            <Label>RGB (decimal)</Label>
+            <Width>15</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Width>11</Width>
@@ -97,8 +102,9 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
             <Label>XTerm Index</Label>
           </TableColumnHeader>
           <TableColumnHeader>
+            <Width>12</Width>
             <Alignment>Left</Alignment>
-            <Label>RGB (decimal)</Label>
+            <Label>ConsoleColor</Label>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -115,18 +121,38 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>ConsoleColor</PropertyName>
+                <PropertyName>X11ColorName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Ordinals</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>XTerm256Index</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Ordinals</PropertyName>
+                <PropertyName>ConsoleColor</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
+    </View>
+    <View>
+      <Name>RgbColor</Name>
+      <ViewSelectedBy>
+        <SelectionSetName>RgbColor</SelectionSetName>
+      </ViewSelectedBy>
+      <WideControl>
+        <WideEntries>
+          <WideEntry>
+            <WideItem>
+              <ScriptBlock>
+                  $_.ToVtEscapeSequence($true) + " $([char]27)[0m " + $_.X11ColorName
+              </ScriptBlock>
+            </WideItem>
+          </WideEntry>
+        </WideEntries>
+      </WideControl>
     </View>
   </ViewDefinitions>
 </Configuration>

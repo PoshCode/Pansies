@@ -34,7 +34,7 @@ namespace PoshCode.Pansies.Commands
             // Discuss: is it worth implementing this, even though Cmdlet.WriteHost won't respect it?
             var value = GetVariableValue("HostPreference", ActionPreference.Continue);
             // NOTE: Anything but Continue and SilentlyContinue (or Ignore) is pointless, since you can set them on Information 
-            if (value is ActionPreference preference && (preference != ActionPreference.SilentlyContinue || preference != ActionPreference.Ignore))
+            if (value is ActionPreference preference && (preference == ActionPreference.SilentlyContinue || preference == ActionPreference.Ignore))
             { 
                 tags = new string[] { };
             }
