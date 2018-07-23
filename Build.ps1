@@ -1,3 +1,4 @@
+#Requires -Module Configuration
 [CmdletBinding()]
 param(
     [ValidateSet("Release","Debug")]

@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.0'
+ModuleVersion = '1.3.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -76,6 +76,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.3.1: Add support for x11 color names to make the drives more useful
+        1.3.0: Add a RgbColor content provider that can convert colors to their escape sequences
+               Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"
         1.2.2: Use full namespace + class name for RgbColor
         1.2.1: Fix cmdlet export so New-Text and Write-Host show back up
                Make EXTERNALHELP work for functions

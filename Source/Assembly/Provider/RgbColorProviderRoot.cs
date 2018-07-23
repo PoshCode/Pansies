@@ -27,7 +27,9 @@ namespace PoshCode.Pansies.Provider
 
             if (string.IsNullOrEmpty(color) || color.Contains("*"))
             {
-                return new XTermPalette().Select(xColor => new RgbColorItem(xColor, mode));
+                //if (Enum.TryParse(color, true, out X11ColorName x11Color) && string.Equals(color, x11Color.ToString(), StringComparison.OrdinalIgnoreCase))
+                return Enum.GetValues(typeof(X11ColorName)).Cast<X11ColorName>().Select(name => new RgbColorItem(RgbColor.X11Palette[(int)name], mode, name.ToString()));
+                //return new X11Palette().Distinct().Select(xColor => new RgbColorItem(xColor, mode));
             }
             else if(StringComparer.OrdinalIgnoreCase.Equals(color, "clear"))
             {
