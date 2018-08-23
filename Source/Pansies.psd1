@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.1'
+ModuleVersion = '1.4.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -40,13 +40,13 @@ FormatsToProcess = @("Pansies.format.ps1xml")
 NestedModules = @( "lib\Pansies.dll" )
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-Gradient', 'Get-Complement'
+FunctionsToExport = 'Get-Gradient', 'Get-Complement', 'Show-ConsolePalette'
 
 # A default Prefix for for Cmdlets to export
 # DefaultCommandPrefix = "Pansies"
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = 'New-Text', 'Write-Host'
+CmdletsToExport = 'New-Text', 'Write-Host', 'Get-ConsolePalette', 'Set-ConsolePalette', 'Import-Palette'
 
 # Variables to export from this module
 # VariablesToExport = '*'
@@ -76,6 +76,7 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.4.0: Add commands to expose the console palette features
         1.3.1: Add support for x11 color names to make the drives more useful
         1.3.0: Add a RgbColor content provider that can convert colors to their escape sequences
                Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"

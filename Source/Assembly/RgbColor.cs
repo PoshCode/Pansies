@@ -31,9 +31,9 @@ namespace PoshCode.Pansies
             }
         }
 
-        public static void ResetConsolePalette()
+        public static void ResetConsolePalette(bool DefaultColors = false)
         {
-            _consolePalette = new ConsolePalette();
+            _consolePalette = new ConsolePalette(DefaultColors);
         }
 
         public static XTermPalette XTermPalette

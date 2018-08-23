@@ -7,6 +7,10 @@ using System.Linq;
 
 namespace ColorMine.Palettes
 {
+    /// <summary>
+    /// An IPalette that stores colors in the Lab colorspace to make sure comparisons look right to people...
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Palette<T> : IPalette<T> where T: IColorSpace, new()
     {
         protected IList<T> nativeColors = new List<T>();
@@ -22,6 +26,19 @@ namespace ColorMine.Palettes
             }
         }
 
+        public Palette() { }
+
+        public Palette(int capacity)
+        {
+            nativeColors = new List<T>(capacity);
+            labColors = new List<Lab>(capacity);
+
+            for(int i = 0; i < capacity; i++)
+            {
+                Add(default(T));
+            }
+        }
+
         public virtual IColorSpaceComparison ComparisonAlgorithm { get; set; } = new CieDe2000Comparison();
 
         public int Count => nativeColors.Count;
@@ -31,7 +48,7 @@ namespace ColorMine.Palettes
         public void Add(T item)
         {
             nativeColors.Add(item);
-            labColors.Add(item.To<Lab>());
+            labColors.Add(item?.To<Lab>());
         }
 
         public void Clear()
@@ -39,7 +56,6 @@ namespace ColorMine.Palettes
             nativeColors.Clear();
             labColors.Clear();
         }
-
 
         /// <remarks>
         /// This comparer ought to be overriden by any implementation which also stores colors in another color space.
@@ -90,7 +106,6 @@ namespace ColorMine.Palettes
         {
             return FindClosestColor<T>(color).Color;
         }
-        
 
         public int FindClosestColorIndex(IColorSpace color)
         {
@@ -102,9 +117,6 @@ namespace ColorMine.Palettes
             return nativeColors.GetEnumerator();
         }
 
-        /// <remarks>
-        /// This comparer ought to be overriden by any implementation which also stores colors in another color space.
-        /// </remarks>
         public virtual int IndexOf(T item)
         {
             return nativeColors.IndexOf(item);
@@ -118,8 +130,6 @@ namespace ColorMine.Palettes
 
         public bool Remove(T item)
         {
-
-
             var index = nativeColors.IndexOf(item);
             if (index >= 0)
             {
