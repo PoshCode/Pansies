@@ -1,7 +1,8 @@
 ﻿function Show-ConsolePalette {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory,ValueFromPipeline)]
+        [Parameter(Mandatory, Position=0, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Alias("ConsolePalette")]
         [PoshCode.Pansies.RgbColor[]]$Colors,
 
         [Switch]$NoTable,
