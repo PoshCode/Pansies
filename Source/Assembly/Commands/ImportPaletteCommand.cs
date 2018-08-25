@@ -47,7 +47,7 @@ namespace PoshCode.Pansies.Commands
                 }
             }
 
-            // if they pass just a palette name, we can look for any known scheme files
+            // if they pass just a palette name, we can look for any known scheme file types
             if (string.IsNullOrEmpty(extension))
             {
                 // For now, just hard-code the parsers:
