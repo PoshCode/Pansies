@@ -2,45 +2,43 @@
 [CmdletBinding()]
 param(
     [ValidateSet("Release","Debug")]
-    $Configuration = "Release"
+    $Configuration = "Release",
+
+    [switch]$SkipBinaryBuild
 )
 
 Push-Location $PSScriptRoot
 try {
     $BuildTimer = New-Object System.Diagnostics.Stopwatch
     $BuildTimer.Start()
-
-    $ModuleName = Split-Path $PSScriptRoot -Leaf
     $ErrorActionPreference = "Stop"
-    $version = Get-Metadata ".\Source\${ModuleName}.psd1"
-    $folder = mkdir $version -Force
 
-    # dotnet restore
-    dotnet build -c $Configuration -o "$($folder.FullName)\lib"
+    Write-Host "##  Building Pansies script module" -ForegroundColor Cyan
+    Build-Module $PSScriptRoot\Source -Passthru -OutVariable Module -Verbose:$VerbosePreference
+    $Folder = $Module | Split-Path
 
-    # Never ship SMA
-    Get-ChildItem "$($folder.FullName)\lib" -Filter "System.Management.Automation-lib*" |
-        Remove-Item
+    if ($SkipBinaryBuild) {
+        Write-Host "##  Compiling Pansies binary module" -ForegroundColor Cyan
+        # dotnet restore
+        dotnet build -c $Configuration -o "$($Folder)\lib"
 
-    Get-ChildItem Source -filter "${ModuleName}.*" |
-        Copy-Item -Dest $folder.FullName -PassThru |
-        ForEach {
-            Write-Host "  $($_.Name) -> $($_.FullName)"
-        }
-    Get-ChildItem Source\Private, Source\Public -Filter *.ps1 -Recurse |
-        Get-Content |
-        Set-Content "$($folder.FullName)\${ModuleName}.psm1"
-    Write-Host "  Pansies -> $($folder.FullName)\${ModuleName}.psm1"
+        # Make sure we never ship SMA
+        Get-ChildItem "$($Folder)\lib" -Filter "System.Management.Automation*" |
+            Remove-Item
+    }
 
-    Write-Host
-    Write-Host "Module build finished." -ForegroundColor Green
+    Write-Host "##  Generating Pansies documentation..." -ForegroundColor Green
 
-    Remove-Item "$($folder.FullName)\en-US" -Force -Recurse -ErrorAction SilentlyContinue
-    New-ExternalHelp -Path ".\Docs" -OutputPath  "$($folder.FullName)\en-US"
-    Write-Host "PlatyPS Documentation finished." -ForegroundColor Green
+    Remove-Item "$($Folder)\en-US" -Force -Recurse -ErrorAction SilentlyContinue
+    if(Get-Command New-ExternalHelp -ErrorAction SilentlyContinue) {
+        New-ExternalHelp -Path ".\Docs" -OutputPath  "$($Folder)\en-US"
+        Write-Host "##  PlatyPS documentation finished." -ForegroundColor Green
+    } else {
+        Write-Host "!!  PlatyPS not found, skipping documentation." -ForegroundColor Yellow
+    }
 
     $BuildTimer.Stop()
-    Write-Host "Total Elapsed $($BuildTimer.Elapsed.ToString("hh\:mm\:ss\.ff"))"
+    Write-Host "##  Total Elapsed $($BuildTimer.Elapsed.ToString("hh\:mm\:ss\.ff"))"
 } catch {
     throw $_
 } finally {
