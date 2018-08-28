@@ -2,6 +2,15 @@
     <#
         .SYNOPSIS
             Convert a VSCode Theme file into a partial theme
+        .DESCRIPTION
+            Attempts to generate a Powershell theme from a VSCode Theme.
+
+            This feature is still experimental.
+
+            - Requires PSReadline 2.0.0 beta 2
+            - To fully theme the windows console, you need a theme with the new `terminal.ansi` colors in it
+
+            Even if everything works, dependine on the theme, there may be some colors for PSReadLine that aren't set, or that are set incorrectly. If so, please let me know in the issues at https://GitHub.com/PoshCode/PANSIES/issues
         .EXAMPLE
             $theme = ConvertFrom-VSCodeTheme '~\AppData\Local\Programs\*Code*\resources\app\extensions\theme-defaults\themes\dark_plus.json'
 
@@ -22,10 +31,7 @@
 
         [switch]$Passthru
     )
-
-    if(!(Test-Path $Theme)) {
-        $Theme = FindVsCodeTheme ([IO.Path]::GetFileName($Theme) -replace ".json$") -ErrorAction Stop
-    }
+    $Theme = FindVsCodeTheme $Theme -ErrorAction Stop
 
     Write-Verbose "Importing $Theme"
     # Load the theme file and split the output into colors and tokencolors
@@ -40,7 +46,7 @@
     $CommandColor = GetColorScope $tokens 'support.function'
     $CommentColor = GetColorScope $tokens 'comment'
     $ContinuationPromptColor = GetColorScope $tokens 'constant.character'
-    $EmphasisColor = GetColorScope $tokens 'markup.bold','emphasis','strong'
+    $EmphasisColor = GetColorScope $tokens 'markup.bold','markup.italic','emphasis','strong','constant.other.color'
     $KeywordColor = GetColorScope $tokens '^keyword.control$'
     $MemberColor = GetColorScope $tokens 'variable.other.object.property','member', 'type.property'
     $NumberColor = GetColorScope $tokens 'constant.numeric'
@@ -104,12 +110,14 @@
     }
 
     if ($colors.'editorWarning.foreground') {
-        $ThemeOutput['HostColors'] = @{
-            WarningForegroundColor  = GetColor $colors 'editorWarning.foreground'
-            ErrorForegroundColor = GetColor $Colors 'editorError.foreground'
-            VerboseForegroundColor = GetColor $Colors 'editorInfo.foreground'
-            ProgressForegroundColor = GetColor $Colors 'notifications.foreground'
-            ProgressBackgroundColor = GetColor $Colors 'notifications.background'
+        $ThemeOutput['Host'] = @{
+            'PrivateData' = @{
+                WarningForegroundColor  = GetColor $colors 'editorWarning.foreground'
+                ErrorForegroundColor = GetColor $Colors 'editorError.foreground'
+                VerboseForegroundColor = GetColor $Colors 'editorInfo.foreground'
+                ProgressForegroundColor = GetColor $Colors 'notifications.foreground'
+                ProgressBackgroundColor = GetColor $Colors 'notifications.background'
+            }
         }
     }
 

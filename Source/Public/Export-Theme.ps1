@@ -1,20 +1,13 @@
 ﻿function Export-Theme {
     # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding()]
-    [OutputType([PoshCode.Pansies.RgbColor])]
     param(
-        # The source color to calculate the complement of
+        # The path to export the current settings to
         [Parameter(ValueFromPipeline, Mandatory)]
-        [PoshCode.Pansies.RgbColor]$Color,
+        [string]$Path,
 
-        # Force the luminance to have "enough" contrast
-        [switch]$ForceContrast,
 
-        # Assume there are only 16 colors
-        [switch]$ConsoleColor,
-
-        # If set, output the input $Color before the complement
-        [switch]$Passthru
+        [string]$Update
     )
     process {
         if($ConsoleColor) {

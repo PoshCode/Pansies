@@ -17,7 +17,7 @@ try {
     Build-Module $PSScriptRoot\Source -Passthru -OutVariable Module -Verbose:$VerbosePreference
     $Folder = $Module | Split-Path
 
-    if ($SkipBinaryBuild) {
+    if (!$SkipBinaryBuild) {
         Write-Host "##  Compiling Pansies binary module" -ForegroundColor Cyan
         # dotnet restore
         dotnet build -c $Configuration -o "$($Folder)\lib"
