@@ -8,16 +8,8 @@
         # A theme to import (can be the name of an installed PANSIES theme, or the full path to a psd1 file)
         [string]$Name
     )
-    if (!$Name.EndsWith(".psd1")) { $Name += ".psd1" }
-    $Path = if (!(Test-Path $Name)) {
-        Join-Path $PSScriptRoot "Themes" | Join-Path -ChildPath $Name
-    } else {
-        $Name
-    }
+    $Theme = ImportTheme $Name
 
-    $Theme = Import-Metadata $Path -ErrorAction Stop
-
-    Write-Verbose "Imported theme from $Path"
     if ($ConsoleColors = $Theme.ConsoleColors) {
         for ($i = 0; $i -lt $ConsoleColors.Count; $i++) {
             $ConsoleColors[$i] = [RgbColor]$ConsoleColors[$i]
@@ -60,6 +52,4 @@
         }
         Update-Host $Host $HostSettings
     }
-
 }
-

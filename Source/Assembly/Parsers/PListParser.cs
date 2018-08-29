@@ -16,7 +16,7 @@ namespace PoshCode.Pansies.Parsers
     ///   Original Copyright (C) Microsoft.  All rights reserved.
     ///   Licensed under MIT license, as described in the LICENSE file in the root of this project.
     /// </permission>
-    class PListParser
+    public static class PListParser
     {
         // In Windows Color Table order
         static string[] PLIST_COLOR_NAMES = {
@@ -42,8 +42,6 @@ namespace PoshCode.Pansies.Parsers
         static string RED_KEY = "Red Component";
         static string GREEN_KEY = "Green Component";
         static string BLUE_KEY = "Blue Component";
-
-        public string Name => "iTerm Parser";
 
         static bool ParseRgbFromXml(XmlNode components, ref RgbColor color)
         {

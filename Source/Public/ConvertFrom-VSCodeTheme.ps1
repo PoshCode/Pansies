@@ -3,62 +3,63 @@
         .SYNOPSIS
             Convert a VSCode Theme file into a partial theme
         .DESCRIPTION
-            Attempts to generate a Powershell theme from a VSCode Theme.
+            Attempts to generate a PANSIES Powershell theme from a VSCode Theme.
 
-            This feature is still experimental.
+            This feature is still experimental, and so far, includes theming:
 
-            - Requires PSReadline 2.0.0 beta 2
-            - To fully theme the windows console, you need a theme with the new `terminal.ansi` colors in it
+            - The ConsoleColor palette (the base 16 ConsoleColors) from the `terminal.ansi*` colors in the VSCode theme
+            - The PSReadLine colors (requires PSReadline 2.0.0 beta 2) from various named scopes
+            - The PrivateData ConsoleColors (used for foreground of the output streams: Verbose, Error, Warning, Debug, Progress) from various named colors.
 
-            Even if everything works, dependine on the theme, there may be some colors for PSReadLine that aren't set, or that are set incorrectly. If so, please let me know in the issues at https://GitHub.com/PoshCode/PANSIES/issues
+            NOTE: for now, even if everything works, there may be some colors for PSReadLine that aren't set, or that are set incorrectly (depending on the theme). If so, please let me know of themes you want to use or of colors that are wrong in the issues at https://GitHub.com/PoshCode/PANSIES/issues
         .EXAMPLE
-            $theme = ConvertFrom-VSCodeTheme '~\AppData\Local\Programs\*Code*\resources\app\extensions\theme-defaults\themes\dark_plus.json'
+            ConvertFrom-VSCodeTheme Dark+
+            Import-Theme Dark+
 
-            foreach ($color in $theme.Keys) {
-                $R,$G,$B = $theme.$color -replace "#" -split "(?<=^.{2}|^.{4})" | % { [Convert]::ToByte($_,16) };
-                "$([char]27)[38;2;$R;$G;${B}m $color $($theme.$color) "
-            }
-
-            # This example shows a demo of the Dark Plus theme from VS Code (if you've installed it to the new user location)
+            # This example shows how to convert the VSCode Dark+ default theme and then use it in your console.
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param(
         # The name of (or full path to) a vscode json theme
         # E.g. 'Dark+' or 'Monokai'
+        [Alias("PSPath", "Name")]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Theme,
 
+        # Overwrite any existing theme
         [switch]$Force,
 
+        # Output the theme after importing it
         [switch]$Passthru
     )
-    $Theme = FindVsCodeTheme $Theme -ErrorAction Stop
+    $ThemeFile = FindVsCodeTheme $Theme -ErrorAction Stop
 
-    Write-Verbose "Importing $Theme"
+    Write-Verbose "Importing $ThemeFile"
     # Load the theme file and split the output into colors and tokencolors
-    $colors, $tokens = (ImportJsonIncludeLast $Theme).Where( {!$_.scope}, 'Split', 2)
+    $colors, $tokens = (ImportJsonIncludeLast $ThemeFile).Where( {!$_.scope}, 'Split', 2)
 
     # these should come from the colors, rather than the token scopes
-    $DefaultTokenColor = GetColor $colors 'editor.foreground', 'foreground'
-    $SelectionColor = GetColor $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground'
-    $ErrorColor = @(@(GetColor $colors 'errorForeground', 'editorError.foreground') + @(GetColorScope $tokens 'invalid'))[0]
+    $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground'
+    $SelectionColor = GetColorProperty $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground'
+    $ErrorColor = @(@(GetColorProperty $colors 'errorForeground', 'editorError.foreground') + @(GetColorScopeForeground $tokens 'invalid'))[0]
 
     # I'm going to need some help figuring out what the best mappings are
-    $CommandColor = GetColorScope $tokens 'support.function'
-    $CommentColor = GetColorScope $tokens 'comment'
-    $ContinuationPromptColor = GetColorScope $tokens 'constant.character'
-    $EmphasisColor = GetColorScope $tokens 'markup.bold','markup.italic','emphasis','strong','constant.other.color'
-    $KeywordColor = GetColorScope $tokens '^keyword.control$'
-    $MemberColor = GetColorScope $tokens 'variable.other.object.property','member', 'type.property'
-    $NumberColor = GetColorScope $tokens 'constant.numeric'
-    $OperatorColor = GetColorScope $tokens 'keyword.operator$', 'keyword'
-    $ParameterColor = GetColorScope $tokens 'parameter'
-    $StringColor = GetColorScope $tokens '^string$'
-    $TypeColor = GetColorScope $tokens '^storage.type$'
-    $VariableColor = GetColorScope $tokens '^variable$', '^entity.name.variable$'
+    $CommandColor = GetColorScopeForeground $tokens 'support.function'
+    $CommentColor = GetColorScopeForeground $tokens 'comment'
+    $ContinuationPromptColor = GetColorScopeForeground $tokens 'constant.character'
+    $EmphasisColor = GetColorScopeForeground $tokens 'markup.bold','markup.italic','emphasis','strong','constant.other.color'
+    $KeywordColor = GetColorScopeForeground $tokens '^keyword.control$'
+    $MemberColor = GetColorScopeForeground $tokens 'variable.other.object.property','member', 'type.property'
+    $NumberColor = GetColorScopeForeground $tokens 'constant.numeric'
+    $OperatorColor = GetColorScopeForeground $tokens 'keyword.operator$', 'keyword'
+    $ParameterColor = GetColorScopeForeground $tokens 'parameter'
+    $StringColor = GetColorScopeForeground $tokens '^string$'
+    $TypeColor = GetColorScopeForeground $tokens '^storage.type$'
+    $VariableColor = GetColorScopeForeground $tokens '^variable$', '^entity.name.variable$'
 
 
     $ThemeOutput = [Ordered]@{
-        Name       = [IO.Path]::GetFileNameWithoutExtension($Theme)
+        Name       = [IO.Path]::GetFileNameWithoutExtension($ThemeFile)
         PSReadLine = @{
             Colors = @{
                 Command =            $CommandColor
@@ -84,39 +85,39 @@
     if ($colors.'terminal.ansiBrightYellow') {
         Write-Verbose "Exporting ConsoleColors"
         $ThemeOutput['ConsoleColors'] = @(
-                GetColor $colors "terminal.ansiBlack"
-                GetColor $colors "terminal.ansiRed"
-                GetColor $colors "terminal.ansiGreen"
-                GetColor $colors "terminal.ansiYellow"
-                GetColor $colors "terminal.ansiBlue"
-                GetColor $colors "terminal.ansiMagenta"
-                GetColor $colors "terminal.ansiCyan"
-                GetColor $colors "terminal.ansiWhite"
-                GetColor $colors "terminal.ansiBrightBlack"
-                GetColor $colors "terminal.ansiBrightRed"
-                GetColor $colors "terminal.ansiBrightGreen"
-                GetColor $colors "terminal.ansiBrightYellow"
-                GetColor $colors "terminal.ansiBrightBlue"
-                GetColor $colors "terminal.ansiBrightMagenta"
-                GetColor $colors "terminal.ansiBrightCyan"
-                GetColor $colors "terminal.ansiBrightWhite"
+                GetColorProperty $colors "terminal.ansiBlack"
+                GetColorProperty $colors "terminal.ansiRed"
+                GetColorProperty $colors "terminal.ansiGreen"
+                GetColorProperty $colors "terminal.ansiYellow"
+                GetColorProperty $colors "terminal.ansiBlue"
+                GetColorProperty $colors "terminal.ansiMagenta"
+                GetColorProperty $colors "terminal.ansiCyan"
+                GetColorProperty $colors "terminal.ansiWhite"
+                GetColorProperty $colors "terminal.ansiBrightBlack"
+                GetColorProperty $colors "terminal.ansiBrightRed"
+                GetColorProperty $colors "terminal.ansiBrightGreen"
+                GetColorProperty $colors "terminal.ansiBrightYellow"
+                GetColorProperty $colors "terminal.ansiBrightBlue"
+                GetColorProperty $colors "terminal.ansiBrightMagenta"
+                GetColorProperty $colors "terminal.ansiBrightCyan"
+                GetColorProperty $colors "terminal.ansiBrightWhite"
             )
         if ($colors."terminal.background") {
-            $ThemeOutput['ConsoleBackground'] = GetColor $colors "terminal.background"
+            $ThemeOutput['ConsoleBackground'] = GetColorProperty $colors "terminal.background"
         }
         if ($colors."terminal.foreground") {
-            $ThemeOutput['ConsoleForeground'] = GetColor $colors "terminal.foreground"
+            $ThemeOutput['ConsoleForeground'] = GetColorProperty $colors "terminal.foreground"
         }
     }
 
     if ($colors.'editorWarning.foreground') {
         $ThemeOutput['Host'] = @{
             'PrivateData' = @{
-                WarningForegroundColor  = GetColor $colors 'editorWarning.foreground'
-                ErrorForegroundColor = GetColor $Colors 'editorError.foreground'
-                VerboseForegroundColor = GetColor $Colors 'editorInfo.foreground'
-                ProgressForegroundColor = GetColor $Colors 'notifications.foreground'
-                ProgressBackgroundColor = GetColor $Colors 'notifications.background'
+                WarningForegroundColor  = GetColorProperty $colors 'editorWarning.foreground'
+                ErrorForegroundColor = GetColorProperty $Colors 'editorError.foreground'
+                VerboseForegroundColor = GetColorProperty $Colors 'editorInfo.foreground'
+                ProgressForegroundColor = GetColorProperty $Colors 'notifications.foreground'
+                ProgressBackgroundColor = GetColorProperty $Colors 'notifications.background'
             }
         }
     }
@@ -125,16 +126,16 @@
         $global:colors = $colors
         $global:tokens = $tokens
         $global:Theme = $ThemeOutput
-        ${function:global:Get-VSColorScope} = ${function:GetColorScope}
-        ${function:global:Get-VSColor} = ${function:GetColor}
+        ${function:global:Get-VSColorScope} = ${function:GetColorScopeForeground}
+        ${function:global:Get-VSColor} = ${function:GetColorProperty}
         Write-Debug "For debugging, `$Theme, `$Colors, `$Tokens were copied to global variables, and Get-VSColor and Get-VSColorScope exported."
     }
 
     if ($ThemeOutput.PSReadLine.Colors.Values -contains $null) {
-        Write-Warning "Some PSReadLine color values not set in '$Theme'"
+        Write-Warning "Some PSReadLine color values not set in '$ThemeFile'"
     }
 
-    $NativeThemePath = Join-Path $PSScriptRoot "Themes\$([IO.Path]::GetFileNameWithoutExtension($Theme)).psd1"
+    $NativeThemePath = Join-Path $PSScriptRoot "Themes\$([IO.Path]::GetFileNameWithoutExtension($ThemeFile)).psd1"
     if(Test-Path $NativeThemePath) {
         if($Force -or $PSCmdlet.ShouldContinue("Overwrite $NativeThemePath?", "Theme exists")) {
             Write-Verbose "Exporting to $NativeThemePath"
@@ -145,6 +146,6 @@
         $ThemeOutput | Export-Metadata $NativeThemePath
     }
     if($PassThru) {
-        $Colors
+        $ThemeOutput | Add-Member NoteProperty Name ([IO.Path]::GetFileNameWithoutExtension($ThemeFile)) -Passthru
     }
 }
