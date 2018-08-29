@@ -9,6 +9,8 @@
 
         .EXAMPLE
             ConvertFrom-iTermColors Argonaut
+
+            Will find the Argonaut.itermcolors file in the furrent directory (or in the module storage path)
      #>
     [CmdletBinding(SupportsShouldProcess)]
     param(
@@ -20,7 +22,10 @@
 
         [switch]$Force,
 
-        [switch]$Passthru
+        [switch]$Passthru,
+
+        [ValidateSet("User", "Machine")]
+        [string]$Scope = "User"
     )
 
     process {
@@ -31,7 +36,7 @@
             $ThemeName = [IO.Path]::GetFileNameWithoutExtension($Theme) + ".itermcolors"
 
             if(!($ThemeFile = Get-ChildItem -Filter $ThemeName -ErrorAction SilentlyContinue)) {
-                $ThemeFile = Get-ChildItem $PSScriptRoot -Filter $ThemeName -Recurse -ErrorAction SilentlyContinue
+                $ThemeFile = Get-ChildItem $(Get-ConfigurationPath -Scope $Scope) -Filter $ThemeName -Recurse -ErrorAction SilentlyContinue
             }
         }
 
@@ -61,23 +66,11 @@
             }
         }
 
-        $NativeThemePath = Join-Path $PSScriptRoot "Themes\$([IO.Path]::GetFileNameWithoutExtension($Theme)).psd1"
-        if(Test-Path $NativeThemePath) {
-            if($Force -or $PSCmdlet.ShouldContinue("Overwrite $NativeThemePath?", "Theme exists")) {
-                Write-Verbose "Exporting to $NativeThemePath"
-                $ThemeOutput | Export-Metadata $NativeThemePath
-            }
-        } else {
-            Write-Verbose "Exporting to $NativeThemePath"
-            $ThemeOutput | Export-Metadata $NativeThemePath
-        }
-
-        if($Palette.Count -ge 18) {
+        if ($Palette.Count -ge 18) {
             $ThemeOutput['ConsoleBackground'] = $Palette[16].ToString()
             $ThemeOutput['ConsoleForeground'] = $Palette[17].ToString()
         }
-        if($PassThru) {
-            $ThemeOutput | Add-Member NoteProperty Name $ThemeFile.BaseName -Passthru
-        }
+
+        $ThemeOutput | ExportTheme -Name $ThemeFile.BaseName -Passthru:$Passthru -Scope:$Scope -Force:$Force
     }
 }

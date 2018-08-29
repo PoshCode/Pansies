@@ -30,7 +30,10 @@
         [switch]$Force,
 
         # Output the theme after importing it
-        [switch]$Passthru
+        [switch]$Passthru,
+
+        [ValidateSet("User", "Machine")]
+        [string]$Scope = "User"
     )
     $ThemeFile = FindVsCodeTheme $Theme -ErrorAction Stop
 
@@ -135,17 +138,5 @@
         Write-Warning "Some PSReadLine color values not set in '$ThemeFile'"
     }
 
-    $NativeThemePath = Join-Path $PSScriptRoot "Themes\$([IO.Path]::GetFileNameWithoutExtension($ThemeFile)).psd1"
-    if(Test-Path $NativeThemePath) {
-        if($Force -or $PSCmdlet.ShouldContinue("Overwrite $NativeThemePath?", "Theme exists")) {
-            Write-Verbose "Exporting to $NativeThemePath"
-            $ThemeOutput | Export-Metadata $NativeThemePath
-        }
-    } else {
-        Write-Verbose "Exporting to $NativeThemePath"
-        $ThemeOutput | Export-Metadata $NativeThemePath
-    }
-    if($PassThru) {
-        $ThemeOutput | Add-Member NoteProperty Name ([IO.Path]::GetFileNameWithoutExtension($ThemeFile)) -Passthru
-    }
+    $ThemeOutput | ExportTheme -Name $Theme -Passthru:$Passthru -Scope:$Scope -Force:$Force
 }

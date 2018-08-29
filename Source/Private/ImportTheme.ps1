@@ -10,12 +10,13 @@ function ImportTheme {
         [string]$Name
     )
 
-    if (!$Name.EndsWith(".psd1")) {
-        $Name += ".psd1"
-    }
+    $Name = $Name -replace "(\.?(theme\.)?psd1)?$", ".theme.psd1"
 
     $Path = if (!(Test-Path $Name)) {
-        [IO.Path]::Combine($PSScriptRoot, "Themes", $Name)
+        Get-ChildItem $(
+            Get-ConfigurationPath -Scope User -SkipCreatingFolder
+            Get-ConfigurationPath -Scope Machine -SkipCreatingFolder
+        ) -Filter $Name -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
     } else {
         $Name
     }
