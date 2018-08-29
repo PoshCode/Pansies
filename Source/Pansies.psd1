@@ -16,7 +16,7 @@ GUID = '6c376de1-1baf-4d52-9666-d46f6933bc16'
 Author = 'Joel Bennett'
 
 # Company or vendor of this module
-CompanyName = 'HuddledMasses.org'
+CompanyName = 'PoshCode'
 
 # Copyright statement for this module
 Copyright = '(c) 2017 Joel Bennett. All rights reserved.'
