@@ -1,11 +1,11 @@
 ﻿function Show-Theme {
     [CmdletBinding(DefaultParameterSetName="CurrentTheme")]
     param(
-        [Alias("Theme")]
+        [Alias("Theme","PSPath")]
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Switch]$NoTable,
+        [Switch]$Tiny,
 
         [Switch]$MoreText,
 
@@ -14,10 +14,11 @@
     process {
         $Theme = ImportTheme $Name
         $Palette = $Theme.ConsoleColors
+        $e = [char]27
 
         -join $(
             "$Name`n"
-            if(!$NoTable) {
+            if (!$Tiny) {
                 $ansi = 30
                 $bold = $false
                 "             Black   Red     Green   Yellow  Blue    Magenta Cyan    White   Gray    Dark Gray `n"
@@ -31,8 +32,8 @@
                         $bold = !$bold
                     }
                     foreach($bg in @($null) + $Palette[0, 4, 2, 6, 1, 5, 3, 15, 7, 8]) {
-                        $(if($bg -ne $null) { $bg.ToVtEscapeSequence($true) })
-                        $(if($fg -ne $null) { $fg.ToVtEscapeSequence() })
+                        $(if($null -ne $bg) { $bg.ToVtEscapeSequence($true) })
+                        $(if($null -ne $fg) { $fg.ToVtEscapeSequence() })
                         "  gYw  $([char]27)[0m "
                     }
                     "`n"
@@ -40,7 +41,7 @@
                 "`n"
             }
 
-            0..7 | % {
+            0..7 | ForEach-Object {
                 $Dark = $Palette[$_]
                 $Lite = $Palette[($_ + 8)]
 
@@ -49,8 +50,19 @@
                 "`n"
             }
 
+            if($Syntax = $Theme.PSReadLine.Colors) {
+                "$e[8A$e[45G$($Syntax.Keyword)function $($Syntax.DefaultToken)Test-Syntax $($Syntax.DefaultToken){"
+                "$e[B$e[45G    $($Syntax.Comment)# Demo Syntax Highlighting"
+                "$e[B$e[45G    $($Syntax.DefaultToken)[$($Syntax.Type)CmdletBinding$($Syntax.DefaultToken)()]"
+                "$e[B$e[45G    $($Syntax.Keyword)param$($Syntax.DefaultToken)( [$($Syntax.Type)IO.FileInfo$($Syntax.DefaultToken)]$($Syntax.Variable)`$Path $($Syntax.DefaultToken))"
+                "$e[B"
+                "$e[B$e[45G    $($Syntax.Command)Write-Verbose $($Syntax.String)`"Testing in $($Syntax.Variable)`$($($Syntax.Command)Split-Path $($Syntax.Variable)`$PSScriptRoot $($Syntax.Parameter)-Leaf$($Syntax.Variable))$($Syntax.String)`" $($Syntax.Parameter)-Verbose"
+                "$e[B$e[45G    $($Syntax.Variable)`$Env:PSModulePath $($Syntax.Operator)-split $($Syntax.String)';' $($Syntax.Operator)-notcontains $($Syntax.Variable)`$Path$($Syntax.DefaultToken).$($Syntax.Member)FullName"
+                "$e[B$e[45G$($Syntax.DefaultToken)}$e[39m)$e[B"
+            }
+
             if($MoreText) {
-                0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15 | % {
+                0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15 | ForEach-Object {
                     $Color = $Palette[$_]
                     New-Text " This is a test " -Back Black -Fore $Color -LeaveColor
                     New-Text " showing more " -Back DarkGray -Fore $Color -LeaveColor
