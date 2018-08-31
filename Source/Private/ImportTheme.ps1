@@ -10,7 +10,7 @@ function ImportTheme {
         [string]$Name
     )
 
-    $Name = $Name -replace "(\.?(theme\.)?psd1)?$", ".theme.psd1"
+    $Name = $Name -replace "((\.theme)?\.psd1)?$" -replace '$', ".theme.psd1"
 
     $Path = if (!(Test-Path $Name)) {
         Get-ChildItem $(
@@ -25,7 +25,26 @@ function ImportTheme {
     $Theme = Import-Metadata $Path -ErrorAction Stop
 
     # Cast the ConsoleColors here
-    $Theme.ConsoleColors = $Theme.ConsoleColors.ForEach([RgbColor])
+    if($Theme['ConsoleColors']) {
+        $Theme['ConsoleColors'] = $Theme['ConsoleColors'].ForEach([RgbColor])
+    }
+    # Convert colors to escape sequences for PSReadline.Colors
+    if ($Colors = $Theme.PSReadline.Colors) {
+        foreach ($color in @($Colors.Keys)) {
+            # If it doesn't start with ESC
+            if ($Colors[$color] -notmatch "^$([char]27)") {
+                try {
+                    # User the RGBColor
+                    $Colors[$color] = ([RgbColor]$Colors[$color]).ToVtEscapeSequence() <# |
+                        Add-Member -MemberType NoteProperty -Name Color -Value ([RgbColor]$Colors[$color]) -PassThru #>
+                } catch {
+                    Write-Warning "Skipped 'PSReadLine.$color', because '$($Colors[$color])' is neither a color nor an escape sequence"
+                    $null = $Colors.Remove($color)
+                }
+            }
+        }
+        $Theme['PSReadline']['Colors'] = $Colors
+    }
 
     $Theme
 }

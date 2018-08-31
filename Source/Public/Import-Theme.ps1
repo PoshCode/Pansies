@@ -19,17 +19,6 @@
     }
 
     if ($PSReadLine = $Theme.PSReadLine) {
-        # Try treating it as a color (otherwise, hope it's an escape sequence already)
-        foreach($key in @($PSReadLine.Colors.Keys)) {
-            if($PSReadLine.Colors[$key] -notmatch "^$([char]27)") {
-                try {
-                    $PSReadLine.Colors[$key] = [RgbColor]::new($PSReadLine.Colors[$key]).ToVtEscapeSequence()
-                } catch {
-                    Write-Warning "Skipped 'PSReadLine.$key', because '$($PSReadLine.Colors[$key])' is neither a color nor an escape sequence"
-                    $null = $PSReadLine.Colors.Remove($key)
-                }
-            }
-        }
         Write-Verbose "Applying PSReadLineOptions"
         Set-PSReadLineOption @PSReadLine
     }
