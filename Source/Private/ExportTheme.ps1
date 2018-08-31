@@ -34,7 +34,7 @@ function ExportTheme {
         }
 
         if($PassThru) {
-            $InputObject | Add-Member NoteProperty Name $NativeThemePath -Passthru
+            $InputObject | Add-Member NoteProperty Name $Name -Passthru | Add-Member NoteProperty PSPath $NativeThemePath -Passthru
         }
     }
 }

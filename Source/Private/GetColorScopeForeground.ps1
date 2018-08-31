@@ -14,7 +14,7 @@ function GetColorScopeForeground {
     # Since we loaded the themes in order of prescedence, we take the first match that has a foreground color
     foreach ($pattern in $name) {
         foreach ($token in $tokens) {
-            if (($token.scope -match $pattern) -and $token.settings.foreground) {
+            if (($token.scope -split "\s*,\s*" -match $pattern) -and $token.settings.foreground) {
                 $token.settings.foreground
                 return
             }

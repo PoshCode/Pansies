@@ -42,7 +42,7 @@
     $colors, $tokens = (ImportJsonIncludeLast $ThemeFile).Where( {!$_.scope}, 'Split', 2)
 
     # these should come from the colors, rather than the token scopes
-    $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground'
+    $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground', 'terminal.foreground'
     $SelectionColor = GetColorProperty $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground'
     $ErrorColor = @(@(GetColorProperty $colors 'errorForeground', 'editorError.foreground') + @(GetColorScopeForeground $tokens 'invalid'))[0]
 
@@ -57,7 +57,7 @@
     $OperatorColor = GetColorScopeForeground $tokens 'keyword.operator$', 'keyword'
     $ParameterColor = GetColorScopeForeground $tokens 'parameter'
     $StringColor = GetColorScopeForeground $tokens '^string$'
-    $TypeColor = GetColorScopeForeground $tokens '^storage.type$'
+    $TypeColor = GetColorScopeForeground $tokens '^storage.type$','^support.class$', '^entity.name.type.class$', '^entity.name.type$'
     $VariableColor = GetColorScopeForeground $tokens '^variable$', '^entity.name.variable$'
 
 

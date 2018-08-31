@@ -49,7 +49,7 @@ function FindVsCodeTheme {
             }
         }
     }
-    if($Theme.Count -gt 1) {
+    if(($Theme.Name | Select-Object -Unique).Count -gt 1) {
         Write-Warning "Found more than one theme for '$Name'. Using '$($Theme[0].Name)', but you could try again for one of: $(($Theme.Name | Select-Object -Unique) -join ', ')"
     }
     @($Theme)[0].Source

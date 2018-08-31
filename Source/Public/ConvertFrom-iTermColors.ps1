@@ -52,7 +52,8 @@
             }
             catch
             {
-                $PSCmdlet.ThrowTerminatingError( [System.Management.Automation.ErrorRecord]::new($_, "PaletteParseException", "ParseError", $ThemeFile.FullName));
+                $Ex = if($_ -is [Exception]) { $_ } else { $_.Exception }
+                $PSCmdlet.ThrowTerminatingError( [System.Management.Automation.ErrorRecord]::new($Ex, "PaletteParseException", "ParserError", $ThemeFile.FullName));
             }
 
             if (!$Palette)
