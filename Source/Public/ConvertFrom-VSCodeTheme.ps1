@@ -39,11 +39,16 @@
 
     Write-Verbose "Importing $ThemeFile"
     # Load the theme file and split the output into colors and tokencolors
-    $colors, $tokens = (ImportJsonIncludeLast $ThemeFile).Where( {!$_.scope}, 'Split', 2)
+    if($ThemeFile.endswith(".json")) {
+        $colors, $tokens = (ImportJsonIncludeLast $ThemeFile).Where( {!$_.scope}, 'Split', 2)
+    } else {
+        $colors, $tokens = (Import-PList $ThemeFile).settings.Where( {!$_.scope}, 'Split', 2)
+        $colors = $colors.settings
+    }
 
     # these should come from the colors, rather than the token scopes
     $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground', 'terminal.foreground'
-    $SelectionColor = GetColorProperty $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground'
+    $SelectionColor = GetColorProperty $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground', 'selection'
     $ErrorColor = @(@(GetColorProperty $colors 'errorForeground', 'editorError.foreground') + @(GetColorScopeForeground $tokens 'invalid'))[0]
 
     # I'm going to need some help figuring out what the best mappings are
@@ -51,8 +56,8 @@
     $CommentColor = GetColorScopeForeground $tokens 'comment'
     $ContinuationPromptColor = GetColorScopeForeground $tokens 'constant.character'
     $EmphasisColor = GetColorScopeForeground $tokens 'markup.bold','markup.italic','emphasis','strong','constant.other.color'
-    $KeywordColor = GetColorScopeForeground $tokens '^keyword.control$'
-    $MemberColor = GetColorScopeForeground $tokens 'variable.other.object.property','member', 'type.property'
+    $KeywordColor = GetColorScopeForeground $tokens '^keyword.control$', '^keyword$', 'keyword.control', 'keyword'
+    $MemberColor = GetColorScopeForeground $tokens 'variable.other.object.property', 'member', 'type.property', 'support.function.any-method', 'entity.name.function'
     $NumberColor = GetColorScopeForeground $tokens 'constant.numeric'
     $OperatorColor = GetColorScopeForeground $tokens 'keyword.operator$', 'keyword'
     $ParameterColor = GetColorScopeForeground $tokens 'parameter'

@@ -1,5 +1,6 @@
 using namespace PoshCode.Pansies
 using namespace ColorMine.ColorSpaces
+using namespace System.Collections.Generic
 
 # On first import, if HostPreference doesn't exist, set it and strongly type it
 if(!(Test-Path Variable:HostPreference) -or $HostPreference -eq $null) {

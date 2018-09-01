@@ -208,6 +208,22 @@ namespace PoshCode.Pansies
         private static int ParseRGB(string rgbHex)
         {
             rgbHex = rgbHex.TrimStart('#');
+            // explicitly trim alpha values
+            if (rgbHex.Length == 8)
+            {
+                rgbHex = rgbHex.Substring(0,6);
+            }
+            // explicitly handle the valid #RGB css syntax
+            else if (rgbHex.Length == 3)
+            {
+                rgbHex = new string(new char[] { rgbHex[0], rgbHex[0], rgbHex[1], rgbHex[1], rgbHex[2], rgbHex[2] });
+            }
+            // explicitly handle rgb strings that are too short
+            else if(rgbHex.Length < 6)
+            {
+                rgbHex = rgbHex.PadRight(6, '0');
+            }
+
             if (int.TryParse(rgbHex, NumberStyles.AllowHexSpecifier, NumberFormatInfo.InvariantInfo, out int val))
             {
                 if (val < 0 || val > 0xffffff)

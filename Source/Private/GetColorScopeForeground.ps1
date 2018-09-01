@@ -15,7 +15,7 @@ function GetColorScopeForeground {
     foreach ($pattern in $name) {
         foreach ($token in $tokens) {
             if (($token.scope -split "\s*,\s*" -match $pattern) -and $token.settings.foreground) {
-                $token.settings.foreground
+                ConvertToCssColor $token.settings.foreground
                 return
             }
         }

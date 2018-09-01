@@ -13,8 +13,9 @@ function GetColorProperty{
     )
     # Since we loaded the themes in order of prescedence, we take the first match that has a foreground color
     foreach ($pattern in $name) {
-        if ($foreground = @($colors.$pattern).Where{$_}[0] -replace '.*(.{6})$', '#$1') {
-            $foreground
+        # Normalize color
+        if($foreground = @($colors.$pattern).Where{$_}[0]) {
+            ConvertToCssColor $foreground
             return
         }
     }
