@@ -141,7 +141,7 @@ namespace PoshCode.Pansies.Console
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    string valueName = "ColorTable{0:" + (i < 10 ? "0" : "") + i;
+                    string valueName = "ColorTable" + (i < 10 ? "0" : "") + i;
                     consoleKey.SetValue(valueName, colors[i].RGB, RegistryValueKind.DWord);
                 }
             }
@@ -153,7 +153,7 @@ namespace PoshCode.Pansies.Console
             {
                 for (int i = 0; i < colors.Count; i++)
                 {
-                    string valueName = "ColorTable{0:" + (i < 10 ? "0" : "") + i;
+                    string valueName = "ColorTable" + (i < 10 ? "0" : "") + i;
                     colors[i].RGB = (int)consoleKey.GetValue(valueName, colors[i].RGB);
                 }
             }
