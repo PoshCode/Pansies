@@ -1,8 +1,10 @@
 ---
-external help file: Pansies-help.xml
-online version: 
+external help file: Pansies.dll-Help.xml
+Module Name: Pansies
+online version:
 schema: 2.0.0
 ---
+
 # Write-Host
 
 ## SYNOPSIS
@@ -12,7 +14,8 @@ Backwards compatible Write-Host replacement which writes customized output to a 
 ## SYNTAX
 
 ```
-Write-Host [[-Object] <Object>] [-NoNewline] [-Separator <Object>] [-ForegroundColor <RgbColor>] [-BackgroundColor <RgbColor>]
+Write-Host [[-Object] <Object>] [-NoNewline] [-Separator <Object>] [-ForegroundColor <RgbColor>]
+ [-BackgroundColor <RgbColor>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -82,12 +85,12 @@ Console Color names:
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -120,14 +123,14 @@ Console Color names:
 - White
 
 ```yaml
-Type: PoshCode.Pansies.RgbColor
+Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -137,7 +140,7 @@ Specifies that the content displayed in the console does not end with a newline 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +155,7 @@ Specifies objects to display in the console.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -167,7 +170,7 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -182,15 +185,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ### System.Object
-You can pipe objects to be written to the host.
+
+### PoshCode.Pansies.RgbColor
 
 ## OUTPUTS
 
-### None
-**Write-Host** sends the objects to the host.
-It does not return any objects.
-However, the host might display the objects that **Write-Host** sends to it.
-
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

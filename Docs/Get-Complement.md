@@ -1,5 +1,6 @@
 ---
 external help file: Pansies-help.xml
+Module Name: Pansies
 online version:
 schema: 2.0.0
 ---
@@ -13,7 +14,7 @@ Get the Hue complement color
 ## SYNTAX
 
 ```
-Get-Complement [-Color] <RgbColor> [-ForceContrast] [-ConsoleColor] [-Passthru]
+Get-Complement [-Color] <RgbColor> [-ForceContrast] [-ConsoleColor] [-Passthru] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ It also has a `-ConsoleColor` switch that causes it to assume only 16 colors wil
 
 ## EXAMPLES
 
-### ---- Example 1 -------------------------------------------------------------
+### Example 1
 
 ```
 PS C:\> Get-Complement Cyan
@@ -34,8 +35,7 @@ PS C:\> Get-Complement Cyan
 
 Gets the color Red back, as the complement for Cyan.
 
-
-### ---- Example 2 -------------------------------------------------------------
+### Example 2
 
 ```
 PS C:\> $Background, $Foreground = Get-Complement Cyan -Passthru -ConsoleColor
@@ -45,8 +45,6 @@ PS C:\> Write-Host " Hello World " -Foreground $Foreground.ConsoleColor -Backgro
 This example shows how using `-Passthru` returns both the original color and the contrasting color, and how using `-ConsoleColor` results in a better contrast when you're being forced to use ConsoleColor (as with the built-in Write-Host command).
 
 You can try the example without `-ConsoleColor` to see the difference: with it, you'll get Black on Cyan, without, you'll get Red on Cyan. Note that using -ForceContrast will make almost no difference if you're using the `ConsoleColor` property, because downsampling to 16 colors has to result in either Red or DarkRed...
-
-
 
 ## PARAMETERS
 
@@ -60,15 +58,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -ForceContrast
+### -ConsoleColor
 
-Force the luminance to have "enough" contrast
+Assume there are only 16 colors. Return either black or white to get a readable contrast color.
 
 ```yaml
 Type: SwitchParameter
@@ -82,9 +80,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ConsoleColor
+### -ForceContrast
 
-Assume there are only 16 colors. Return either black or white to get a readable contrast color.
+Force the luminance to have "enough" contrast
 
 ```yaml
 Type: SwitchParameter
@@ -114,20 +112,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### PoshCode.Pansies.RgbColor
-
-The color to find a complement for
-
 
 ## OUTPUTS
 
 ### PoshCode.Pansies.RgbColor
 
-The complement of the input color
-
 ## NOTES
 
 ## RELATED LINKS
-

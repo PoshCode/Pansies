@@ -1,6 +1,7 @@
-﻿---
-external help file: Pansies-help.xml
-online version: 
+---
+external help file: Pansies.dll-Help.xml
+Module Name: Pansies
+online version:
 schema: 2.0.0
 ---
 
@@ -12,7 +13,8 @@ Create a Text object with specified background and foreground colors
 ## SYNTAX
 
 ```
-New-Text [-Object] <Object> [-BackgroundColor <RgbColor>] [-Separator <Object>] [-ForegroundColor <RgbColor>] [-LeaveColor] [-IgnoreEntities]
+New-Text [-Object] <Object> [-BackgroundColor <RgbColor>] [-Separator <Object>] [-ForegroundColor <RgbColor>]
+ [-LeaveColor] [-IgnoreEntities] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,7 +51,7 @@ Aliases: Bg
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -64,7 +66,7 @@ Aliases: Fg
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -74,7 +76,7 @@ If set, don't render the HTML Entities to characters (i.e. leave "&hearts;" as "
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +91,7 @@ If set, don't clear the colors at the end of the output.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +106,7 @@ Specifies objects to display in the console.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -119,7 +121,7 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -128,15 +130,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Object
 
+### PoshCode.Pansies.RgbColor
+
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
-
