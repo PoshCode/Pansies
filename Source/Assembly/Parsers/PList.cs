@@ -1,5 +1,10 @@
-﻿//
-//   PlistCS Property List (plist) serialization and parsing library.
+﻿//   NOTE: I (Joel Bennett <Jaykul@HuddledMasses.org>) modified this:
+//   1. Use interfaces IList & IDictionary (e.g. hashtable), vs List<Object> & Dictionary<string,object>
+//   2. Use PowerShell's converter to convert object keys to strings
+//   3. Allow duplicate keys in dictionaries (currently by turning the value into an array)
+
+//
+//   Property List (plist) serialization and parsing library.
 //
 //   https://github.com/animetrics/PlistCS
 //   
