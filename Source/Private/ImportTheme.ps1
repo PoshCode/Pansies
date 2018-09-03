@@ -34,7 +34,7 @@ function ImportTheme {
             # If it doesn't start with ESC
             if ($Colors[$color] -notmatch "^$([char]27)") {
                 try {
-                    # User the RGBColor
+                    # Use the RGBColor
                     $Colors[$color] = ([RgbColor]$Colors[$color]).ToVtEscapeSequence() <# |
                         Add-Member -MemberType NoteProperty -Name Color -Value ([RgbColor]$Colors[$color]) -PassThru #>
                 } catch {

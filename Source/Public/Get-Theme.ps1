@@ -14,7 +14,7 @@ function Get-Theme {
     foreach($Theme in Join-Path $(
             Get-ConfigurationPath -Scope User -SkipCreatingFolder
             Get-ConfigurationPath -Scope Machine -SkipCreatingFolder
-        ) -ChildPath *.theme.psd1 -Resolve -ErrorAction SilentlyContinue ) {
+        ) -ChildPath *.theme.psd1 -Resolve -ErrorAction Ignore ) {
             if ($ConsoleColors -or $PSReadline) {
                 $ThemeData = Import-Metadata -Path $Theme
                 if($ConsoleColors -and !$ThemeData.ConsoleColors) {
