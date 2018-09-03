@@ -1,4 +1,4 @@
-function ConvertFrom-VSCodeTheme {
+﻿function ConvertFrom-VSCodeTheme {
     <#
         .SYNOPSIS
             Convert a VSCode Theme file into a partial theme
@@ -29,6 +29,8 @@ function ConvertFrom-VSCodeTheme {
         # Overwrite any existing theme
         [switch]$Force,
 
+        [switch]$Update,
+
         # Output the theme after importing it
         [switch]$Passthru,
 
@@ -47,12 +49,12 @@ function ConvertFrom-VSCodeTheme {
             $colors = $colors.settings
         }
 
-    # these should come from the colors, rather than the token scopes
-    $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground', 'terminal.foreground'
-    $SelectionColor = GetColorProperty $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground', 'selection'
-    $ErrorColor = @(@(GetColorProperty $colors 'errorForeground', 'editorError.foreground') + @(GetColorScopeForeground $tokens 'invalid'))[0]
+        # these should come from the colors, rather than the token scopes
+        $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground', 'terminal.foreground'
+        $SelectionColor = GetColorProperty $colors 'editor.selectionBackground', 'editor.selectionHighlightBackground', 'selection'
+        $ErrorColor = @(@(GetColorProperty $colors 'errorForeground', 'editorError.foreground') + @(GetColorScopeForeground $tokens 'invalid'))[0]
 
-    # I'm going to need some help figuring out what the best mappings are
+        # I'm going to need some help figuring out what the best mappings are
         $CommandColor = GetColorScopeForeground $tokens 'support.function'
         $CommentColor = GetColorScopeForeground $tokens 'comment'
         $ContinuationPromptColor = GetColorScopeForeground $tokens 'constant.character'
@@ -60,7 +62,7 @@ function ConvertFrom-VSCodeTheme {
         $KeywordColor = GetColorScopeForeground $tokens '^keyword.control$', '^keyword$', 'keyword.control', 'keyword'
         $MemberColor = GetColorScopeForeground $tokens 'variable.other.object.property', 'member', 'type.property', 'support.function.any-method', 'entity.name.function'
         $NumberColor = GetColorScopeForeground $tokens 'constant.numeric'
-    $OperatorColor = GetColorScopeForeground $tokens 'keyword.operator$', 'keyword'
+        $OperatorColor = GetColorScopeForeground $tokens 'keyword.operator$', 'keyword'
         $ParameterColor = GetColorScopeForeground $tokens 'parameter'
         $StringColor = GetColorScopeForeground $tokens '^string$'
         $TypeColor = GetColorScopeForeground $tokens '^storage.type$','^support.class$', '^entity.name.type.class$', '^entity.name.type$'
@@ -72,50 +74,50 @@ function ConvertFrom-VSCodeTheme {
             PSReadLine = @{
                 Colors = @{
                     Command =            $CommandColor
-                Comment =            $CommentColor
-                ContinuationPrompt = $ContinuationPromptColor
-                DefaultToken =       $DefaultTokenColor
-                Emphasis =           $EmphasisColor
-                Error =              $ErrorColor
-                Keyword =            $KeywordColor
-                Member =             $MemberColor
-                Number =             $NumberColor
-                Operator =           $OperatorColor
-                Parameter =          $ParameterColor
-                Selection =          $SelectionColor
-                String =             $StringColor
-                Type =               $TypeColor
-                Variable =           $VariableColor
+                    Comment =            $CommentColor
+                    ContinuationPrompt = $ContinuationPromptColor
+                    DefaultToken =       $DefaultTokenColor
+                    Emphasis =           $EmphasisColor
+                    Error =              $ErrorColor
+                    Keyword =            $KeywordColor
+                    Member =             $MemberColor
+                    Number =             $NumberColor
+                    Operator =           $OperatorColor
+                    Parameter =          $ParameterColor
+                    Selection =          $SelectionColor
+                    String =             $StringColor
+                    Type =               $TypeColor
+                    Variable =           $VariableColor
+                }
             }
         }
-    }
 
-    # If the VSCode Theme has terminal colors, export those
-    if ($colors.'terminal.ansiBrightYellow') {
-        Write-Verbose "Exporting ConsoleColors"
-        $ThemeOutput['ConsoleColors'] = @(
-                GetColorProperty $colors "terminal.ansiBlack"
-                GetColorProperty $colors "terminal.ansiRed"
-                GetColorProperty $colors "terminal.ansiGreen"
-                GetColorProperty $colors "terminal.ansiYellow"
-                GetColorProperty $colors "terminal.ansiBlue"
-                GetColorProperty $colors "terminal.ansiMagenta"
-                GetColorProperty $colors "terminal.ansiCyan"
-                GetColorProperty $colors "terminal.ansiWhite"
-                GetColorProperty $colors "terminal.ansiBrightBlack"
-                GetColorProperty $colors "terminal.ansiBrightRed"
-                GetColorProperty $colors "terminal.ansiBrightGreen"
-                GetColorProperty $colors "terminal.ansiBrightYellow"
-                GetColorProperty $colors "terminal.ansiBrightBlue"
-                GetColorProperty $colors "terminal.ansiBrightMagenta"
-                GetColorProperty $colors "terminal.ansiBrightCyan"
-                GetColorProperty $colors "terminal.ansiBrightWhite"
-            )
-        if ($colors."terminal.background") {
-            $ThemeOutput['ConsoleBackground'] = GetColorProperty $colors "terminal.background"
-        }
-        if ($colors."terminal.foreground") {
-            $ThemeOutput['ConsoleForeground'] = GetColorProperty $colors "terminal.foreground"
+        # If the VSCode Theme has terminal colors, export those
+        if ($colors.'terminal.ansiBrightYellow') {
+            Write-Verbose "Exporting ConsoleColors"
+            $ThemeOutput['ConsoleColors'] = @(
+                    GetColorProperty $colors "terminal.ansiBlack"
+                    GetColorProperty $colors "terminal.ansiRed"
+                    GetColorProperty $colors "terminal.ansiGreen"
+                    GetColorProperty $colors "terminal.ansiYellow"
+                    GetColorProperty $colors "terminal.ansiBlue"
+                    GetColorProperty $colors "terminal.ansiMagenta"
+                    GetColorProperty $colors "terminal.ansiCyan"
+                    GetColorProperty $colors "terminal.ansiWhite"
+                    GetColorProperty $colors "terminal.ansiBrightBlack"
+                    GetColorProperty $colors "terminal.ansiBrightRed"
+                    GetColorProperty $colors "terminal.ansiBrightGreen"
+                    GetColorProperty $colors "terminal.ansiBrightYellow"
+                    GetColorProperty $colors "terminal.ansiBrightBlue"
+                    GetColorProperty $colors "terminal.ansiBrightMagenta"
+                    GetColorProperty $colors "terminal.ansiBrightCyan"
+                    GetColorProperty $colors "terminal.ansiBrightWhite"
+                )
+            if ($colors."terminal.background") {
+                $ThemeOutput['ConsoleBackground'] = GetColorProperty $colors "terminal.background"
+            }
+            if ($colors."terminal.foreground") {
+                $ThemeOutput['ConsoleForeground'] = GetColorProperty $colors "terminal.foreground"
             }
         }
 
@@ -123,27 +125,27 @@ function ConvertFrom-VSCodeTheme {
             $ThemeOutput['Host'] = @{
                 'PrivateData' = @{
                     WarningForegroundColor  = GetColorProperty $colors 'editorWarning.foreground'
-                ErrorForegroundColor = GetColorProperty $Colors 'editorError.foreground'
-                VerboseForegroundColor = GetColorProperty $Colors 'editorInfo.foreground'
-                ProgressForegroundColor = GetColorProperty $Colors 'notifications.foreground'
-                ProgressBackgroundColor = GetColorProperty $Colors 'notifications.background'
+                    ErrorForegroundColor = GetColorProperty $Colors 'editorError.foreground'
+                    VerboseForegroundColor = GetColorProperty $Colors 'editorInfo.foreground'
+                    ProgressForegroundColor = GetColorProperty $Colors 'notifications.foreground'
+                    ProgressBackgroundColor = GetColorProperty $Colors 'notifications.background'
+                }
             }
         }
-    }
 
-    if ($DebugPreference -in "Continue", "Inquire") {
-        $global:colors = $colors
-        $global:tokens = $tokens
-        $global:Theme = $ThemeOutput
-        ${function:global:Get-VSColorScope} = ${function:GetColorScopeForeground}
-        ${function:global:Get-VSColor} = ${function:GetColorProperty}
-        Write-Debug "For debugging, `$Theme, `$Colors, `$Tokens were copied to global variables, and Get-VSColor and Get-VSColorScope exported."
+        if ($DebugPreference -in "Continue", "Inquire") {
+            $global:colors = $colors
+            $global:tokens = $tokens
+            $global:Theme = $ThemeOutput
+            ${function:global:Get-VSColorScope} = ${function:GetColorScopeForeground}
+            ${function:global:Get-VSColor} = ${function:GetColorProperty}
+            Write-Debug "For debugging, `$Theme, `$Colors, `$Tokens were copied to global variables, and Get-VSColor and Get-VSColorScope exported."
         }
 
         if ($ThemeOutput.PSReadLine.Colors.Values -contains $null) {
             Write-Warning "Some PSReadLine color values not set in '$($ThemeSource.Path)'"
         }
 
-        $ThemeOutput | ExportTheme -Name $ThemeSource.Name -Passthru:$Passthru -Scope:$Scope -Force:$Force
+        $ThemeOutput | ExportTheme -Name $ThemeSource.Name -Passthru:$Passthru -Scope:$Scope -Force:$Force -Update:$Update
     }
 }

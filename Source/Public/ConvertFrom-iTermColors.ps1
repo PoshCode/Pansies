@@ -22,6 +22,8 @@ function ConvertFrom-iTermColors {
 
         [switch]$Force,
 
+        [switch]$Update,
+
         [switch]$Passthru,
 
         [ValidateSet("User", "Machine")]
@@ -98,6 +100,6 @@ function ConvertFrom-iTermColors {
             $Name = ([IO.Path]::GetFileNameWithoutExtension($Theme))
         }
 
-        $ThemeOutput | ExportTheme -Name $Name -Passthru:$Passthru -Scope:$Scope -Force:$Force
+        $ThemeOutput | ExportTheme -Name $Name -Passthru:$Passthru -Scope:$Scope -Force:$Force -Update:$Update
     }
 }

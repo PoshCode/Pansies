@@ -15,16 +15,22 @@ function ExportTheme {
 
         [switch]$Force,
 
+        [switch]$Update,
+
         [switch]$PassThru,
 
         [ValidateSet("User", "Machine")]
         [string]$Scope = "User"
     )
     process {
-        $NativeThemePath = Join-Path  $(Get-ConfigurationPath -Scope $Scope) "$Name.theme.psd1"
+        $NativeThemePath = Join-Path $(Get-ConfigurationPath -Scope $Scope) "$Name.theme.psd1"
 
         if(Test-Path $NativeThemePath) {
-            if($Force -or $PSCmdlet.ShouldContinue("Overwrite $NativeThemePath?", "Theme exists")) {
+            if($Update) {
+                Write-Verbose "Updating $NativeThemePath"
+                $Theme = Import-Metadata $NativeThemePath -ErrorAction Stop
+                Update-Object -InputObject $Theme -UpdateObject $InputObject | Export-Metadata $NativeThemePath
+            } elseif($Force -or $PSCmdlet.ShouldContinue("Overwrite $($NativeThemePath)?", "$Name Theme exists")) {
                 Write-Verbose "Exporting to $NativeThemePath"
                 $InputObject | Export-Metadata $NativeThemePath
             }
@@ -34,7 +40,8 @@ function ExportTheme {
         }
 
         if($PassThru) {
-            $InputObject | Add-Member NoteProperty Name $Name -Passthru | Add-Member NoteProperty PSPath $NativeThemePath -Passthru
+            $InputObject | Add-Member NoteProperty Name $Name -Passthru |
+                           Add-Member NoteProperty PSPath $NativeThemePath -Passthru
         }
     }
 }
