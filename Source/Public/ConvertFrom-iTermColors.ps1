@@ -62,6 +62,7 @@ function ConvertFrom-iTermColors {
         }
 
         $ThemeOutput = @{
+            Name = [IO.Path]::GetFileNameWithoutExtension($Theme)
             ConsoleColors = @(
                 foreach($color in $PListColorNames) {
                     if(!$pList[$color]) {

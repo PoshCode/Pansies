@@ -12,13 +12,10 @@ function ImportTheme {
 
     $Name = $Name -replace "((\.theme)?\.psd1)?$" -replace '$', ".theme.psd1"
 
-    $Path = if (!(Test-Path $Name)) {
-        Get-ChildItem $(
-            Get-ConfigurationPath -Scope User -SkipCreatingFolder
-            Get-ConfigurationPath -Scope Machine -SkipCreatingFolder
-        ) -Filter $Name -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+    $Path = if (!(Test-Path -LiteralPath $Name)) {
+        Get-Theme $Name | Select-Object -First 1 -ExpandProperty PSPath
     } else {
-        $Name
+        Convert-Path $Name
     }
 
     Write-Verbose "Importing $Name theme from $Path"

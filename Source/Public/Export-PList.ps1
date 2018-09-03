@@ -26,7 +26,7 @@ function Export-PList {
     }
     end {
         $Parent = Split-Path $Path
-        if(!(Test-Path $Parent -PathType Container)) {
+        if(!(Test-Path -LiteralPath $Parent -PathType Container)) {
             New-Item -ItemType Directory -Path $Parent -Force
         }
         $Parent = Convert-Path $Parent

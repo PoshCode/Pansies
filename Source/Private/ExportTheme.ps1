@@ -25,7 +25,7 @@ function ExportTheme {
     process {
         $NativeThemePath = Join-Path $(Get-ConfigurationPath -Scope $Scope) "$Name.theme.psd1"
 
-        if(Test-Path $NativeThemePath) {
+        if(Test-Path -LiteralPath $NativeThemePath) {
             if($Update) {
                 Write-Verbose "Updating $NativeThemePath"
                 $Theme = Import-Metadata $NativeThemePath -ErrorAction Stop
