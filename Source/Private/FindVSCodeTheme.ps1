@@ -13,28 +13,51 @@ function FindVsCodeTheme {
 
     $Themes = @(
         # If they passed a file path that exists, use just that one file
-        $AllThemes = if (Test-Path $Name) {
-            Convert-Path $Name
-        } else {
-            $VSCodeExtensions | Join-Path -ChildPath "\*\themes\*.json" -Resolve
-            $VSCodeExtensions | Join-Path -ChildPath "\*\themes\*.tmtheme" -Resolve
-        }
-
-        # Verify that we can parse the .json themes
-        foreach ($File in $AllThemes) {
-            try {
-                if($File.EndsWith(".json")) {
-                    ConvertFrom-Json (Get-Content -Path $File -Raw -Encoding utf8) -ErrorAction SilentlyContinue |
-                        Add-Member -MemberType NoteProperty -Name Source -Value $File -PassThru
+        if ($Specific = Test-Path -LiteralPath $Name) {
+            $File = Convert-Path $Name
+            $(
+                if ($File.EndsWith(".json")) {
+                    try {
+                        # Write-Debug "Parsing json file: $File"
+                        ConvertFrom-Json (Get-Content -Path $File -Raw -Encoding utf8) -ErrorAction SilentlyContinue
+                    } catch {
+                        Write-Error "Couldn't parse '$File'. $(
+                        if($PSVersionTable.PSVersion.Major -lt 6) {
+                            'You could try again with PowerShell Core, the JSON parser there works much better!'
+                        })"
+                    }
                 } else {
-                    Import-PList -Path $File |
-                        Add-Member -MemberType NoteProperty -Name Source -Value $File -PassThru
+                    # Write-Debug "Parsing PList file: $File"
+                    Import-PList -Path $File
                 }
-            } catch {
-                $Warnings += "Couldn't parse '$File'. $(
-                    if($PSVersionTable.PSVersion.Major -lt 6) {
-                        'You could try again with PowerShell Core, the JSON parser there works much better!'
-                    })"
+            ) | Select-Object @{ Name = "Name"
+                                 Expr = {
+                                    if ($_.name) {
+                                        $_.name
+                                    } else {
+                                        [IO.Path]::GetFileNameWithoutExtension($File)
+                                    }
+                                }
+                           }, @{ Name = "Path"
+                                 Expr = {$File}
+                           }
+        } else {
+            $VSCodeExtensions  = $VSCodeExtensions | Join-Path -ChildPath "\*\package.json" -Resolve
+            foreach ($File in $VSCodeExtensions) {
+                # Write-Debug "Considering VSCode Extention $([IO.Path]::GetFileName([IO.Path]::GetDirectoryName($File)))"
+                $JSON = Get-Content -Path $File -Raw -Encoding utf8
+                try {
+                    $Extension = ConvertFrom-Json $JSON -ErrorAction Stop
+                    # if ($Extension.contributes.themes) {
+                    #     Write-Debug "Found $($Extension.contributes.themes.Count) themes"
+                    # }
+                    $Extension.contributes.themes |
+                        Select-Object @{Name="Name" ; Expr={$_.label}},
+                                      @{Name="Style"; Expr={$_.uiTheme}},
+                                      @{Name="Path" ; Expr={Join-Path (Split-Path $File) $_.path -resolve}}
+                } catch {
+                    $Warning = "Couldn't parse some VSCode extensions."
+                }
             }
         }
     )
@@ -42,28 +65,28 @@ function FindVsCodeTheme {
         throw "Could not find any VSCode themes. Please use a full path."
     }
 
-
-    if ($VerbosePreference -eq "Continue") {
-        $ThemeNames = $Themes.name | Sort-Object
-        Write-Verbose "Found Themes: $($ThemeNames -join ', ')"
+    if($Specific -and $Themes.Count -eq 1) {
+        $Themes
     }
 
     # Make sure we're comparing the name to a name
     $Name = [IO.Path]::GetFileName(($Name -replace "\.json$|\.tmtheme$"))
     Write-Verbose "Testing theme names for '$Name'"
 
+    # increasingly fuzzy search: (eq -> like -> match)
     if(!($Theme = $Themes.Where{$_.name -eq $Name})) {
         if (!($Theme = $Themes.Where{$_.name -like $Name})) {
             if (!($Theme = $Themes.Where{$_.name -like "*$Name*"})) {
                 foreach($Warning in $Warnings) {
                     Write-Warning $Warning
                 }
-                Write-Error "Couldn't find the theme '$Name', please try another: $(($Theme.name | Select-Object -Unique) -join ', ')"
+                Write-Error "Couldn't find the theme '$Name', please try another: $(($Themes.name | Select-Object -Unique) -join ', ')"
             }
         }
     }
-    if(($Theme.name | Select-Object -Unique).Count -gt 1) {
-        Write-Warning "Found more than one theme for '$Name'. Using '$($Theme[0].name)', but you could try again for one of: $(($Theme.name | Select-Object -Unique) -join ', ')"
+    if(@($Theme).Count -gt 1) {
+        $Dupes = $(if(@($Theme.Name | Get-Unique).Count -gt 1) {$Theme.Name} else {$Theme.Path}) -join ", "
+        Write-Warning "Found more than one theme for '$Name'. Using '$(@($Theme)[0].Path)', but you could try again for one of: $Dupes)"
     }
-    @($Theme)[0].Source
+    @($Theme)[0]
 }

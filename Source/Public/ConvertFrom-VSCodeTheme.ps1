@@ -1,4 +1,4 @@
-﻿function ConvertFrom-VSCodeTheme {
+function ConvertFrom-VSCodeTheme {
     <#
         .SYNOPSIS
             Convert a VSCode Theme file into a partial theme
@@ -35,16 +35,17 @@
         [ValidateSet("User", "Machine")]
         [string]$Scope = "User"
     )
-    $ThemeFile = FindVsCodeTheme $Theme -ErrorAction Stop
+    $ThemeSource = FindVsCodeTheme $Theme -ErrorAction Stop
 
-    Write-Verbose "Importing $ThemeFile"
-    # Load the theme file and split the output into colors and tokencolors
-    if($ThemeFile.endswith(".json")) {
-        $colors, $tokens = (ImportJsonIncludeLast $ThemeFile).Where( {!$_.scope}, 'Split', 2)
-    } else {
-        $colors, $tokens = (Import-PList $ThemeFile).settings.Where( {!$_.scope}, 'Split', 2)
-        $colors = $colors.settings
-    }
+    Write-Verbose "Importing $($ThemeSource.Path)"
+    if($PSCmdlet.ShouldProcess($ThemeSource.Path, "Convert to $($ThemeSource.Name).theme.psd1")) {
+        # Load the theme file and split the output into colors and tokencolors
+        if($ThemeSource.Path.endswith(".json")) {
+            $colors, $tokens = (ImportJsonIncludeLast $ThemeSource.Path).Where( {!$_.scope}, 'Split', 2)
+        } else {
+            $colors, $tokens = (Import-PList $ThemeSource.Path).settings.Where( {!$_.scope}, 'Split', 2)
+            $colors = $colors.settings
+        }
 
     # these should come from the colors, rather than the token scopes
     $DefaultTokenColor = GetColorProperty $colors 'editor.foreground', 'foreground', 'terminal.foreground'
@@ -52,25 +53,25 @@
     $ErrorColor = @(@(GetColorProperty $colors 'errorForeground', 'editorError.foreground') + @(GetColorScopeForeground $tokens 'invalid'))[0]
 
     # I'm going to need some help figuring out what the best mappings are
-    $CommandColor = GetColorScopeForeground $tokens 'support.function'
-    $CommentColor = GetColorScopeForeground $tokens 'comment'
-    $ContinuationPromptColor = GetColorScopeForeground $tokens 'constant.character'
-    $EmphasisColor = GetColorScopeForeground $tokens 'markup.bold','markup.italic','emphasis','strong','constant.other.color'
-    $KeywordColor = GetColorScopeForeground $tokens '^keyword.control$', '^keyword$', 'keyword.control', 'keyword'
-    $MemberColor = GetColorScopeForeground $tokens 'variable.other.object.property', 'member', 'type.property', 'support.function.any-method', 'entity.name.function'
-    $NumberColor = GetColorScopeForeground $tokens 'constant.numeric'
+        $CommandColor = GetColorScopeForeground $tokens 'support.function'
+        $CommentColor = GetColorScopeForeground $tokens 'comment'
+        $ContinuationPromptColor = GetColorScopeForeground $tokens 'constant.character'
+        $EmphasisColor = GetColorScopeForeground $tokens 'markup.bold','markup.italic','emphasis','strong','constant.other.color', 'markup.heading'
+        $KeywordColor = GetColorScopeForeground $tokens '^keyword.control$', '^keyword$', 'keyword.control', 'keyword'
+        $MemberColor = GetColorScopeForeground $tokens 'variable.other.object.property', 'member', 'type.property', 'support.function.any-method', 'entity.name.function'
+        $NumberColor = GetColorScopeForeground $tokens 'constant.numeric'
     $OperatorColor = GetColorScopeForeground $tokens 'keyword.operator$', 'keyword'
-    $ParameterColor = GetColorScopeForeground $tokens 'parameter'
-    $StringColor = GetColorScopeForeground $tokens '^string$'
-    $TypeColor = GetColorScopeForeground $tokens '^storage.type$','^support.class$', '^entity.name.type.class$', '^entity.name.type$'
-    $VariableColor = GetColorScopeForeground $tokens '^variable$', '^entity.name.variable$'
+        $ParameterColor = GetColorScopeForeground $tokens 'parameter'
+        $StringColor = GetColorScopeForeground $tokens '^string$'
+        $TypeColor = GetColorScopeForeground $tokens '^storage.type$','^support.class$', '^entity.name.type.class$', '^entity.name.type$'
+        $VariableColor = GetColorScopeForeground $tokens '^variable$', '^entity.name.variable$', '^variable.other$'
 
 
-    $ThemeOutput = [Ordered]@{
-        Name       = [IO.Path]::GetFileNameWithoutExtension($ThemeFile)
-        PSReadLine = @{
-            Colors = @{
-                Command =            $CommandColor
+        $ThemeOutput = [Ordered]@{
+            Name       = $ThemeSource.Name
+            PSReadLine = @{
+                Colors = @{
+                    Command =            $CommandColor
                 Comment =            $CommentColor
                 ContinuationPrompt = $ContinuationPromptColor
                 DefaultToken =       $DefaultTokenColor
@@ -115,13 +116,13 @@
         }
         if ($colors."terminal.foreground") {
             $ThemeOutput['ConsoleForeground'] = GetColorProperty $colors "terminal.foreground"
+            }
         }
-    }
 
-    if ($colors.'editorWarning.foreground') {
-        $ThemeOutput['Host'] = @{
-            'PrivateData' = @{
-                WarningForegroundColor  = GetColorProperty $colors 'editorWarning.foreground'
+        if (GetColorProperty $colors 'editorWarning.foreground') {
+            $ThemeOutput['Host'] = @{
+                'PrivateData' = @{
+                    WarningForegroundColor  = GetColorProperty $colors 'editorWarning.foreground'
                 ErrorForegroundColor = GetColorProperty $Colors 'editorError.foreground'
                 VerboseForegroundColor = GetColorProperty $Colors 'editorInfo.foreground'
                 ProgressForegroundColor = GetColorProperty $Colors 'notifications.foreground'
@@ -137,11 +138,12 @@
         ${function:global:Get-VSColorScope} = ${function:GetColorScopeForeground}
         ${function:global:Get-VSColor} = ${function:GetColorProperty}
         Write-Debug "For debugging, `$Theme, `$Colors, `$Tokens were copied to global variables, and Get-VSColor and Get-VSColorScope exported."
-    }
+        }
 
-    if ($ThemeOutput.PSReadLine.Colors.Values -contains $null) {
-        Write-Warning "Some PSReadLine color values not set in '$ThemeFile'"
-    }
+        if ($ThemeOutput.PSReadLine.Colors.Values -contains $null) {
+            Write-Warning "Some PSReadLine color values not set in '$($ThemeSource.Path)'"
+        }
 
-    $ThemeOutput | ExportTheme -Name $Theme -Passthru:$Passthru -Scope:$Scope -Force:$Force
+        $ThemeOutput | ExportTheme -Name $ThemeSource.Name -Passthru:$Passthru -Scope:$Scope -Force:$Force
+    }
 }
