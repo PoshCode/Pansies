@@ -130,6 +130,11 @@ namespace PoshCode.Pansies.Console
             SetConsoleScreenBuffer(csbe);
         }
 
+        /// <summary>
+        /// Set the default console palette in the registery
+        /// </summary>
+        /// <param name="colors"></param>
+        /// <remarks>Note that Windows stores colors in ConsoleColor enum order and in BGR byte order <see cref="ColorReference"/></remarks>
         public static void SetDefaultConsolePalette(IList<RgbColor> colors)
         {
             if (colors.Count < 16)
@@ -142,10 +147,15 @@ namespace PoshCode.Pansies.Console
                 for (int i = 0; i < 16; i++)
                 {
                     string valueName = "ColorTable" + (i < 10 ? "0" : "") + i;
-                    consoleKey.SetValue(valueName, colors[i].RGB, RegistryValueKind.DWord);
+                    consoleKey.SetValue(valueName, colors[i].BGR, RegistryValueKind.DWord);
                 }
             }
         }
+        /// <summary>
+        /// Get the default console palette from the registery
+        /// </summary>
+        /// <param name="colors"></param>
+        /// <remarks>Note that Windows stores colors in ConsoleColor enum order and in BGR byte order <see cref="ColorReference"/></remarks>
         public static ConsolePalette GetDefaultConsolePalette()
         {
             ConsolePalette colors = new ConsolePalette();
@@ -154,7 +164,7 @@ namespace PoshCode.Pansies.Console
                 for (int i = 0; i < colors.Count; i++)
                 {
                     string valueName = "ColorTable" + (i < 10 ? "0" : "") + i;
-                    colors[i].RGB = (int)consoleKey.GetValue(valueName, colors[i].RGB);
+                    colors[i].BGR = (int)consoleKey.GetValue(valueName, colors[i].BGR);
                 }
             }
             return colors;

@@ -20,7 +20,9 @@ try {
     if (!$SkipBinaryBuild) {
         Write-Host "##  Compiling Pansies binary module" -ForegroundColor Cyan
         # dotnet restore
-        dotnet build -c $Configuration -o "$($Folder)\lib"
+
+        # The only framework specific assembly we have is for Windows-only functionality, so ...
+        dotnet publish -c $Configuration -o "$($Folder)\lib" -r win10
 
         # Make sure we never ship SMA
         Get-ChildItem "$($Folder)\lib" -Filter "System.Management.Automation*" |
