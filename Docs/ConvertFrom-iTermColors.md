@@ -146,17 +146,17 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-[string] the name of the theme
+### [string] the name of the theme
 
 ## OUTPUTS
-[PSCustomObject] representing the theme (if -Pasthru)
+### [PSCustomObject] representing the theme (if -Pasthru)
 
 ## NOTES
 The conversion outputs a .theme.psd1 file to AppData or ProgramData
 
 ## RELATED LINKS
-ConvertFrom-VSCodeTheme
-Export-Theme
-Import-Theme
-Get-Theme
-Show-Theme
+[ConvertFrom-VSCodeTheme]()
+[Export-Theme]()
+[Import-Theme]()
+[Get-Theme]()
+[Show-Theme]()
