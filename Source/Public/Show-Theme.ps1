@@ -9,7 +9,7 @@
 
         [Switch]$MoreText,
 
-        [Switch]$CodeSample
+        [Switch]$NoCodeSample
     )
     process {
         $e = [char]27
@@ -56,7 +56,7 @@
                         "`n"
                     }
                 }
-                if($Syntax = $Theme.PSReadLine.Colors) {
+                if(($Syntax = $Theme.PSReadLine.Colors) -and !$NoCodeSample) {
                     "$e[8A$e[45G$($Syntax.Keyword)function $($Syntax.DefaultToken)Test-Syntax $($Syntax.DefaultToken){"
                     "$e[B$e[45G    $($Syntax.Comment)# Demo Syntax Highlighting"
                     "$e[B$e[45G    $($Syntax.DefaultToken)[$($Syntax.Type)CmdletBinding$($Syntax.DefaultToken)()]"
