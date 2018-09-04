@@ -13,8 +13,12 @@ try {
     $BuildTimer.Start()
     $ErrorActionPreference = "Stop"
 
+    # We can't clean unless we're going to rebuild the binary part
+    $Target = if ($SkipBinaryBuild) { "Build" } else { "CleanBuild" }
+
     Write-Host "##  Building Pansies script module" -ForegroundColor Cyan
-    Build-Module $PSScriptRoot\Source -Passthru -OutVariable Module -Verbose:$VerbosePreference
+    Build-Module $PSScriptRoot\Source -Passthru -OutVariable Module -Verbose:$VerbosePreference -Target $Target
+
     $Folder = $Module | Split-Path
 
     if (!$SkipBinaryBuild) {
