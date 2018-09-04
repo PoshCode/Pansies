@@ -98,4 +98,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[Get-ConsolePalette]()
+[Get-ConsolePalette](Get-ConsolePalette.md)

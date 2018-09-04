@@ -195,18 +195,20 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[New-Text](New-Text.md)
+
 [Clear-Host](../Microsoft.PowerShell.Core/Functions/Clear-Host.md)
 
-[Write-Debug](Write-Debug.md)
+[Write-Debug](../Microsoft.PowerShell.Utility/Functions/Write-Debug.md)
 
-[Write-Error](Write-Error.md)
+[Write-Error](../Microsoft.PowerShell.Utility/Functions/Write-Error.md)
 
-[Write-Output](Write-Output.md)
+[Write-Output](../Microsoft.PowerShell.Utility/Functions/Write-Output.md)
 
-[Write-Progress](Write-Progress.md)
+[Write-Progress](../Microsoft.PowerShell.Utility/Functions/Write-Progress.md)
 
-[Write-Verbose](Write-Verbose.md)
+[Write-Verbose](../Microsoft.PowerShell.Utility/Functions/Write-Verbose.md)
 
-[Write-Warning](Write-Warning.md)
+[Write-Warning](../Microsoft.PowerShell.Utility/Functions/Write-Warning.md)
 
 

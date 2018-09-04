@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -36,7 +36,7 @@ Overwrite any existing theme file with the given name
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -51,7 +51,7 @@ The name of the theme to export the current settings to
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -66,7 +66,7 @@ Output the theme after converting it so you can, for instance, pipe it to Show-T
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +81,7 @@ User or Machine (supports storing themes per-user or shared for all users). Defa
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: User, Machine
 
 Required: False
@@ -97,7 +97,7 @@ Update any existing theme file. You can use this to complement a previously expo
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -122,8 +122,8 @@ Generates a .theme.psd1 file to AppData or ProgramData
 
 ## RELATED LINKS
 
-[ConvertFrom-ITermColors]()
-[ConvertFrom-VSCodeTheme]()
-[Import-Theme]()
-[Get-Theme]()
-[Show-Theme]()
+[ConvertFrom-ITermColors](ConvertFrom-ITermColors.md)
+[ConvertFrom-VSCodeTheme](ConvertFrom-VSCodeTheme.md)
+[Import-Theme](Import-Theme.md)
+[Get-Theme](Get-Theme.md)
+[Show-Theme](Show-Theme.md)

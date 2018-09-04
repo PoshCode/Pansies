@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -51,7 +51,7 @@ Adds an additional block with more text on the most common background colors
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -66,7 +66,7 @@ Supresses the large color table
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +81,7 @@ Supresses the code sample output
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -106,8 +106,8 @@ Although this is a `Show` command, it actually just returns a string for display
 
 ## RELATED LINKS
 
-[ConvertFrom-ITermColors]()
-[ConvertFrom-VSCodeTheme]()
-[Export-Theme]()
-[Import-Theme]()
-[Get-Theme]()
+[ConvertFrom-ITermColors](ConvertFrom-ITermColors.md)
+[ConvertFrom-VSCodeTheme](ConvertFrom-VSCodeTheme.md)
+[Export-Theme](Export-Theme.md)
+[Import-Theme](Import-Theme.md)
+[Get-Theme](Get-Theme.md)

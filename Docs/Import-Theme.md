@@ -72,8 +72,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[ConvertFrom-ITermColors]()
-[ConvertFrom-VSCodeTheme]()
-[Export-Theme]()
-[Get-Theme]()
-[Show-Theme]()
+[ConvertFrom-ITermColors](ConvertFrom-ITermColors.md)
+[ConvertFrom-VSCodeTheme](ConvertFrom-VSCodeTheme.md)
+[Export-Theme](Export-Theme.md)
+[Get-Theme](Get-Theme.md)
+[Show-Theme](Show-Theme.md)

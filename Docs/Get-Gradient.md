@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -45,7 +45,7 @@ CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 
 Required: False
@@ -61,7 +61,7 @@ The right color to end the gradient at.
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -76,7 +76,7 @@ Flattens the 2D array to a single array.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +91,7 @@ The number of rows to generate in the gradient. Defaults to 1
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -106,7 +106,7 @@ For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient t
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +121,7 @@ The left color to start the gradient from.
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -162,3 +162,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[Get-Complement](Get-Complement.md)

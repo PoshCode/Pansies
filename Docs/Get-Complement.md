@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -50,7 +50,7 @@ The source color to calculate the complement of
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -65,7 +65,7 @@ Assume there are only 16 colors. Return either black or white to get a readable 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +80,7 @@ Force the luminance to have "enough" contrast
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +95,7 @@ If set, output the input $Color before the complement
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -119,3 +119,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[Get-Gradient](Get-Gradient.md)

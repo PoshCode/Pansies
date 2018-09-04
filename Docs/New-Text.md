@@ -18,7 +18,8 @@ New-Text [-Object] <Object> [-BackgroundColor <RgbColor>] [-Separator <Object>] 
 ```
 
 ## DESCRIPTION
-Create a Text object with specified background and foreground colors, and rendering HTML-style entities.
+Create a Text object with specified background and foreground colors, and rendering HTML-style entities like `&hearts;` and `&frac12;` or `&uuml;` and numerical unicode character entities in both decimal (e.g. `&#926;`) and hexadeximal (`&#x39E;`)
+
 When this object is rendered to the host with .ToString(), it inserts ANSI Virtual Terminal escape sequences for the specified colors,
 and by default, outputs escape sequences to clear those colors after the text.
 
@@ -27,13 +28,20 @@ and by default, outputs escape sequences to clear those colors after the text.
 ### Example 1
 ```
 PS C:\> New-Text "&hearts;" -ForegroundColor Red
+
+
+BackgroundColor ForegroundColor Object       ToString
+--------------- --------------- ------       --------
+                [101m [0m Red &hearts;[0m [91m?[39m[0m
 ```
 
-Generates a text object with the hearts symbol (♥) in red. The output will show the BackgroundColor, ForegroundColor, Text (with the entity text in it) and the rendered output of `.ToString()` where the entity will be replaced with the hearts symbol.
+Generates a text object with the hearts symbol (♥) in red. The output shows the BackgroundColor, ForegroundColor, Text (with the entity text in it) and the rendered output when the object is in a string, where the entity will be replaced with the hearts symbol and the colors will take effect.
 
-### Example 1
+### Example 2
 ```
-PS C:\> "I $(New-Text "&hearts;" -ForegroundColor Red) PS"
+PS C:\> "I $(New-Text "&hearts;" -ForegroundColor "#F00") PS"
+
+I [38;2;255;0;0m?[39m PS
 ```
 
 Outputs the text "I ♥ PS" with the heart in red.
@@ -147,3 +155,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[Write-Host](Write-Host.md)
