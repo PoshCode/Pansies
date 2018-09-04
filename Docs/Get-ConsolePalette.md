@@ -1,14 +1,13 @@
 ---
 external help file: Pansies.dll-Help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
 # Get-ConsolePalette
 
 ## SYNOPSIS
-
 Returns the 16 Console Colors currently used by the console
 
 ## SYNTAX
@@ -23,7 +22,7 @@ Get-ConsolePalette [-Default] [<CommonParameters>]
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -37,7 +36,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -56,6 +55,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

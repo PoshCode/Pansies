@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,8 @@ Convert a .itermcolors XML file into a (partial) PANSIES theme for your PowerShe
 ## SYNTAX
 
 ```
-ConvertFrom-iTermColors [[-Theme] <String>] [-Force] [-Update] [-Passthru] [[-Scope] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ConvertFrom-iTermColors [[-Theme] <String>] [-Force] [-Update] [-Passthru] [[-Scope] <String>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,7 +57,7 @@ Overwrite any existing theme file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -71,7 +72,7 @@ Update any existing theme file. You can use this to complement a previously expo
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -86,7 +87,7 @@ Output the theme after converting it so you can, for instance, pipe it to Show-T
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -102,7 +103,7 @@ User or Machine (supports storing themes per-user or shared for all users). Defa
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -146,15 +147,18 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
 ### [string] the name of the theme
 
 ## OUTPUTS
+
 ### [PSCustomObject] representing the theme (if -Pasthru)
 
 ## NOTES
 The conversion outputs a .theme.psd1 file to AppData or ProgramData
 
 ## RELATED LINKS
+
 [ConvertFrom-VSCodeTheme]()
 [Export-Theme]()
 [Import-Theme]()

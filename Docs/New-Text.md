@@ -1,7 +1,7 @@
 ---
 external help file: Pansies.dll-Help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -76,7 +76,7 @@ If set, don't render the HTML Entities to characters (i.e. leave "&hearts;" as "
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -91,7 +91,7 @@ If set, don't clear the colors at the end of the output.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -106,7 +106,7 @@ Specifies objects to display in the console.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -121,7 +121,7 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -142,6 +142,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

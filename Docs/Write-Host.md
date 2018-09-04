@@ -1,14 +1,13 @@
 ---
 external help file: Pansies.dll-Help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
 # Write-Host
 
 ## SYNOPSIS
-
 Backwards compatible Write-Host replacement which writes customized output to a host, but using full RGB color values.
 
 ## SYNTAX
@@ -85,7 +84,7 @@ Console Color names:
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -125,7 +124,7 @@ Console Color names:
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -140,7 +139,7 @@ Specifies that the content displayed in the console does not end with a newline 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -155,7 +154,7 @@ Specifies objects to display in the console.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 0
@@ -170,7 +169,7 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -191,6 +190,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS

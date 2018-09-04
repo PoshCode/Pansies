@@ -1,14 +1,13 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
 # Get-Gradient
 
 ## SYNOPSIS
-
 Get a range of colors between two colors
 
 ## SYNTAX
@@ -19,13 +18,11 @@ Get-Gradient [-StartColor] <RgbColor> [-EndColor] <RgbColor> [[-Width] <Int32>] 
 ```
 
 ## DESCRIPTION
-
 Get an array (or multiple arrays, one per line) of RgbColor values for a gradient from the start Color to the end Color.
 
 ## EXAMPLES
 
 ### Example 1
-
 ```
 PS C:\> Get-Gradient Red Blue -Count 10 -Flatten
 ```
@@ -33,7 +30,6 @@ PS C:\> Get-Gradient Red Blue -Count 10 -Flatten
 Gets a simple array of ten colors between Red and Blue.
 
 ### Example 2
-
 ```
 PS C:\> Get-Gradient Red Blue
 ```
@@ -49,7 +45,7 @@ CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 Accepted values: CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 
 Required: False
@@ -60,13 +56,12 @@ Accept wildcard characters: False
 ```
 
 ### -EndColor
-
 The right color to end the gradient at.
 
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -81,7 +76,7 @@ Flattens the 2D array to a single array.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -96,7 +91,7 @@ The number of rows to generate in the gradient. Defaults to 1
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -111,7 +106,7 @@ For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient t
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -121,13 +116,12 @@ Accept wildcard characters: False
 ```
 
 ### -StartColor
-
 The left color to start the gradient from.
 
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -167,3 +161,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

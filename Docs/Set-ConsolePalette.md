@@ -1,7 +1,7 @@
 ---
 external help file: Pansies.dll-Help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -29,7 +29,7 @@ Set-ConsolePalette [-Colors] <RgbColor[]> [-Default] [<CommonParameters>]
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -43,7 +43,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: RgbColor[]
 Parameter Sets: Colors
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -58,7 +58,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ Accept wildcard characters: False
 ```yaml
 Type: ColorMine.Palettes.Palette`1[PoshCode.Pansies.RgbColor]
 Parameter Sets: Palette
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -94,6 +94,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

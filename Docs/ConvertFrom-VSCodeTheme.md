@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -32,10 +32,11 @@ If so, please let me know of themes you want to use or of colors that are wrong 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```powershell
+```
 PS C:\> ConvertFrom-VSCodeTheme Dark+
 PS C:\> Import-Theme Dark+
 ```
+
 This example shows how to convert the VSCode Dark+ default theme and then use it in your console.
 
 ## PARAMETERS
@@ -63,7 +64,7 @@ Overwrite any existing theme completely
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -78,7 +79,7 @@ Update any existing theme file. You can use this to complement a previously expo
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -93,7 +94,7 @@ Output the theme after converting it so you can, for instance, pipe it to Show-T
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -108,7 +109,7 @@ User or Machine (supports storing themes per-user or shared for all users). Defa
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -152,15 +153,18 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
+
 ### [string] the name of the theme
 
 ## OUTPUTS
+
 ### [PSCustomObject] representing the theme (if -Pasthru)
 
 ## NOTES
 The conversion outputs a .theme.psd1 file to AppData or ProgramData
 
 ## RELATED LINKS
+
 [ConvertFrom-ITermColors]()
 [Export-Theme]()
 [Import-Theme]()
