@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,6 +28,20 @@ PS C:\> Get-ConsolePalette -Default
 
 Get the default console palette
 
+### Example 2
+```
+PS C:\> Get-ConsolePalette
+```
+
+Get the current console palette
+
+### Example 3
+```
+PS C:\> (Get-ConsolePalette).FindClosestColor([PoshCode.Pansies.RgbColor]"#336699")
+```
+
+Finds the closest color in the current 16 color console palette to the specified #336699 shade of blue
+
 ## PARAMETERS
 
 ### -Default
@@ -36,7 +50,7 @@ If set, attempts to read the default console colortable values from the registry
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named

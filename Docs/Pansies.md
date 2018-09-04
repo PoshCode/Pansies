@@ -12,47 +12,44 @@ Locale: en-US
 
 ## Pansies Cmdlets
 ### [ConvertFrom-iTermColors](ConvertFrom-iTermColors.md)
-{{Manually Enter ConvertFrom-iTermColors Description Here}}
-
-### [ConvertFrom-iTermColors2](ConvertFrom-iTermColors2.md)
-{{Manually Enter ConvertFrom-iTermColors2 Description Here}}
+Convert a .itermcolors XML file into a (partial) PANSIES theme for your PowerShell console
 
 ### [ConvertFrom-VSCodeTheme](ConvertFrom-VSCodeTheme.md)
-{{Manually Enter ConvertFrom-VSCodeTheme Description Here}}
+Convert a VSCode Theme file into a partial theme
 
 ### [Export-PList](Export-PList.md)
-{{Manually Enter Export-PList Description Here}}
+Convert an object to an XML or Binary PList file.
 
 ### [Export-Theme](Export-Theme.md)
-{{Manually Enter Export-Theme Description Here}}
+Exports the current console and PSReadLine colors as a theme
 
 ### [Get-Complement](Get-Complement.md)
-{{Manually Enter Get-Complement Description Here}}
-
-### [Get-Gradient](Get-Gradient.md)
-{{Manually Enter Get-Gradient Description Here}}
-
-### [Get-Theme](Get-Theme.md)
-{{Manually Enter Get-Theme Description Here}}
-
-### [Import-PList](Import-PList.md)
-{{Manually Enter Import-PList Description Here}}
-
-### [Import-Theme](Import-Theme.md)
-{{Manually Enter Import-Theme Description Here}}
-
-### [Show-Theme](Show-Theme.md)
-{{Manually Enter Show-Theme Description Here}}
+Get the Hue complement color
 
 ### [Get-ConsolePalette](Get-ConsolePalette.md)
-{{Manually Enter Get-ConsolePalette Description Here}}
+Returns the 16 Color Palette configured for the console
+
+### [Get-Gradient](Get-Gradient.md)
+Get a range of colors between two colors
+
+### [Get-Theme](Get-Theme.md)
+List available PANSIES themes, optionally filtering
+
+### [Import-PList](Import-PList.md)
+Convert an XML or Binary PList (property list) file to objects (arrays, string-\>object dictionaries, etc).
+
+### [Import-Theme](Import-Theme.md)
+Imports a PANSIES .theme.psd1 file to style your Console, Host, and PSReadLine
 
 ### [New-Text](New-Text.md)
-{{Manually Enter New-Text Description Here}}
+Create a Text object with specified background and foreground colors
 
 ### [Set-ConsolePalette](Set-ConsolePalette.md)
-{{Manually Enter Set-ConsolePalette Description Here}}
+Set the 16 color console palette
+
+### [Show-Theme](Show-Theme.md)
+Show a preview of a PANSIES theme
 
 ### [Write-Host](Write-Host.md)
-{{Manually Enter Write-Host Description Here}}
+Backwards compatible Write-Host replacement which writes customized output to a host, but using full RGB color values.
 
