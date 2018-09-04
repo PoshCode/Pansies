@@ -3,7 +3,7 @@ function Export-PList {
         .SYNOPSIS
             Convert an object to an XML or Binary PList file.
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param(
         # The object(s) to convert
         [Parameter(Mandatory, ValueFromPipeline)]
@@ -25,17 +25,22 @@ function Export-PList {
         $Output += $InputObject
     }
     end {
-        $Parent = Split-Path $Path
-        if(!(Test-Path -LiteralPath $Parent -PathType Container)) {
-            New-Item -ItemType Directory -Path $Parent -Force
+        $Parent = if($Parent = Split-Path $Path) {
+            if(!(Test-Path -LiteralPath $Parent -PathType Container)) {
+                New-Item -ItemType Directory -Path $Parent -Force
+            }
+            Convert-Path $Parent
+        } else {
+            Convert-Path (Get-Location -PSProvider FileSystem)
         }
-        $Parent = Convert-Path $Parent
         $Path = Join-Path $Parent -ChildPath (Split-Path $Path -Leaf)
 
-        if ($Binary) {
-            [PoshCode.Pansies.Parsers.Plist]::WriteBinary($Output, $Path)
-        } else {
-            [PoshCode.Pansies.Parsers.Plist]::WriteXml($Output, $Path)
+        if($PSCmdlet.ShouldProcess($Path,"Export InputObject as PList $(if($Binary){'Binary'}else{'Xml'})") ) {
+            if ($Binary) {
+                [PoshCode.Pansies.Parsers.Plist]::WriteBinary($Output, $Path)
+            } else {
+                [PoshCode.Pansies.Parsers.Plist]::WriteXml($Output, $Path)
+            }
         }
     }
 }

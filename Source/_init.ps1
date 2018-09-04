@@ -1,5 +1,7 @@
-using namespace PoshCode.Pansies
 using namespace ColorMine.ColorSpaces
+using namespace PoshCode.Pansies
+using namespace ColorMine.Palettes
+using namespace PoshCode.Pansies.Palettes
 using namespace System.Collections.Generic
 
 # On first import, if HostPreference doesn't exist, set it and strongly type it

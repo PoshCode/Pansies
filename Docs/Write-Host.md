@@ -1,7 +1,7 @@
 ---
-external help file: Pansies.dll-Help.xml
+external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -54,7 +54,7 @@ The background is white, as defined by the *BackgroundColor* parameter.
 ## PARAMETERS
 
 ### -BackgroundColor
-Specifies the background color. 
+Specifies the background color.
 There is no default.
 The acceptable values for this parameter are:
 
@@ -84,7 +84,7 @@ Console Color names:
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -124,7 +124,7 @@ Console Color names:
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +139,7 @@ Specifies that the content displayed in the console does not end with a newline 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -154,7 +154,7 @@ Specifies objects to display in the console.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -169,7 +169,7 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

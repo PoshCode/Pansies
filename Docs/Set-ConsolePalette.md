@@ -1,21 +1,20 @@
 ---
-external help file: Pansies.dll-Help.xml
+external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Set-ConsolePalette
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Set the 16 color console palette
 
 ## SYNTAX
 
 ### Palette
 ```
-Set-ConsolePalette [-Palette] <ColorMine.Palettes.Palette`1[PoshCode.Pansies.RgbColor]> [-Default]
- [<CommonParameters>]
+Set-ConsolePalette [-Palette] <IList`1[RgbColor]> [-Default] [<CommonParameters>]
 ```
 
 ### Colors
@@ -24,26 +23,26 @@ Set-ConsolePalette [-Colors] <RgbColor[]> [-Default] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Set the 16 color console palette (and optionally, the default palette)
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Get-ConsolePalette | Set-ConsolePalette -Default
 ```
 
-{{ Add example description here }}
+This example shows how to use Set-ConsolePalette with pipeline input to upgrade the current palette to the default palette.
 
 ## PARAMETERS
 
 ### -Colors
-{{Fill Colors Description}}
+Colors to be used for the console palette. Supports piping in a collection of colors.
 
 ```yaml
 Type: RgbColor[]
 Parameter Sets: Colors
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -53,12 +52,12 @@ Accept wildcard characters: False
 ```
 
 ### -Default
-{{Fill Default Description}}
+If set, set the default console palette in addition to the current palette
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -68,12 +67,12 @@ Accept wildcard characters: False
 ```
 
 ### -Palette
-{{Fill Palette Description}}
+The palette to set the console colors. Note that a Palette is just a `List` of 16 (or more) colors.
 
 ```yaml
-Type: ColorMine.Palettes.Palette`1[PoshCode.Pansies.RgbColor]
+Type: IList[RgbColor]
 Parameter Sets: Palette
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -87,15 +86,16 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### ColorMine.Palettes.Palette`1[[PoshCode.Pansies.RgbColor, Pansies, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+### [IList[RgbColor]] A ConsolePalette or other list of 16 RGBColor values
 
-### PoshCode.Pansies.RgbColor[]
+### [RgbColor[]]
 
 ## OUTPUTS
 
-### System.Object
+### None
 
 ## NOTES
 
 ## RELATED LINKS
 
+[Get-ConsolePalette]()

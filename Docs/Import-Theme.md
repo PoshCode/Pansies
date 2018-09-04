@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -36,7 +36,7 @@ A theme to import (can be the name of an installed PANSIES theme, or the full pa
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -47,10 +47,12 @@ Accept wildcard characters: False
 
 ### -SkipDefault
 By default, imported themes will update the default console colors (if they define console colors)
-If SkipDefault is set, Import-Theme will leave the default Console Colors alone```yaml
+If SkipDefault is set, Import-Theme will leave the default Console Colors alone
+
+```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

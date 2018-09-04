@@ -1,14 +1,14 @@
 ---
-external help file: Pansies.dll-Help.xml
+external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-ConsolePalette
 
 ## SYNOPSIS
-Returns the 16 Console Colors currently used by the console
+Returns the 16 Color Palette configured for the console
 
 ## SYNTAX
 
@@ -17,26 +17,26 @@ Get-ConsolePalette [-Default] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Returns the 16 Color palette defined for the current console (or the defaults for the system)
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Get-ConsolePalette -Default
 ```
 
-{{ Add example description here }}
+Get the default console palette
 
 ## PARAMETERS
 
 ### -Default
-{{Fill Default Description}}
+If set, attempts to read the default console colortable values from the registry, rather than the palette of the current console.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -54,9 +54,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Object
+### ConsolePalette
 
 ## NOTES
 
 ## RELATED LINKS
 
+[Set-ConsolePalette]()

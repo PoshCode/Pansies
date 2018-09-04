@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -31,10 +31,12 @@ Show all themes which contain both Console colors and PSReadline colors
 ## PARAMETERS
 
 ### -Name
-The name of the theme(s) to show. Supports wildcards, and defaults to * everything.```yaml
+The name of the theme(s) to show. Supports wildcards, and defaults to * everything.
+
+```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -49,7 +51,7 @@ If set, only returns themes that include ConsoleColor
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -64,7 +66,7 @@ If set, only returns themes that include PSReadline Colors
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

@@ -1,4 +1,5 @@
 ﻿function Show-Theme {
+    [OutputType([string])]
     [CmdletBinding(DefaultParameterSetName="CurrentTheme")]
     param(
         [Alias("Theme","PSPath")]

@@ -76,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoCodeSample
-{{Fill NoCodeSample Description}}
+Supresses the code sample output
 
 ```yaml
 Type: SwitchParameter
@@ -95,13 +95,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.String
+### [String] (the theme name)
 
 ## OUTPUTS
 
-### System.Object
+### [String] (a string with embedded ANSI escape sequences to demonstrate the theme)
 
 ## NOTES
+Although this is a `Show` command, it actually just returns a string for display on the console. There are lots of escape sequences, but no other formatting.
 
 ## RELATED LINKS
 

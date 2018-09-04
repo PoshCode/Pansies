@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -17,22 +17,23 @@ Import-PList [-Path] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Import a PList (XML or binary file) as a string dictionary or array of objects.
+
+Note that JSON and psd1 filesare not supported, since ConvertFrom-JSON and ConvertFrom-Metadata work fine.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Import-PList argonaut.itermcolors
 ```
 
-{{ Add example description here }}
+Import a PList XML file
 
 ## PARAMETERS
 
 ### -Path
-The path to an XML or binary plist file (e.g.
-a .tmTheme file)
+The path to an XML or binary plist file (e.g. a .tmTheme or .itermcolors file)
 
 ```yaml
 Type: String
@@ -57,3 +58,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[Export-PList]()

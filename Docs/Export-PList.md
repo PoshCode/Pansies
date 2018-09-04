@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -17,21 +17,23 @@ Export-PList -InputObject <Object[]> [-Path] <String> [-Binary] [<CommonParamete
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Exports simple data to an Apple-compatible Property List (PList) file.
+
+Note that this function is only lightly tested, and only supports strings, integers and doubles, dates, bytes, and booleans, as well as arrays or dictionaries of them (as long as the dictionary has string keys).
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> (Get-ConsolePalette).ForEach([string]) | Export-PList -Path palette.xml
 ```
 
-{{ Add example description here }}
+Exports the palette as a PList XML file -- note that this isn't anything like the format that itermcolors files use -- they export colors as dictionaries of Red, Green, Blue ...
 
 ## PARAMETERS
 
 ### -InputObject
-The object(s) to convert
+The object(s) to convert. Must be a date, string, double, integer, byte, bool, or an array or dictionary with only those in it.
 
 ```yaml
 Type: Object[]
@@ -46,8 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-The path to an XML or binary plist file (e.g.
-a .tmTheme file)
+The path where the export will be written
 
 ```yaml
 Type: String
@@ -62,12 +63,12 @@ Accept wildcard characters: False
 ```
 
 ### -Binary
-{{Fill Binary Description}}
+If set, Export-PList creates a binary file rather than an XML file
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -87,3 +88,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[Import-PList]()
