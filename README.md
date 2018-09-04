@@ -15,7 +15,7 @@ The goal of this project is to experiment with some classes and interfaces to tr
 It requires PowerShell 5 or higher and an ANSI-capable host like xTerm, the Windows 10 Console, or ConEmu. If you can satisfy those requirements, you can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies):
 
 ```posh
-Install-Module Pansies
+Install-Module Pansies -AllowClobber
 ```
 
 If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/issues):
