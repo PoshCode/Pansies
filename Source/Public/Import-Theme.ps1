@@ -6,6 +6,7 @@
     [CmdletBinding()]
     param(
         # A theme to import (can be the name of an installed PANSIES theme, or the full path to a psd1 file)
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name,
 
         # By default, imported themes will update the default console colors (if they define console colors)
@@ -16,7 +17,7 @@
 
     if ($ConsoleColors = $Theme.ConsoleColors) {
         Write-Verbose "Setting the console palette"
-        Set-ConsolePalette -Colors $ConsoleColors -Default:!$SkipDefault
+        Set-ConsolePalette -Colors $ConsoleColors -Default:(!$SkipDefault)
     }
 
     if ($PSReadLine = $Theme.PSReadLine) {
