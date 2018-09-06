@@ -1,8 +1,5 @@
 function Export-PList {
-    <#
-        .SYNOPSIS
-            Convert an object to an XML or Binary PList file.
-    #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding(SupportsShouldProcess)]
     param(
         # The object(s) to convert

@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -30,32 +30,47 @@ Saves your current settings as "Default" so you can re-import them later to reve
 
 ## PARAMETERS
 
-### -Force
-Overwrite any existing theme file with the given name
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Name
 The name of the theme to export the current settings to
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Update
+Update any existing theme file. You can use this to complement a previously exported VSCode theme with matching ConsoleColors.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Overwrite any existing theme file with the given name
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -66,7 +81,7 @@ Output the theme after converting it so you can, for instance, pipe it to Show-T
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -81,27 +96,11 @@ User or Machine (supports storing themes per-user or shared for all users). Defa
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
-Accepted values: User, Machine
+Aliases: 
 
 Required: False
 Position: Named
 Default value: User
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Update
-Update any existing theme file. You can use this to complement a previously exported VSCode theme with matching ConsoleColors.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

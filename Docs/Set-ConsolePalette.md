@@ -12,7 +12,7 @@ Set the 16 color console palette
 
 ## SYNTAX
 
-### Palette
+### Palette (Default)
 ```
 Set-ConsolePalette [-Palette] <IList`1[RgbColor]> [-Default] [<CommonParameters>]
 ```
@@ -42,7 +42,7 @@ Colors to be used for the console palette. Supports piping in a collection of co
 ```yaml
 Type: RgbColor[]
 Parameter Sets: Colors
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -57,7 +57,7 @@ If set, set the default console palette in addition to the current palette
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named

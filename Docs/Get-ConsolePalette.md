@@ -50,7 +50,7 @@ If set, attempts to read the default console colortable values from the registry
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named

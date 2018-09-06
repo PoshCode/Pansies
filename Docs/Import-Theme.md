@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Imports a PANSIES .theme.psd1 file to style your Console, Host, and PSReadLine
 ## SYNTAX
 
 ```
-Import-Theme [[-Name] <String>] [-SkipDefault] [<CommonParameters>]
+Import-Theme [-Name] <String> [-SkipDefault] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,12 +36,12 @@ A theme to import (can be the name of an installed PANSIES theme, or the full pa
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
-Required: False
+Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
@@ -52,7 +52,7 @@ If SkipDefault is set, Import-Theme will leave the default Console Colors alone
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named

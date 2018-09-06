@@ -1,8 +1,5 @@
 ﻿function Import-Theme {
-    <#
-        .SYNOPSIS
-            Import a theme file to style your console window and PowerShell session
-    #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding()]
     param(
         # A theme to import (can be the name of an installed PANSIES theme, or the full path to a psd1 file)

@@ -1,23 +1,5 @@
 ﻿function ConvertFrom-VSCodeTheme {
-    <#
-        .SYNOPSIS
-            Convert a VSCode Theme file into a partial theme
-        .DESCRIPTION
-            Attempts to generate a PANSIES Powershell theme from a VSCode Theme.
-
-            This feature is still experimental, and so far, includes theming:
-
-            - The ConsoleColor palette (the base 16 ConsoleColors) from the `terminal.ansi*` colors in the VSCode theme
-            - The PSReadLine colors (requires PSReadline 2.0.0 beta 2) from various named scopes
-            - The PrivateData ConsoleColors (used for foreground of the output streams: Verbose, Error, Warning, Debug, Progress) from various named colors.
-
-            NOTE: for now, even if everything works, there may be some colors for PSReadLine that aren't set, or that are set incorrectly (depending on the theme). If so, please let me know of themes you want to use or of colors that are wrong in the issues at https://GitHub.com/PoshCode/PANSIES/issues
-        .EXAMPLE
-            ConvertFrom-VSCodeTheme Dark+
-            Import-Theme Dark+
-
-            # This example shows how to convert the VSCode Dark+ default theme and then use it in your console.
-    #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding(SupportsShouldProcess)]
     param(
         # The name of (or full path to) a vscode json theme

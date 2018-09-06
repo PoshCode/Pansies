@@ -1,17 +1,18 @@
 function Convert-ConsolePalette {
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact="Medium", DefaultParameterSetName = "Dark")]
     param(
-        # If set, change the dark colors (use negative values to make them darker)
+        # How much to shift the dark colors. Positive values make the colors brighter, negative values make them darker
         [Parameter(Mandatory, ParameterSetName = "Dark", Position = 0)]
         [int]$DarkShift,
 
-        # If set, change the bright colors (use positive values to make them brighter)
+        # How much to shift the bright colors. Positive values make the colors brighter, negative values make them darker
         [Parameter(Mandatory, ParameterSetName = "Bright")]
         [int]$BrightShift,
 
         # By default, the colors are modified in-place. If copy is set:
-        #   the dark colors start with the value of the bright colors
-        #   the light colors start at the value of the dark colors
+        # - the dark colors start with the value of the bright colors
+        # - the light colors start at the value of the dark colors
         [switch]$Copy
     )
     $Palette = Get-ConsolePalette

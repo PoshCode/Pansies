@@ -1,4 +1,5 @@
 ﻿function Show-Theme {
+    # .EXTERNALHELP Pansies-help.xml
     [OutputType([string])]
     [CmdletBinding(DefaultParameterSetName="CurrentTheme")]
     param(

@@ -1,8 +1,5 @@
 function Import-PList {
-    <#
-        .SYNOPSIS
-            Convert an XML or Binary PList (property list) file to objects (arrays, string->object dictionaries, etc).
-    #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding()]
     param(
         # The path to an XML or binary plist file (e.g. a .tmTheme file)

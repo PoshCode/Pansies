@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -38,19 +38,17 @@ Gets a 2D gradient from the ConsoleColor Red to Blue, with the width x height th
 
 ## PARAMETERS
 
-### -ColorSpace
-A color space to render the gradient in. Defaults to HunterLab, but can be any of
-CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
+### -StartColor
+The left color to start the gradient from.
 
 ```yaml
-Type: Object
+Type: RgbColor
 Parameter Sets: (All)
-Aliases:
-Accepted values: CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
+Aliases: 
 
-Required: False
-Position: Named
-Default value: HunterLab
+Required: True
+Position: 1
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -61,70 +59,10 @@ The right color to end the gradient at.
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Flatten
-Flattens the 2D array to a single array.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Height
-The number of rows to generate in the gradient. Defaults to 1
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: $Host.UI.RawUI.WindowSize.Height
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Reverse
-For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient the long way, creating a rainbow effect.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -StartColor
-The left color to start the gradient from.
-
-```yaml
-Type: RgbColor
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -139,8 +77,69 @@ Parameter Sets: (All)
 Aliases: Length, Count, Steps
 
 Required: False
-Position: 2
+Position: 3
 Default value: $Host.UI.RawUI.WindowSize.Width
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+The number of rows to generate in the gradient. Defaults to 1
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 4
+Default value: $Host.UI.RawUI.WindowSize.Height
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ColorSpace
+A color space to render the gradient in. Defaults to HunterLab, but can be any of
+CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: HunterLab
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Reverse
+For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient the long way, creating a rainbow effect.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Flatten
+Flattens the 2D array to a single array.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

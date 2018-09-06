@@ -1,8 +1,5 @@
 function Get-Theme {
-    <#
-        .SYNOPSIS
-            List available PANSIES themes, optionally filtering
-    #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding()]
     param(
         # The name of the theme(s) to show. Supports wildcards, and defaults to * everything.

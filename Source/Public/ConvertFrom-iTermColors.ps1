@@ -1,17 +1,5 @@
 function ConvertFrom-iTermColors {
-    <#
-        .SYNOPSIS
-            Convert a .itermcolors XML file into a partial theme
-        .DESCRIPTION
-            Generate a PANSIES PowerShell theme from iTermColors.
-
-            For a collection of iTermColors files you can use, visit https:#ithub.com/mbadolato/iTerm2-Color-Schemes
-
-        .EXAMPLE
-            ConvertFrom-iTermColors Argonaut
-
-            Will find the Argonaut.itermcolors file in the furrent directory (or in the module storage path)
-     #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding(SupportsShouldProcess)]
     param(
         # The name of (or full path to) an XML PList itermcolors scheme
