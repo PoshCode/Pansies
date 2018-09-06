@@ -4,7 +4,9 @@ param(
     [ValidateSet("Release","Debug")]
     $Configuration = "Release",
 
-    [switch]$SkipBinaryBuild
+    [switch]$SkipBinaryBuild,
+
+    [switch]$SkipDocs
 )
 
 Push-Location $PSScriptRoot
@@ -26,21 +28,22 @@ try {
         # dotnet restore
 
         # The only framework specific assembly we have is for Windows-only functionality, so ...
-        dotnet publish -c $Configuration -o "$($Folder)\lib" -r win10
+        dotnet publish -c $Configuration -o "$($Folder)\lib" -r win10 -f netstandard2.0
 
         # Make sure we never ship SMA
         Get-ChildItem "$($Folder)\lib" -Filter "System.Management.Automation*" |
             Remove-Item
     }
 
-    Write-Host "##  Generating Pansies documentation..." -ForegroundColor Green
-
-    Remove-Item "$($Folder)\en-US" -Force -Recurse -ErrorAction SilentlyContinue
-    if(Get-Command New-ExternalHelp -ErrorAction SilentlyContinue) {
-        New-ExternalHelp -Path ".\Docs" -OutputPath  "$($Folder)\en-US"
-        Write-Host "##  PlatyPS documentation finished." -ForegroundColor Green
-    } else {
-        Write-Host "!!  PlatyPS not found, skipping documentation." -ForegroundColor Yellow
+    if (!$SkipDocs) {
+        Write-Host "##  Generating Pansies documentation..." -ForegroundColor Green
+        Remove-Item "$($Folder)\en-US" -Force -Recurse -ErrorAction SilentlyContinue
+        if(Get-Command New-ExternalHelp -ErrorAction SilentlyContinue) {
+            New-ExternalHelp -Path ".\Docs" -OutputPath  "$($Folder)\en-US"
+            Write-Host "##  PlatyPS documentation finished." -ForegroundColor Green
+        } else {
+            Write-Host "!!  PlatyPS not found, skipping documentation." -ForegroundColor Yellow
+        }
     }
 
     $BuildTimer.Stop()
