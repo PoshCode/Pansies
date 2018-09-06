@@ -7,7 +7,7 @@
         # PrivateData.PSData is the PowerShell Gallery data
         PSData = @{
             # Prerelease string of this module
-            Prerelease      = '-beta01'
+            Prerelease      = '-beta02'
 
             # ReleaseNotes of this module
             ReleaseNotes    = '
