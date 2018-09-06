@@ -62,7 +62,7 @@
     Copyright               = 'Copyright 2018 Joel Bennett'
 
     # Minimum version of the Windows PowerShell engine required by this module
-    PowerShellVersion       = '5.0'
+    PowerShellVersion       = '5.1'
     CompatiblePSEditions    = @('Core','Desktop')
 }
 
