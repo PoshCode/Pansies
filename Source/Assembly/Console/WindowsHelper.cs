@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -36,6 +36,8 @@ namespace PoshCode.Pansies.Console
             {
                 throw new System.Exception("GetConsoleScreenBufferInfoEx->WinError: #" + Marshal.GetLastWin32Error());
             }
+            ++csbe.srWindow.Bottom;
+            ++csbe.srWindow.Right;
             return csbe;
         }
 

@@ -11,17 +11,17 @@ namespace PoshCode.Pansies.Console
         [StructLayout(LayoutKind.Sequential)]
         public struct Coordinate
         {
-            internal short X;
-            internal short Y;
+            public short X;
+            public short Y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Rectangle
         {
-            internal short Left;
-            internal short Top;
-            internal short Right;
-            internal short Bottom;
+            public short Left;
+            public short Top;
+            public short Right;
+            public short Bottom;
         }
 
         [Flags]
@@ -63,30 +63,30 @@ namespace PoshCode.Pansies.Console
         [StructLayout(LayoutKind.Sequential)]
         public struct ConsoleScreenBufferInfoEx
         {
-            internal int cbSize;
-            internal Coordinate dwSize;
-            internal Coordinate dwCursorPosition;
-            internal ushort wAttributes;
-            internal Rectangle srWindow;
-            internal Coordinate dwMaximumWindowSize;
-            internal ushort wPopupAttributes;
-            internal bool bFullscreenSupported;
-            internal ColorReference Black;
-            internal ColorReference DarkBlue;
-            internal ColorReference DarkGreen;
-            internal ColorReference DarkCyan;
-            internal ColorReference DarkRed;
-            internal ColorReference DarkMagenta;
-            internal ColorReference DarkYellow;
-            internal ColorReference Gray;
-            internal ColorReference DarkGray;
-            internal ColorReference Blue;
-            internal ColorReference Green;
-            internal ColorReference Cyan;
-            internal ColorReference Red;
-            internal ColorReference Magenta;
-            internal ColorReference Yellow;
-            internal ColorReference White;
+            public int cbSize;
+            public Coordinate dwSize;
+            public Coordinate dwCursorPosition;
+            public ushort wAttributes;
+            public Rectangle srWindow;
+            public Coordinate dwMaximumWindowSize;
+            public ushort wPopupAttributes;
+            public bool bFullscreenSupported;
+            public ColorReference Black;
+            public ColorReference DarkBlue;
+            public ColorReference DarkGreen;
+            public ColorReference DarkCyan;
+            public ColorReference DarkRed;
+            public ColorReference DarkMagenta;
+            public ColorReference DarkYellow;
+            public ColorReference Gray;
+            public ColorReference DarkGray;
+            public ColorReference Blue;
+            public ColorReference Green;
+            public ColorReference Cyan;
+            public ColorReference Red;
+            public ColorReference Magenta;
+            public ColorReference Yellow;
+            public ColorReference White;
         }
 
         [DllImport("kernel32.dll")]
