@@ -9,15 +9,20 @@ namespace PoshCode.Pansies.Palettes
     {
         public override IColorSpaceComparison ComparisonAlgorithm { get; set; } = new CieDe2000Comparison();
 
-        public ConsolePalette(bool DefaultColors = false)
+        public ConsolePalette(bool defaultColors = false) : this(defaultColors, false)
         {
-            if (!DefaultColors)
+
+        }
+
+        internal ConsolePalette(bool defaultColors = false, bool addScreenAndPopup = false)
+        {
+            if (!defaultColors)
             {
                 if (System.Environment.OSVersion.Platform <= System.PlatformID.Win32NT)
                 {
                     try
                     {
-                        this.LoadCurrentColorset();
+                        this.LoadCurrentColorset(addScreenAndPopup);
                     }
                     catch
                     {

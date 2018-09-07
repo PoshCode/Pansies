@@ -21,7 +21,7 @@ namespace PoshCode.Pansies
             {
                 if(null == _consolePalette)
                 {
-                    _consolePalette = new ConsolePalette();
+                    _consolePalette = new ConsolePalette(false);
                 }
                 return _consolePalette;
             }

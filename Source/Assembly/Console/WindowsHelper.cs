@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -7,6 +7,7 @@ namespace PoshCode.Pansies.Console
     using ColorMine.Palettes;
     using Microsoft.Win32;
     using PoshCode.Pansies.Palettes;
+    using System.Linq;
     using static NativeMethods;
     public static class WindowsHelper
     {
@@ -26,22 +27,23 @@ namespace PoshCode.Pansies.Console
             }
         }
 
-        internal static ConsoleScreenBufferInfoEx GetConsoleScreenBuffer()
+        public static ConsoleScreenBufferInfoEx GetConsoleScreenBuffer()
         {
             ConsoleScreenBufferInfoEx csbe = new ConsoleScreenBufferInfoEx();
             csbe.cbSize = Marshal.SizeOf(csbe); // 96 = 0x60
-
             bool brc = GetConsoleScreenBufferInfoEx(ConsoleOutputHandle, ref csbe);
             if (!brc)
             {
                 throw new System.Exception("GetConsoleScreenBufferInfoEx->WinError: #" + Marshal.GetLastWin32Error());
             }
+            // work around a weird bug in windows ...
+            // https://stackoverflow.com/questions/25274019/strange-setconsolescreenbufferinfoex-behavior
             ++csbe.srWindow.Bottom;
             ++csbe.srWindow.Right;
             return csbe;
         }
 
-        internal static void SetConsoleScreenBuffer(ConsoleScreenBufferInfoEx screenBufferInfo)
+        public static void SetConsoleScreenBuffer(ConsoleScreenBufferInfoEx screenBufferInfo)
         {
             bool brc = SetConsoleScreenBufferInfoEx(ConsoleOutputHandle, ref screenBufferInfo);
             if (!brc)
@@ -76,7 +78,7 @@ namespace PoshCode.Pansies.Console
             return result;
         }
 
-        public static void LoadCurrentColorset(this IList<RgbColor> colors)
+        public static void LoadCurrentColorset(this IList<RgbColor> colors, bool addScreenAndPopup = false)
         {
             var csbe = GetConsoleScreenBuffer();
             colors.Clear();
@@ -97,11 +99,22 @@ namespace PoshCode.Pansies.Console
             colors.Add(csbe.Magenta.GetRgbColor());
             colors.Add(csbe.Yellow.GetRgbColor());
             colors.Add(csbe.White.GetRgbColor());
+
+            if (addScreenAndPopup)
+            {
+                // the default colors, foreground first
+                colors.Add(colors[csbe.wAttributes ^ ((csbe.wAttributes >> 4) << 4)]);
+                colors.Add(colors[csbe.wAttributes >> 4]);
+
+                // the popup colors, foreground first
+                colors.Add(colors[csbe.wPopupAttributes ^ ((csbe.wPopupAttributes >> 4) << 4)]);
+                colors.Add(colors[csbe.wPopupAttributes >> 4]);
+            }
         }
 
-        public static ConsolePalette GetCurrentConsolePalette()
+        public static ConsolePalette GetCurrentConsolePalette(bool addScreenAndPopup = false)
         {
-            return new ConsolePalette();
+            return new ConsolePalette(false, addScreenAndPopup);
         }
 
         public static void SetCurrentConsolePalette(IList<RgbColor> colors)
@@ -129,6 +142,24 @@ namespace PoshCode.Pansies.Console
             csbe.Yellow.SetColor(colors[(int)ConsoleColor.Yellow]);
             csbe.White.SetColor(colors[(int)ConsoleColor.White]);
 
+
+            // Index 16 & 17 are the default FG and BG (which can only be one of the 16 colors)
+            if (colors.Count >= 18)
+            {
+                var palette = new Palette<RgbColor>(colors.Take(16));
+                var fg = palette.FindClosestColorIndex(colors[16]);
+                var bg = palette.FindClosestColorIndex(colors[17]);
+
+                csbe.wAttributes = (ushort)(fg | bg << 4);
+                // Index 18 and 19 are the "popup" FG and BG (which can only be one of the 16 colors)
+                if (colors.Count >= 20)
+                {
+                    fg = palette.FindClosestColorIndex(colors[18]);
+                    bg = palette.FindClosestColorIndex(colors[19]);
+                    csbe.wPopupAttributes = (ushort)(fg | bg << 4);
+                }
+            }
+
             SetConsoleScreenBuffer(csbe);
         }
 
@@ -151,6 +182,23 @@ namespace PoshCode.Pansies.Console
                     string valueName = "ColorTable" + (i < 10 ? "0" : "") + i;
                     consoleKey.SetValue(valueName, colors[i].BGR, RegistryValueKind.DWord);
                 }
+
+                // Index 16 & 17 are the default FG and BG (which can only be one of the 16 colors)
+                if (colors.Count >= 18)
+                {
+                    var palette = new Palette<RgbColor>(colors.Take(16));
+                    var fg = palette.FindClosestColorIndex(colors[16]);
+                    var bg = palette.FindClosestColorIndex(colors[17]);
+
+                    consoleKey.SetValue("ScreenColors", (fg | bg << 4), RegistryValueKind.DWord);
+                    // Index 18 and 19 are the "popup" FG and BG (which can only be one of the 16 colors)
+                    if (colors.Count >= 20)
+                    {
+                        fg = palette.FindClosestColorIndex(colors[18]);
+                        bg = palette.FindClosestColorIndex(colors[19]);
+                        consoleKey.SetValue("PopupColors", (fg | bg << 4), RegistryValueKind.DWord);
+                    }
+                }
             }
         }
         /// <summary>
@@ -158,9 +206,9 @@ namespace PoshCode.Pansies.Console
         /// </summary>
         /// <param name="colors"></param>
         /// <remarks>Note that Windows stores colors in ConsoleColor enum order and in BGR byte order <see cref="ColorReference"/></remarks>
-        public static ConsolePalette GetDefaultConsolePalette()
+        public static ConsolePalette GetDefaultConsolePalette(bool addScreenAndPopup = false)
         {
-            ConsolePalette colors = new ConsolePalette();
+            ConsolePalette colors = new ConsolePalette(false);
             using (RegistryKey consoleKey = Registry.CurrentUser.OpenSubKey("Console", true))
             {
                 for (int i = 0; i < colors.Count; i++)
@@ -168,7 +216,20 @@ namespace PoshCode.Pansies.Console
                     string valueName = "ColorTable" + (i < 10 ? "0" : "") + i;
                     colors[i].BGR = (int)consoleKey.GetValue(valueName, colors[i].BGR);
                 }
+                if (addScreenAndPopup)
+                {
+                    var color = (int)consoleKey.GetValue("ScreenColors", colors[0].BGR);
+                    // the default colors, foreground first
+                    colors.Add(colors[color >> 4 & color]);
+                    colors.Add(colors[color >> 4]);
+
+                    color = (int)consoleKey.GetValue("PopupColors", colors[7].BGR);
+                    // the popup colors, foreground first
+                    colors.Add(colors[color >> 4 & color]);
+                    colors.Add(colors[color >> 4]);
+                }
             }
+
             return colors;
         }
 
