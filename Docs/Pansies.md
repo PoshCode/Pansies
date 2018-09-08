@@ -16,6 +16,9 @@ It also contains commands for manipulating the Windows console color palette and
 It requires PowerShell 5 or higher, and an ANSI-capable host like the Windows 10 console, or xTerm, iTerm, or ConEmu.
 
 ## Cmdlets
+### [Convert-ConsolePalette](Convert-ConsolePalette.md)
+Converts the current 16 Color console palette by shifting either the dark or light colors to darker or lighter shades.
+
 ### [ConvertFrom-iTermColors](ConvertFrom-iTermColors.md)
 Convert a .itermcolors XML file into a (partial) PANSIES theme for your PowerShell console
 

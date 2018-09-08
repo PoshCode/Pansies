@@ -13,7 +13,7 @@ Returns the 16 Color Palette configured for the console
 ## SYNTAX
 
 ```
-Get-ConsolePalette [-Default] [<CommonParameters>]
+Get-ConsolePalette [-Default] [-AddScreenAndPopup] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,13 +44,28 @@ Finds the closest color in the current 16 color console palette to the specified
 
 ## PARAMETERS
 
+### -AddScreenAndPopup
+If set, the exported palette will include 4 extra colors representing the default foreground and background and the popup foreground and background.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Default
 If set, attempts to read the default console colortable values from the registry, rather than the palette of the current console.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

@@ -30,21 +30,6 @@ Show all themes which contain both Console colors and PSReadline colors
 
 ## PARAMETERS
 
-### -Name
-The name of the theme(s) to show. Supports wildcards, and defaults to * everything.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 1
-Default value: *
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ConsoleColors
 If set, only returns themes that include ConsoleColor
 
@@ -56,6 +41,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+The name of the theme(s) to show. Supports wildcards, and defaults to * everything.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 0
+Default value: *
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -38,17 +38,19 @@ Gets a 2D gradient from the ConsoleColor Red to Blue, with the width x height th
 
 ## PARAMETERS
 
-### -StartColor
-The left color to start the gradient from.
+### -ColorSpace
+A color space to render the gradient in. Defaults to HunterLab, but can be any of
+CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 
 ```yaml
-Type: RgbColor
+Type: Object
 Parameter Sets: (All)
 Aliases: 
+Accepted values: CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 
-Required: True
-Position: 1
-Default value: None
+Required: False
+Position: Named
+Default value: HunterLab
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -62,23 +64,23 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: 2
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Width
-The number of columns to generate in the gradient. Defaults to the width of the console.
+### -Flatten
+Flattens the 2D array to a single array.
 
 ```yaml
-Type: Int32
+Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: Length, Count, Steps
+Aliases: 
 
 Required: False
-Position: 3
-Default value: $Host.UI.RawUI.WindowSize.Width
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -92,24 +94,8 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 4
+Position: 3
 Default value: $Host.UI.RawUI.WindowSize.Height
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ColorSpace
-A color space to render the gradient in. Defaults to HunterLab, but can be any of
-CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: HunterLab
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -129,17 +115,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Flatten
-Flattens the 2D array to a single array.
+### -StartColor
+The left color to start the gradient from.
 
 ```yaml
-Type: SwitchParameter
+Type: RgbColor
 Parameter Sets: (All)
 Aliases: 
 
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+The number of columns to generate in the gradient. Defaults to the width of the console.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: Length, Count, Steps
+
 Required: False
-Position: Named
-Default value: False
+Position: 2
+Default value: $Host.UI.RawUI.WindowSize.Width
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

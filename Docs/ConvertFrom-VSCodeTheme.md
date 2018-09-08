@@ -41,40 +41,23 @@ This example shows how to convert the VSCode Dark+ default theme and then use it
 
 ## PARAMETERS
 
-### -Theme
-The name of (or full path to) a vscode json theme
-E.g.
-'Dark+' or 'Monokai'
+### -Confirm
+Prompts you with the file names for confirmation before running the conversion.
 
 ```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: PSPath, Name
+Aliases: cf
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Force
 Overwrite any existing theme completely
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Update
-Update any existing theme file. You can use this to complement a previously exported iTerm color scheme with complementary PSReadline colors.
 
 ```yaml
 Type: SwitchParameter
@@ -110,10 +93,43 @@ User or Machine (supports storing themes per-user or shared for all users). Defa
 Type: String
 Parameter Sets: (All)
 Aliases: 
+Accepted values: User, Machine
 
 Required: False
-Position: 2
+Position: 1
 Default value: User
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Theme
+The name of (or full path to) a vscode json theme
+E.g.
+'Dark+' or 'Monokai'
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: PSPath, Name
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Update
+Update any existing theme file. You can use this to complement a previously exported iTerm color scheme with complementary PSReadline colors.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -126,21 +142,6 @@ The conversion is not run.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you with the file names for confirmation before running the conversion.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
 
 Required: False
 Position: Named

@@ -53,14 +53,14 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: 1
+Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -ForceContrast
-Force the luminance to have "enough" contrast
+### -ConsoleColor
+Assume there are only 16 colors. Return either black or white to get a readable contrast color.
 
 ```yaml
 Type: SwitchParameter
@@ -74,8 +74,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ConsoleColor
-Assume there are only 16 colors. Return either black or white to get a readable contrast color.
+### -ForceContrast
+Force the luminance to have "enough" contrast
 
 ```yaml
 Type: SwitchParameter

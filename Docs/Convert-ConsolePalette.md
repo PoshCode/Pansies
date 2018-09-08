@@ -1,6 +1,6 @@
 ---
 external help file: Pansies-help.xml
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,12 +13,12 @@ Converts the current 16 Color console palette by shifting either the dark or lig
 
 ### Dark (Default)
 ```
-Convert-ConsolePalette [-DarkShift] <Int32> [-Copy] [-WhatIf] [-Confirm]
+Convert-ConsolePalette [-DarkShift] <Int32> [-Copy] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Bright
 ```
-Convert-ConsolePalette -BrightShift <Int32> [-Copy] [-WhatIf] [-Confirm]
+Convert-ConsolePalette -BrightShift <Int32> [-Copy] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +41,7 @@ How much to shift the bright colors. Positive values make the colors brighter, n
 ```yaml
 Type: Int32
 Parameter Sets: Bright
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -73,7 +73,7 @@ By default, the colors are modified in-place. If copy is set:
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -88,7 +88,7 @@ How much to shift the dark colors. Positive values make the colors brighter, neg
 ```yaml
 Type: Int32
 Parameter Sets: Dark
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -113,10 +113,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### None
-
 
 ## OUTPUTS
 
