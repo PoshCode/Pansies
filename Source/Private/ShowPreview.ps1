@@ -30,7 +30,7 @@ function ShowPreview {
                 @{Name = "String"; Expression = { $_.StringColor }}
                 @{Name = "Error"; Expression = { $_.ErrorColor }}
                 @{Name = "Number"; Expression = { $_.NumberColor }}
-                @{Name = "DefaultToken"; Expression = { $_.DefaultTokenColor }}
+                @{Name = "Default"; Expression = { $_.DefaultTokenColor }}
                 @{Name = "Comment"; Expression = { $_.CommentColor }}
             )
     }
@@ -77,14 +77,14 @@ function ShowPreview {
         }
 
         if($Syntax -and !$NoCodeSample) {
-            "$e[8A$e[45G$($Syntax.Keyword)function $($Syntax.DefaultToken)Test-Syntax $($Syntax.DefaultToken){"
+            "$e[8A$e[45G$($Syntax.Keyword)function $($Syntax.Default)Test-Syntax $($Syntax.Default){"
             "$e[B$e[45G    $($Syntax.Comment)# Demo Syntax Highlighting"
-            "$e[B$e[45G    $($Syntax.DefaultToken)[$($Syntax.Type)CmdletBinding$($Syntax.DefaultToken)()]"
-            "$e[B$e[45G    $($Syntax.Keyword)param$($Syntax.DefaultToken)( [$($Syntax.Type)IO.FileInfo$($Syntax.DefaultToken)]$($Syntax.Variable)`$Path $($Syntax.DefaultToken))"
+            "$e[B$e[45G    $($Syntax.Default)[$($Syntax.Type)CmdletBinding$($Syntax.Default)()]"
+            "$e[B$e[45G    $($Syntax.Keyword)param$($Syntax.Default)( [$($Syntax.Type)IO.FileInfo$($Syntax.Default)]$($Syntax.Variable)`$Path $($Syntax.Default))"
             "$e[B"
             "$e[B$e[45G    $($Syntax.Command)Write-Verbose $($Syntax.String)`"Testing in $($Syntax.Variable)`$($($Syntax.Command)Split-Path $($Syntax.Variable)`$PSScriptRoot $($Syntax.Parameter)-Leaf$($Syntax.Variable))$($Syntax.String)`" $($Syntax.Parameter)-Verbose"
-            "$e[B$e[45G    $($Syntax.Variable)`$Env:PSModulePath $($Syntax.Operator)-split $($Syntax.String)';' $($Syntax.Operator)-notcontains $($Syntax.Variable)`$Path$($Syntax.DefaultToken).$($Syntax.Member)FullName"
-            "$e[B$e[45G$($Syntax.DefaultToken)}$e[39m$e[B"
+            "$e[B$e[45G    $($Syntax.Variable)`$Env:PSModulePath $($Syntax.Operator)-split $($Syntax.String)';' $($Syntax.Operator)-notcontains $($Syntax.Variable)`$Path$($Syntax.Default).$($Syntax.Member)FullName"
+            "$e[B$e[45G$($Syntax.Default)}$e[39m$e[B"
         }
 
         if($Palette -and $MoreText) {

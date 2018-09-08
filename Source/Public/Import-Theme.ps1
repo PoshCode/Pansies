@@ -14,6 +14,38 @@
 
     if ($ConsoleColors = $Theme.ConsoleColors) {
         Write-Verbose "Setting the console palette"
+
+        # Handle setting the default foreground and background
+        if($Theme.ConsoleBackground) {
+            if($Theme.ConsoleForeground) {
+                $ConsoleColors += [RgbColor]$Theme.ConsoleForeground
+            } else {
+                $ConsoleColors += Get-Complement $Theme.ConsoleBackground
+            }
+            $ConsoleColors += [RgbColor]$Theme.ConsoleBackground
+        } elseif($Theme.ConsoleForeground) {
+            $ConsoleColors += [RgbColor]$Theme.ConsoleForeground
+            $ConsoleColors += Get-Complement $Theme.ConsoleForeground -ConsoleColor
+        } else {
+            # As a fall back, always force the background to black and the foreground to white
+            # Because if you're in a default PowerShell window, you're using DarkYellow on DarkMagenta, which will be awful
+            $ConsoleColors += [RgbColor]"White"
+            $ConsoleColors += [RgbColor]"Black"
+        }
+
+        # Handle setting the popup foreground and background
+        if($Theme.PopupBackground) {
+            if($Theme.PopupForeground) {
+                $ConsoleColors += [RgbColor]$Theme.PopupForeground
+            } else {
+                $ConsoleColors += Get-Complement $Theme.PopupBackground
+            }
+            $ConsoleColors += [RgbColor]$Theme.PopupBackground
+        } elseif($Theme.PopupForeground) {
+            $ConsoleColors += [RgbColor]$Theme.PopupForeground
+            $ConsoleColors += Get-Complement $Theme.PopupForeground -ConsoleColor
+        }
+
         Set-ConsolePalette -Colors $ConsoleColors -Default:(!$SkipDefault)
     }
 

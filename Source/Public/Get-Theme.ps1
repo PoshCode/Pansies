@@ -17,6 +17,7 @@ function Get-Theme {
     foreach($Theme in Join-Path $(
             Get-ConfigurationPath -Scope User -SkipCreatingFolder
             Get-ConfigurationPath -Scope Machine -SkipCreatingFolder
+            Join-Path $PSScriptRoot Themes
         ) -ChildPath $Name -Resolve -ErrorAction Ignore ) {
             if ($ConsoleColors -or $PSReadline) {
                 $ThemeData = Import-Metadata -Path $Theme
