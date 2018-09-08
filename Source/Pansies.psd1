@@ -7,11 +7,18 @@
         # PrivateData.PSData is the PowerShell Gallery data
         PSData = @{
             # Prerelease string of this module
-            Prerelease      = '-beta02'
+            Prerelease      = '-beta03'
 
             # ReleaseNotes of this module
             ReleaseNotes    = '
             1.4.0-beta: Add commands to expose the console palette features
+                        New palette commands: Get-ConsolePalette, Set-ConsolePalette, Convert-ConsolePalette
+
+                        Add color "themes" which include console palettes, PSReadLine, and ConsoleHost PrivateData
+                        New theme commands: Get-Theme, Show-Theme, Import-Theme, Export-Theme
+                        Also: ConverFrom-VSCodeTheme and ConvertFrom-iTermColors
+
+                        Added Import-PList (needed for VSCode and iTermColors converters) and Export-PList
             1.3.0:      Add support for x11 color names to make the drives more useful
                         Add a RgbColor content provider that can convert colors to their escape sequences
                         Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"
