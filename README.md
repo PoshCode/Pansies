@@ -22,11 +22,21 @@ If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/i
 
 ## Building from source.
 
-Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module. With those dependencies preinstalled and on your path, you can just:
+There are two submodules being used (my personally modified versions of ColorMine and p2f), but it's very simple to get them all and compile them.
+
+Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module.
+
+With those dependencies preinstalled and on your path, you can just:
 
 ```posh
-git clone https://github.com/PoshCode/Pansies.git
+git clone --recursive https://github.com/PoshCode/Pansies.git
 .\Pansies\Build.ps1
+```
+
+Note: I'm including ColorMine and p2f as submodules, you may need to update them with:
+
+```posh
+git submodule update --init -recursive
 ```
 
 ### Currently Pansies provides four commands:
