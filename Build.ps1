@@ -18,19 +18,17 @@ try {
     # dotnet restore
     dotnet build -c $Configuration -o "$($folder.FullName)\lib"
 
-    # Never ship SMA
-    Get-ChildItem "$($folder.FullName)\lib" -Filter "System.Management.Automation-lib*" |
-        Remove-Item
+    if (!$SkipBinaryBuild) {
+        Write-Host "##  Compiling Pansies binary module" -ForegroundColor Cyan
+        # dotnet restore
 
-    Get-ChildItem Source -filter "${ModuleName}.*" |
-        Copy-Item -Dest $folder.FullName -PassThru |
-        ForEach {
-            Write-Host "  $($_.Name) -> $($_.FullName)"
-        }
-    Get-ChildItem Source\Private, Source\Public -Filter *.ps1 -Recurse |
-        Get-Content |
-        Set-Content "$($folder.FullName)\${ModuleName}.psm1"
-    Write-Host "  Pansies -> $($folder.FullName)\${ModuleName}.psm1"
+        # The only framework specific assembly we have is for Windows-only functionality, so ...
+        dotnet publish -c $Configuration -o "$($Folder)\lib" -r win10
+
+        # Make sure we never ship SMA
+        Get-ChildItem "$($Folder)\lib" -Filter "System.Management.Automation*" |
+            Remove-Item
+    }
 
     Write-Host
     Write-Host "Module build finished." -ForegroundColor Green

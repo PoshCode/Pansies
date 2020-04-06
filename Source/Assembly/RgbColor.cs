@@ -281,6 +281,14 @@ namespace PoshCode.Pansies
             return new RgbColor(rgb);
         }
 
+        public static RgbColor FromRegistry(int bgr)
+        {
+            return new RgbColor
+            {
+                BGR = bgr
+            };
+        }
+
 
         public static RgbColor ConvertFrom(object inputData)
         {
@@ -365,6 +373,20 @@ namespace PoshCode.Pansies
                 R = (value >> 16) & 0xff;
                 G = (value >> 8) & 0xff;
                 B = value & 0xff;
+            }
+        }
+
+        public int BGR
+        {
+            get
+            {
+                return (((int)B) << 16) + (((int)G) << 8) + (int)R;
+            }
+            set
+            {
+                B = (value >> 16) & 0xff;
+                G = (value >> 8) & 0xff;
+                R = value & 0xff;
             }
         }
 
