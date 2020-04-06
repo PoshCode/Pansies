@@ -4,7 +4,7 @@ function Get-Complement {
     [OutputType([PoshCode.Pansies.RgbColor])]
     param(
         # The source color to calculate the complement of
-        [Parameter(ValueFromPipeline, Mandatory)]
+        [Parameter(ValueFromPipeline, Mandatory, Position = 0)]
         [PoshCode.Pansies.RgbColor]$Color,
 
         # Force the luminance to have "enough" contrast
