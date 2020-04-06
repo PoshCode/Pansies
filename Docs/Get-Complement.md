@@ -1,6 +1,7 @@
 ---
 external help file: Pansies-help.xml
-online version:
+Module Name: Pansies
+online version: 
 schema: 2.0.0
 ---
 
@@ -57,7 +58,7 @@ The source color to calculate the complement of
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -67,13 +68,12 @@ Accept wildcard characters: False
 ```
 
 ### -ForceContrast
-
 Force the luminance to have "enough" contrast
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,13 +83,12 @@ Accept wildcard characters: False
 ```
 
 ### -ConsoleColor
-
 Assume there are only 16 colors. Return either black or white to get a readable contrast color.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -105,7 +104,7 @@ If set, output the input $Color before the complement
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named

@@ -1,6 +1,7 @@
 ---
 external help file: Pansies-help.xml
-online version:
+Module Name: Pansies
+online version: 
 schema: 2.0.0
 ---
 
@@ -44,13 +45,12 @@ Gets a 2D gradient from the ConsoleColor Red to Blue, with the width x height th
 ## PARAMETERS
 
 ### -StartColor
-
 The left color to start the gradient from.
 
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -67,7 +67,7 @@ The right color to end the gradient at.
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 2
@@ -97,7 +97,7 @@ The number of rows to generate in the gradient. Defaults to 1
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 4
@@ -113,7 +113,7 @@ CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -128,7 +128,7 @@ For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient t
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -143,7 +143,7 @@ Flattens the 2D array to a single array.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
