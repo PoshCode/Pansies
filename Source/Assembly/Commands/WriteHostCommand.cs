@@ -1,4 +1,6 @@
-﻿using System.Management.Automation;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 
 namespace PoshCode.Pansies.Commands
 {
@@ -27,7 +29,18 @@ namespace PoshCode.Pansies.Commands
             informationMessage.Message = Text.GetString(ForegroundColor, BackgroundColor, Object, Separator.ToString(), true, true);
             informationMessage.NoNewLine = NoNewline.IsPresent;
 
-            this.WriteInformation(informationMessage, new string[] { "PSHOST" });
+            var tags = new string[] { "PSHOST" };
+            
+            // Discuss: is it worth implementing this, even though Cmdlet.WriteHost won't respect it?
+            var value = GetVariableValue("HostPreference", ActionPreference.Continue);
+            // NOTE: Anything but Continue and SilentlyContinue (or Ignore) is pointless, since you can set them on Information 
+            if (value is ActionPreference preference && (preference == ActionPreference.SilentlyContinue || preference == ActionPreference.Ignore))
+            { 
+                tags = new string[] { };
+            }
+
+            WriteInformation(informationMessage, tags);
+            
             // this.Host.UI.TranscribeResult(result);
 
         }

@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.1'
+ModuleVersion = '1.3.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -37,7 +37,7 @@ Description = 'A PowerShell module for handling color and cursor positioning via
 FormatsToProcess = @("Pansies.format.ps1xml")
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = if($PSEdition -eq "Core") { "lib\netstandard1.6\Pansies.dll" } else { "lib\net451\Pansies.dll" }
+NestedModules = @( "lib\Pansies.dll" )
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-Gradient', 'Get-Complement'
@@ -76,6 +76,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.3.1: Add support for x11 color names to make the drives more useful
+        1.3.0: Add a RgbColor content provider that can convert colors to their escape sequences
+               Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"
+        1.2.2: Use full namespace + class name for RgbColor
         1.2.1: Fix cmdlet export so New-Text and Write-Host show back up
                Make EXTERNALHELP work for functions
                Provide help for Get-Complement
@@ -94,5 +98,8 @@ PrivateData = @{
 # HelpInfo URI of this module
 # HelpInfoURI = ''
 
+    # Minimum version of the Windows PowerShell engine required by this module
+    PowerShellVersion       = '5.1'
+    CompatiblePSEditions    = @('Core','Desktop')
 }
 

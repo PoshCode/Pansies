@@ -25,13 +25,20 @@ and by default, outputs escape sequences to clear those colors after the text.
 ### Example 1
 ```
 PS C:\> New-Text "&hearts;" -ForegroundColor Red
+
+
+BackgroundColor ForegroundColor Object       ToString
+--------------- --------------- ------       --------
+                `e[101m `e[0m Red &hearts;`e[0m `e[91m?`e[39m`e[0m
 ```
 
 Generates a text object with the hearts symbol (♥) in red. The output will show the BackgroundColor, ForegroundColor, Text (with the entity text in it) and the rendered output of `.ToString()` where the entity will be replaced with the hearts symbol.
 
 ### Example 1
 ```
-PS C:\> "I $(New-Text "&hearts;" -ForegroundColor Red) PS"
+PS C:\> "I $(New-Text "&hearts;" -ForegroundColor "#F00") PS"
+
+I `e[38;2;255;0;0m?`e[39m PS
 ```
 
 Outputs the text "I ♥ PS" with the heart in red.

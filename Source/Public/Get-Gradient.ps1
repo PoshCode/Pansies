@@ -1,7 +1,5 @@
 function Get-Gradient {
-    <#
-    .EXTERNALHELP Pansies-help.xml
-    #>
+    # .EXTERNALHELP Pansies-help.xml
     [CmdletBinding()]
     [OutputType([PoshCode.Pansies.RgbColor[][]],[PoshCode.Pansies.RgbColor[]])]
     param(

@@ -1,10 +1,10 @@
 using namespace PoshCode.Pansies
 [CmdletBinding()]
 param(
-    [RgbColor]
+    [PoshCode.Pansies.RgbColor]
     $LeftColor = "DarkBlue",
 
-    [RgbColor]
+    [PoshCode.Pansies.RgbColor]
     $RightColor = "Red",
 
     [ValidateSet("CMYK","LAB","LUV","HunterLAB","HSL","HSLReverse","RGB","XYZ")]

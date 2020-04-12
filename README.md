@@ -15,21 +15,46 @@ The goal of this project is to experiment with some classes and interfaces to tr
 It requires PowerShell 5 or higher and an ANSI-capable host like xTerm, the Windows 10 Console, or ConEmu. If you can satisfy those requirements, you can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies):
 
 ```posh
-Install-Module Pansies
+Install-Module Pansies -AllowClobber
 ```
 
 If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/issues):
 
 ## Building from source.
 
-Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module. With those dependencies preinstalled and on your path, you can just:
+There are two submodules being used (my personally modified versions of ColorMine and p2f), but it's very simple to get them all and compile them.
+
+Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module.
+
+With those dependencies preinstalled and on your path, you can just:
 
 ```posh
-git clone https://github.com/PoshCode/Pansies.git
+git clone --recursive https://github.com/PoshCode/Pansies.git
 .\Pansies\Build.ps1
 ```
 
-### Currently Pansies provides a couple of important classes:
+Note: I'm including ColorMine and p2f as submodules, you may need to update them with:
+
+```posh
+git submodule update --init -recursive
+```
+
+### Currently Pansies provides four commands:
+
+Cmdlet         | Description
+------         | -----------
+New-Text       | Creates a `Text` object. Provides parameters for `BackgroundColor` and `ForegroundColor` properties, that renders in console
+Write-Host     | Writes to host just like Write-Host, but with full RGBColor support
+Get-Gradient   | Get a range of colors between two colors
+Get-Complement | Gets the Hue complement color
+
+One key feature is that `New-Text` and `Write-Host` both support [HTML named entities](https://www.w3schools.com/charsets/ref_html_entities_4.asp) like `&hearts;` and `&frac12;` or `&uuml;`, and numerical unicode character entities in both decimal (e.g. `&#926;`) and hexadeximal (`&#x39E;`), so you can easily embed characters, and even color them, so to write out "I ♥ PS" with a red heart you can just:
+
+```posh
+"I $(Text "&hearts;" -Fg Red) PS"
+```
+
+### Pansies also provides a couple of important classes:
 
 *RgbColor* is a powerful representation of RGB colors with support for parsing CSS style color strings "#RRGGBB" and XTerm indexes, as well as handling the ConsoleColor values PowerShell users are used to. In addition to that, it has conversions to other color spaces for the purpose of doing color math like generating palettes and gradients, etc. The `ToString()` implementation shows the properties, but there is an overload which takes a boolean for Background or Foreground and renders to ANSI escape sequences. It has built-in palette for XTerm, and a built-in ConsoleColor palette which (on Windows) sniffs the current console's current color configuration. It uses these palettes to automatically downsample RGB colors to the nearest match when it's necessary to render in those color spaces.
 
@@ -39,14 +64,6 @@ There are also *Palette* classes which support the XTerm 256 color palette and t
 
 You can play with setting `[PoshCode.Pansies.RgbColor]::ColorMode` to change how the colors are down-sampled, and modify the actual palettes in `[PoshCode.Pansies.RgbColor]::ConsolePalette` and `[PoshCode.Pansies.RgbColor]::XTermPalette`
 
-### Pansies also provides four commands:
-
-Cmdlet         | Description
-------         | -----------
-New-Text       | Creates a `Text` object. Provides parameters for `BackgroundColor` and `ForegroundColor` properties, that renders in console
-Write-Host     | Writes to host just like Write-Host, but with full RGBColor support
-Get-Gradient   | Get a range of colors between two colors
-Get-Complement | Gets the Hue complement color
 
 ## Contribute
 

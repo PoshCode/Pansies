@@ -1,0 +1,6 @@
+[submodule "lib/p2f"]
+	path = lib/p2f
+	url = https://github.com/Jaykul/p2f.git
+[submodule "lib/ColorMine"]
+	path = lib/ColorMine
+	url = https://github.com/Jaykul/ColorMine.git

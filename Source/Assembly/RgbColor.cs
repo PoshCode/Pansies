@@ -13,6 +13,8 @@ namespace PoshCode.Pansies
         private int index = -1;
         private static ConsolePalette _consolePalette;
         private static XTermPalette _xTermPalette;
+        private static X11Palette _x11Palette;
+
         public static ConsolePalette ConsolePalette
         {
             get
@@ -49,7 +51,21 @@ namespace PoshCode.Pansies
                 _xTermPalette = value;
             }
         }
-
+        public static X11Palette X11Palette
+        {
+            get
+            {
+                if (null == _x11Palette)
+                {
+                    _x11Palette = new X11Palette();
+                }
+                return _x11Palette;
+            }
+            set
+            {
+                _x11Palette = value;
+            }
+        }
         #region private ctors (to be removed?)
         private RgbColor(byte xTerm256Index)
         {
@@ -171,19 +187,21 @@ namespace PoshCode.Pansies
                 catch { }
             }
 
-            // It could also be a named ConsoleColor
-            // TODO: Should we support all the named colors? They're very standard:
-            // https://en.wikipedia.org/wiki/X11_color_names
-            // https://msdn.microsoft.com/en-us/library/system.drawing.color
-            // https://en.wikipedia.org/wiki/Web_colors
+            // It could be a named x11 COLOR
             // NOTE: the IsDefined is necessary to prevent numerical strings from being parsed as ConsoleColor...
-            if (Enum.TryParse(color, true, out ConsoleColor consoleColor) && Enum.IsDefined(typeof(ConsoleColor), consoleColor))
+            if (Enum.TryParse(color, true, out X11ColorName x11Color) && string.Equals(color, x11Color.ToString(), StringComparison.OrdinalIgnoreCase))
             {
-                SetConsoleColor(consoleColor);
+                SetX11Color(x11Color);
             }
             else
             {
-                throw new ArgumentException("Unrecognized color: '" + color + "' if you're not using a ConsoleColor name, consider using #RRGGBB css-style colors");
+                throw new ArgumentException("Unrecognized color: '" + color + "' if you're not using an x11 color name, consider using #RRGGBB css-style colors");
+            }
+
+            // X11 Colors are also ConsoleColors, but we want ConsoleColor to win
+            if (Enum.TryParse(color, true, out ConsoleColor consoleColor) && string.Equals(color, consoleColor.ToString(), StringComparison.OrdinalIgnoreCase))
+            {
+                SetConsoleColor(consoleColor);
             }
         }
 
@@ -263,6 +281,14 @@ namespace PoshCode.Pansies
             return new RgbColor(rgb);
         }
 
+        public static RgbColor FromRegistry(int bgr)
+        {
+            return new RgbColor
+            {
+                BGR = bgr
+            };
+        }
+
 
         public static RgbColor ConvertFrom(object inputData)
         {
@@ -316,6 +342,13 @@ namespace PoshCode.Pansies
             RGB = ConsolePalette[index].RGB;
         }
 
+        private void SetX11Color(X11ColorName color)
+        {
+            _mode = ColorMode.X11;
+            index = (int)color;
+            RGB = X11Palette[index].RGB;
+        }
+
         /// <summary>
         /// The default ColorMode for the console
         /// </summary>
@@ -343,7 +376,20 @@ namespace PoshCode.Pansies
             }
         }
 
-        // TODO: Downsample to the nearest ConsoleColor
+        public int BGR
+        {
+            get
+            {
+                return (((int)B) << 16) + (((int)G) << 8) + (int)R;
+            }
+            set
+            {
+                B = (value >> 16) & 0xff;
+                G = (value >> 8) & 0xff;
+                R = value & 0xff;
+            }
+        }
+
         public ConsoleColor ConsoleColor
         {
             get
@@ -356,7 +402,6 @@ namespace PoshCode.Pansies
             }
         }
 
-        // TODO: Downsample to the nearest XTerm256Color
         public byte XTerm256Index
         {
             get
@@ -366,6 +411,18 @@ namespace PoshCode.Pansies
                     return (byte)XTermPalette.FindClosestColorIndex(this);
                 }
                 return (byte)index;
+            }
+        }
+
+        public X11ColorName X11ColorName
+        {
+            get
+            {
+                if (_mode != ColorMode.X11)
+                {
+                    return (X11ColorName)X11Palette.FindClosestColorIndex(this);
+                }
+                return (X11ColorName)index;
             }
         }
 
