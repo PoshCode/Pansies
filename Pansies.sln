@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pansies", "Pansies.csproj", "{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorMine", "lib\ColorMine\ColorMine\ColorMine.csproj", "{25D4CBB8-B010-4768-95D5-F21B54547FB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Paths", "lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj", "{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}"
 EndProject
@@ -21,10 +19,6 @@ Global
 		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25D4CBB8-B010-4768-95D5-F21B54547FB6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}.Release|Any CPU.ActiveCfg = Release|Any CPU

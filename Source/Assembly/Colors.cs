@@ -1,10 +1,10 @@
 ﻿// Note: This is a generated file.
-using ColorMine.ColorSpaces.Conversions;
-using ColorMine.ColorSpaces;
+using PoshCode.Pansies.ColorSpaces.Conversions;
+using PoshCode.Pansies.ColorSpaces;
 
 namespace PoshCode.Pansies
 {
-    public partial class RgbColor : ColorMine.ColorSpaces.Rgb
+    public partial class RgbColor : PoshCode.Pansies.ColorSpaces.Rgb
     {
 		public RgbColor(){}
 
@@ -116,7 +116,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class XyzColor : ColorMine.ColorSpaces.Xyz
+    public partial class XyzColor : PoshCode.Pansies.ColorSpaces.Xyz
     {
 		public XyzColor(){}
 
@@ -228,7 +228,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class HslColor : ColorMine.ColorSpaces.Hsl
+    public partial class HslColor : PoshCode.Pansies.ColorSpaces.Hsl
     {
 		public HslColor(){}
 
@@ -340,7 +340,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class LabColor : ColorMine.ColorSpaces.Lab
+    public partial class LabColor : PoshCode.Pansies.ColorSpaces.Lab
     {
 		public LabColor(){}
 
@@ -452,7 +452,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class LchColor : ColorMine.ColorSpaces.Lch
+    public partial class LchColor : PoshCode.Pansies.ColorSpaces.Lch
     {
 		public LchColor(){}
 
@@ -564,7 +564,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class LuvColor : ColorMine.ColorSpaces.Luv
+    public partial class LuvColor : PoshCode.Pansies.ColorSpaces.Luv
     {
 		public LuvColor(){}
 
@@ -676,7 +676,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class YxyColor : ColorMine.ColorSpaces.Yxy
+    public partial class YxyColor : PoshCode.Pansies.ColorSpaces.Yxy
     {
 		public YxyColor(){}
 
@@ -788,7 +788,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class CmyColor : ColorMine.ColorSpaces.Cmy
+    public partial class CmyColor : PoshCode.Pansies.ColorSpaces.Cmy
     {
 		public CmyColor(){}
 
@@ -900,7 +900,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class CmykColor : ColorMine.ColorSpaces.Cmyk
+    public partial class CmykColor : PoshCode.Pansies.ColorSpaces.Cmyk
     {
 		public CmykColor(){}
 
@@ -1012,7 +1012,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class HsvColor : ColorMine.ColorSpaces.Hsv
+    public partial class HsvColor : PoshCode.Pansies.ColorSpaces.Hsv
     {
 		public HsvColor(){}
 
@@ -1124,7 +1124,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class HsbColor : ColorMine.ColorSpaces.Hsb
+    public partial class HsbColor : PoshCode.Pansies.ColorSpaces.Hsb
     {
 		public HsbColor(){}
 
@@ -1236,7 +1236,7 @@ namespace PoshCode.Pansies
             return new HunterLabColor(this);
 		}
     }
-    public partial class HunterLabColor : ColorMine.ColorSpaces.HunterLab
+    public partial class HunterLabColor : PoshCode.Pansies.ColorSpaces.HunterLab
     {
 		public HunterLabColor(){}
 

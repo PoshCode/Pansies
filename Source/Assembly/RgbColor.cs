@@ -1,4 +1,4 @@
-﻿using ColorMine.ColorSpaces;
+﻿using PoshCode.Pansies.ColorSpaces;
 using PoshCode.Pansies.Palettes;
 using System;
 using System.Globalization;
@@ -424,6 +424,35 @@ namespace PoshCode.Pansies
                 }
                 return (X11ColorName)index;
             }
+        }
+
+        public RgbColor GetComplement(bool HighContrast = true, bool BlackAndWhite = true)
+        {
+            if (BlackAndWhite)
+            {
+                // Since the point of BlackAndWhite is to ensure contrast in the console
+                // We may need to first convert to the nearest ConsoleColor
+                // new RgbColor(ConsoleColor).To<HunterLab>()
+                if (To<HunterLab>().L < 50)
+                {
+                    return new RgbColor(ConsoleColor.White);
+                }
+                else
+                {
+                    return new RgbColor(ConsoleColor.Black);
+                }
+            }
+
+            var hsl = To<Hsl>();
+            hsl.H = (hsl.H + 180) % 360;
+
+            if (HighContrast)
+            {
+                var result = hsl.To<HunterLab>();
+                result.L = (To<HunterLab>().L + 50) % 100;
+                return result.To<RgbColor>();
+            }
+            return hsl.To<RgbColor>();
         }
 
         public override string ToString()

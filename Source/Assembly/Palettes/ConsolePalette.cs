@@ -1,5 +1,5 @@
-﻿using ColorMine.ColorSpaces.Comparisons;
-using ColorMine.Palettes;
+﻿using PoshCode.Pansies.ColorSpaces.Comparisons;
+using PoshCode.Pansies.Palettes;
 
 namespace PoshCode.Pansies.Palettes
 {

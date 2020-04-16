@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<colorSpaces>
+  <colorSpace name="Rgb">
+    <dataPoints>
+      <dataPoint label="R" description="Red" min="0" max="255" />
+      <dataPoint label="G" description="Green" min="0" max="255" />
+      <dataPoint label="B" description="Blue" min="0" max="255" />
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Xyz">
+    <dataPoints>
+      <dataPoint label="X" min="0" max="100"/>
+      <dataPoint label="Y" min="0" max="100"/>
+      <dataPoint label="Z" min="0" max="100"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Hsl">
+    <dataPoints>
+      <dataPoint label="H" min="0" max="360"/>
+      <dataPoint label="S" min="0" max="100"/>
+      <dataPoint label="L" min="0" max="100"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Lab" description="CIE-L*ab">
+    <dataPoints>
+      <dataPoint label="L" min="0" max="100"/>
+      <dataPoint label="A" min="-128" max="128"/>
+      <dataPoint label="B" min="-128" max="128"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Lch" description="CIE-Lch">
+    <dataPoints>
+      <dataPoint label="L" min="0" max="100"/>
+      <dataPoint label="C" min="0" max="100"/>
+      <dataPoint label="H" min="0" max="360"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Luv" description="CIE-Luv">
+    <dataPoints>
+      <dataPoint label="L" min="0" max="100"/>
+      <dataPoint label="U" min="-134" max="224"/>
+      <dataPoint label="V" min="-140" max ="122"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Yxy">
+    <dataPoints>
+      <dataPoint label="Y1" min="0" max="100"/>
+      <dataPoint label="X" min="0" max="1"/>
+      <dataPoint label="Y2" min="0" max="1"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Cmy">
+    <dataPoints>
+      <dataPoint label="C" min="0" max="1"/>
+      <dataPoint label="M" min="0" max="1"/>
+      <dataPoint label="Y" min="0" max="1"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Cmyk">
+    <dataPoints>
+      <dataPoint label="C" min="0" max="1"/>
+      <dataPoint label="M" min="0" max="1"/>
+      <dataPoint label="Y" min="0" max="1"/>
+      <dataPoint label="K" min="0" max="1"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Hsv">
+    <dataPoints>
+      <dataPoint label="H" min="0" max="360"/>
+      <dataPoint label="S" min="0" max="1"/>
+      <dataPoint label="V" min="0" max="1"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="Hsb">
+    <dataPoints>
+      <dataPoint label="H" min="0" max="360"/>
+      <dataPoint label="S" min="0" max="1"/>
+      <dataPoint label="B" min="0" max="1"/>
+    </dataPoints>
+  </colorSpace>
+  <colorSpace name="HunterLab">
+    <dataPoints>
+      <dataPoint label="L" min="0" max="100"/>
+      <dataPoint label="A" min="-128" max="128"/>
+      <dataPoint label="B" min="-128" max="128"/>
+    </dataPoints>
+  </colorSpace>
+</colorSpaces>

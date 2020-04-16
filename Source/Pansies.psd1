@@ -40,13 +40,13 @@ FormatsToProcess = @("Pansies.format.ps1xml")
 NestedModules = @( "lib\Pansies.dll" )
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-Gradient', 'Get-Complement'
+FunctionsToExport = @()
 
 # A default Prefix for for Cmdlets to export
 # DefaultCommandPrefix = "Pansies"
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = 'New-Text', 'Write-Host'
+CmdletsToExport = @('New-Text', 'Write-Host', 'Get-Gradient', 'Get-Complement')
 
 # Variables to export from this module
 # VariablesToExport = '*'
