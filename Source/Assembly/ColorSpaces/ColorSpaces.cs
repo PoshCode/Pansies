@@ -9,6 +9,7 @@
 
 // Note: This is a generated file.
 using PoshCode.Pansies.ColorSpaces.Conversions;
+using System.Linq;
 
 namespace PoshCode.Pansies.ColorSpaces
 {
@@ -68,13 +69,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "R: " + R,
+			   "R=" + R,
 
-			   "G: " + G,
+			   "G=" + G,
 
-			   "B: " + B,
+			   "B=" + B,
 
 			});
 		}
@@ -83,6 +84,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return RgbConverter.ToColor(this);
 		}
+
+		public Rgb[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "R","G","B", };
 
 		public override sealed double[] Ordinals
 		{
@@ -154,13 +162,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "X: " + X,
+			   "X=" + X,
 
-			   "Y: " + Y,
+			   "Y=" + Y,
 
-			   "Z: " + Z,
+			   "Z=" + Z,
 
 			});
 		}
@@ -169,6 +177,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return XyzConverter.ToColor(this);
 		}
+
+		public Xyz[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "X","Y","Z", };
 
 		public override sealed double[] Ordinals
 		{
@@ -240,13 +255,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "H: " + H,
+			   "H=" + H,
 
-			   "S: " + S,
+			   "S=" + S,
 
-			   "L: " + L,
+			   "L=" + L,
 
 			});
 		}
@@ -255,6 +270,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return HslConverter.ToColor(this);
 		}
+
+		public Hsl[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "H","S","L", };
 
 		public override sealed double[] Ordinals
 		{
@@ -326,13 +348,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "L: " + L,
+			   "L=" + L,
 
-			   "A: " + A,
+			   "A=" + A,
 
-			   "B: " + B,
+			   "B=" + B,
 
 			});
 		}
@@ -341,6 +363,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return LabConverter.ToColor(this);
 		}
+
+		public Lab[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "L","A","B", };
 
 		public override sealed double[] Ordinals
 		{
@@ -412,13 +441,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "L: " + L,
+			   "L=" + L,
 
-			   "C: " + C,
+			   "C=" + C,
 
-			   "H: " + H,
+			   "H=" + H,
 
 			});
 		}
@@ -427,6 +456,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return LchConverter.ToColor(this);
 		}
+
+		public Lch[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "L","C","H", };
 
 		public override sealed double[] Ordinals
 		{
@@ -498,13 +534,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "L: " + L,
+			   "L=" + L,
 
-			   "U: " + U,
+			   "U=" + U,
 
-			   "V: " + V,
+			   "V=" + V,
 
 			});
 		}
@@ -513,6 +549,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return LuvConverter.ToColor(this);
 		}
+
+		public Luv[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "L","U","V", };
 
 		public override sealed double[] Ordinals
 		{
@@ -584,13 +627,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "Y1: " + Y1,
+			   "Y1=" + Y1,
 
-			   "X: " + X,
+			   "X=" + X,
 
-			   "Y2: " + Y2,
+			   "Y2=" + Y2,
 
 			});
 		}
@@ -599,6 +642,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return YxyConverter.ToColor(this);
 		}
+
+		public Yxy[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "Y1","X","Y2", };
 
 		public override sealed double[] Ordinals
 		{
@@ -670,13 +720,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "C: " + C,
+			   "C=" + C,
 
-			   "M: " + M,
+			   "M=" + M,
 
-			   "Y: " + Y,
+			   "Y=" + Y,
 
 			});
 		}
@@ -685,6 +735,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return CmyConverter.ToColor(this);
 		}
+
+		public Cmy[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "C","M","Y", };
 
 		public override sealed double[] Ordinals
 		{
@@ -762,15 +819,15 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "C: " + C,
+			   "C=" + C,
 
-			   "M: " + M,
+			   "M=" + M,
 
-			   "Y: " + Y,
+			   "Y=" + Y,
 
-			   "K: " + K,
+			   "K=" + K,
 
 			});
 		}
@@ -779,6 +836,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return CmykConverter.ToColor(this);
 		}
+
+		public Cmyk[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "C","M","Y","K", };
 
 		public override sealed double[] Ordinals
 		{
@@ -852,13 +916,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "H: " + H,
+			   "H=" + H,
 
-			   "S: " + S,
+			   "S=" + S,
 
-			   "V: " + V,
+			   "V=" + V,
 
 			});
 		}
@@ -867,6 +931,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return HsvConverter.ToColor(this);
 		}
+
+		public Hsv[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "H","S","V", };
 
 		public override sealed double[] Ordinals
 		{
@@ -938,13 +1009,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "H: " + H,
+			   "H=" + H,
 
-			   "S: " + S,
+			   "S=" + S,
 
-			   "B: " + B,
+			   "B=" + B,
 
 			});
 		}
@@ -953,6 +1024,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return HsbConverter.ToColor(this);
 		}
+
+		public Hsb[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "H","S","B", };
 
 		public override sealed double[] Ordinals
 		{
@@ -1024,13 +1102,13 @@ namespace PoshCode.Pansies.ColorSpaces
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 
-			   "L: " + L,
+			   "L=" + L,
 
-			   "A: " + A,
+			   "A=" + A,
 
-			   "B: " + B,
+			   "B=" + B,
 
 			});
 		}
@@ -1039,6 +1117,13 @@ namespace PoshCode.Pansies.ColorSpaces
 		{
 			return HunterLabConverter.ToColor(this);
 		}
+
+		public HunterLab[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { "L","A","B", };
 
 		public override sealed double[] Ordinals
 		{

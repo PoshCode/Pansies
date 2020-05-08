@@ -1,4 +1,5 @@
 ﻿using PoshCode.Pansies.ColorSpaces.Comparisons;
+using System.Linq;
 
 namespace PoshCode.Pansies.ColorSpaces
 {
@@ -50,6 +51,25 @@ namespace PoshCode.Pansies.ColorSpaces
         public abstract void Initialize(IRgb color);
         public abstract IRgb ToRgb();
         public abstract double[] Ordinals { get; set; }
+        internal abstract string[] OrdinalLabels { get; }
+
+        public override string ToString()
+        {
+            string[] fields = new string[Ordinals.Length];
+
+            for (int i = 0; i < Ordinals.Length; i++)
+            {
+                string value;
+                if (Ordinals[i] >= 0 && Ordinals[i] <= 1) {
+                    value = Ordinals[i].ToString("N3");
+                } else {
+                    value = Ordinals[i].ToString("N0");
+                }
+                fields[i] = $"{OrdinalLabels[i]}={value}";
+            }
+
+            return string.Join("; ", fields);
+        }
 
         /// <summary>
         /// Convienience method for comparing any IColorSpace
@@ -78,6 +98,14 @@ namespace PoshCode.Pansies.ColorSpaces
             newColorSpace.Initialize(ToRgb());
 
             return newColorSpace;
+        }
+
+
+        public T[] GradientTo<T>(T end, int size = 10) where T : IColorSpace, new()
+        {
+            T start = new T();
+            start.Initialize(ToRgb());
+            return Gradient.GetGradient(start, end, size).ToArray();
         }
     }
 }

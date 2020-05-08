@@ -5,9 +5,6 @@ using System.Globalization;
 
 namespace PoshCode.Pansies
 {
-
-    // Thinking about renaming this to AnsiColor to prevent collisions with System.Drawing.Color, as I would
-    // like to add a ctor that takes a System.Drawing.Color.AntiqueWhite, etc.
     public partial class RgbColor : Rgb, IEquatable<RgbColor>
     {
         private int index = -1;
@@ -426,7 +423,7 @@ namespace PoshCode.Pansies
             }
         }
 
-        public RgbColor GetComplement(bool HighContrast = true, bool BlackAndWhite = true)
+        public RgbColor GetComplement(bool HighContrast = false, bool BlackAndWhite = false)
         {
             if (BlackAndWhite)
             {
@@ -455,8 +452,12 @@ namespace PoshCode.Pansies
             return hsl.To<RgbColor>();
         }
 
-        public override string ToString()
+        public string ToString(bool AsOrdinal = false)
         {
+            if (AsOrdinal) {
+                return base.ToString();
+            }
+
             switch (_mode)
             {
                 case ColorMode.ConsoleColor:
@@ -470,6 +471,11 @@ namespace PoshCode.Pansies
                     return String.Format("#{0:X6}", RGB);
 
             }
+        }
+
+        public override string ToString()
+        {
+            return ToString(false);
         }
 
         public string ToVtEscapeSequence(bool background = false, ColorMode? mode = null)

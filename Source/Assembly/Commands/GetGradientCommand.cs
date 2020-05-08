@@ -24,7 +24,7 @@ namespace PoshCode.Pansies.Commands
         [Parameter(Position = 2)]
         [Alias("Length", "Count", "Steps")]
         [ValidateRange(3, int.MaxValue)]
-        public int Width { get; set; } = 1;
+        public int Width { get; set; } = -1;
 
         [Parameter(Position = 3)]
         [ValidateRange(1, int.MaxValue)]
@@ -37,30 +37,31 @@ namespace PoshCode.Pansies.Commands
         public SwitchParameter Flatten { get; set; }
 
         [Parameter]
-        [ValidateSet("CMY", "CMYK", "LAB", "LCH", "LUV", "HunterLAB", "HSL", "HSV", "HSB", "RGB", "XYZ", "YXY")]
-        public string ColorSpace { get; set; } = "HunterLab";
+        [ValidateSet("Hsl", "Lch", "Rgb", "Lab", "Xyz")]
+        public string ColorSpace { get; set; } = "Lch";
 
-        private static System.Reflection.MethodInfo GetGradient;
+        private static System.Reflection.MethodInfo Get2DGradient;
 
         static GetGradientCommand()
         {
-            GetGradient = typeof(Gradient).GetMethod("GetGradient", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            Get2DGradient = typeof(Gradient).GetMethod("Get2DGradient", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
         }
 
         protected override void EndProcessing()
         {
             base.EndProcessing();
 
-            if (Width == 1)
+            if (Width <= 0)
             {
                 PSHost host = GetVariableValue("Host") as PSHost;
                 Width = host.UI.RawUI.WindowSize.Width;
             }
             Height = System.Math.Max(1, Height);
             Width = System.Math.Max(1, Width);
-
+            ColorSpace = ColorSpace.Substring(0, 1).ToUpperInvariant() + ColorSpace.Substring(1).ToLowerInvariant();
             var colorType = GetType().Assembly.GetType($"PoshCode.Pansies.ColorSpaces.{ColorSpace}");
-            var colors = (RgbColor[][])GetGradient.MakeGenericMethod(colorType).Invoke(null, new object[] { StartColor, EndColor, Height, Width, Reverse.ToBool() });
+            var colors = (RgbColor[][])Get2DGradient.MakeGenericMethod(typeof(RgbColor), colorType).Invoke(null,
+                                            new object[] { StartColor, EndColor, Height, Width, Reverse.ToBool() });
 
             if (Flatten || Height == 1)
             {

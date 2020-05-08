@@ -14,6 +14,7 @@
 #>
 <#@ output extension=".cs" #>// Note: This is a generated file.
 using PoshCode.Pansies.ColorSpaces.Conversions;
+using System.Linq;
 
 namespace PoshCode.Pansies.ColorSpaces
 {
@@ -64,9 +65,9 @@ var points = space.SelectNodes("dataPoints/dataPoint");#>
 
 		public override string ToString()
 		{
-			return string.Join(", ", new []{
+			return string.Join("; ", new []{
 <# foreach(XmlNode point in points) { #>
-			   "<#=point.Attributes["label"].Value#>: " + <#=point.Attributes["label"].Value#>,
+			   "<#=point.Attributes["label"].Value#>=" + <#=point.Attributes["label"].Value#>,
 <# } #>
 			});
 		}
@@ -75,6 +76,13 @@ var points = space.SelectNodes("dataPoints/dataPoint");#>
 		{
 			return <#=spaceName#>Converter.ToColor(this);
 		}
+
+		public <#=spaceName#>[] Rainbow(int size = 7)
+		{
+			return Gradient.GetRainbow(this, size).ToArray();
+		}
+
+		internal override string[] OrdinalLabels { get; } = new[] { <# foreach(XmlNode point in points) { #>"<#=point.Attributes["label"].Value#>",<# } #> };
 
 		public override sealed double[] Ordinals
 		{
