@@ -15,6 +15,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Colors.cs</LastGenOutput>
     </None>
+    <Compile Update="Source\Assembly\ColorSpaces\ColorSpaces.cs">
+      <DependentUpon>ColorSpaces.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <None Update="Source\Assembly\ColorSpaces\ColorSpaces.tt">
+      <LastGenOutput>ColorSpaces.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <!-- I wouldn't want to double-compile the stuff in here -->
@@ -28,7 +37,6 @@
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-04" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="lib\ColorMine\ColorMine\ColorMine.csproj" />
     <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
     <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj" />
   </ItemGroup>

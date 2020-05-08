@@ -12,10 +12,10 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       </Types>
     </SelectionSet>
     <SelectionSet>
-      <Name>RgbColor</Name>
+      <Name>Color</Name>
       <Types>
         <TypeName>PoshCode.Pansies.RgbColor</TypeName>
-        <TypeName>Microsoft.PowerShell.Console.RgbColor</TypeName>
+        <TypeName>PoshCode.Pansies.ColorSpaces.ColorSpace</TypeName>
       </Types>
     </SelectionSet>
   </SelectionSets>
@@ -71,9 +71,9 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       </TableControl>
     </View>
     <View>
-      <Name>RgbColor</Name>
+      <Name>Color</Name>
       <ViewSelectedBy>
-        <SelectionSetName>RgbColor</SelectionSetName>
+        <SelectionSetName>Color</SelectionSetName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -93,8 +93,8 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
           </TableColumnHeader>
           <TableColumnHeader>
             <Alignment>Left</Alignment>
-            <Label>RGB (decimal)</Label>
-            <Width>15</Width>
+            <Label>Ordinals</Label>
+            <Width>25</Width>
           </TableColumnHeader>
           <TableColumnHeader>
             <Width>11</Width>
@@ -112,25 +112,24 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
             <TableColumnItems>
               <TableColumnItem>
                 <ScriptBlock>
-                  $_.ToVtEscapeSequence($true) + " $([char]27)[0m " + $_.Mode
+                  ([PoshCode.Pansies.RgbColor]$_).ToVtEscapeSequence($true) + " $([char]27)[0m " +
+                  $(if ($_ -is [PoshCode.Pansies.RgbColor]) { $_.Mode } else { $_.GetType().Name })
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>
-                  "#{0:X6}" -f $_.RGB
-                </ScriptBlock>
+                <ScriptBlock>"#{0:X6}" -f ([PoshCode.Pansies.RgbColor]$_).RGB</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>X11ColorName</PropertyName>
+                <ScriptBlock>([PoshCode.Pansies.RgbColor]$_).X11ColorName</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Ordinals</PropertyName>
+                <ScriptBlock>([PoshCode.Pansies.ColorSpaces.ColorSpace]$_).ToString()</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>XTerm256Index</PropertyName>
+                <ScriptBlock>([PoshCode.Pansies.RgbColor]$_).XTerm256Index</ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>ConsoleColor</PropertyName>
+                <ScriptBlock>([PoshCode.Pansies.RgbColor]$_).ConsoleColor</ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -138,16 +137,16 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       </TableControl>
     </View>
     <View>
-      <Name>RgbColor</Name>
+      <Name>Color</Name>
       <ViewSelectedBy>
-        <SelectionSetName>RgbColor</SelectionSetName>
+        <SelectionSetName>Color</SelectionSetName>
       </ViewSelectedBy>
       <WideControl>
         <WideEntries>
           <WideEntry>
             <WideItem>
               <ScriptBlock>
-                  $_.ToVtEscapeSequence($true) + " $([char]27)[0m " + $_.X11ColorName
+                  ([PoshCode.Pansies.RgbColor]$_).ToVtEscapeSequence($true) + " $([char]27)[0m" + ("#{0:X6}" -f ([PoshCode.Pansies.RgbColor]$_).RGB)
               </ScriptBlock>
             </WideItem>
           </WideEntry>

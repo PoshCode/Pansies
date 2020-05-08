@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Get a range of colors between two colors
 ## SYNTAX
 
 ```
-Get-Gradient [-StartColor] <RgbColor> [-EndColor] <RgbColor> [[-Height] <Int32>] [[-Width] <Int32>] [[-ColorSpace] <Object>] [-Reverse] [-Flatten]
+Get-Gradient [-StartColor] <RgbColor> [-EndColor] <RgbColor> [[-Width] <Int32>] [[-Height] <Int32>] [[-ColorSpace] <Object>] [-Reverse] [-Flatten]
 ```
 
 ## DESCRIPTION
@@ -38,19 +38,18 @@ Gets a simple array of ten colors between Red and Blue.
 PS C:\> Get-Gradient Red Blue
 ```
 
-Gets a 2D gradient from the ConsoleColor Red to Blue, with the width x height the current size of the console.
-
-
+Gets a 2D gradient from the ConsoleColor Red to Blue, with as many colors as the current width of the console.
 
 ## PARAMETERS
 
 ### -StartColor
+
 The left color to start the gradient from.
 
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -67,7 +66,7 @@ The right color to end the gradient at.
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -77,6 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Width
+
 The number of columns to generate in the gradient. Defaults to the width of the console.
 
 ```yaml
@@ -92,12 +92,13 @@ Accept wildcard characters: False
 ```
 
 ### -Height
+
 The number of rows to generate in the gradient. Defaults to 1
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -107,13 +108,14 @@ Accept wildcard characters: False
 ```
 
 ### -ColorSpace
-A color space to render the gradient in. Defaults to HunterLab, but can be any of
-CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
+A color space to render the gradient in. Defaults to HunterLab, which
+generates gradients that are very consistent in their brightness,
+but can be any of CMY, CMYK, LAB, LCH, LUV, HunterLAB, HSL, HSV, HSB, RGB, XYZ, YXY
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +130,7 @@ For color spaces with Hue (HSL, HSV, HSB), setting this generates the gradient t
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +145,7 @@ Flattens the 2D array to a single array.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

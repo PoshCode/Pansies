@@ -6,14 +6,14 @@
 <#@ import namespace="System.Text" #>
 <#@ import Namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
-using ColorMine.ColorSpaces.Conversions;
-using ColorMine.ColorSpaces;
+using PoshCode.Pansies.ColorSpaces.Conversions;
+using PoshCode.Pansies.ColorSpaces;
 
 namespace PoshCode.Pansies
 {
 <#
 	var document2 = new XmlDocument();
-	var file2 = Host.ResolvePath("../../../ColorMine/ColorMine/ColorSpaces/ColorSpaces.xml");
+	var file2 = Host.ResolvePath("./ColorSpaces/ColorSpaces.xml");
 	document2.Load(file2);
 	var colorSpaces = document2.SelectSingleNode("colorSpaces");
 
@@ -22,7 +22,7 @@ namespace PoshCode.Pansies
 		var className = space.Attributes["name"].Value;
 		var points = space.SelectNodes("dataPoints/dataPoint");
 #>
-    public partial class <#=className#>Color : ColorMine.ColorSpaces.<#=className#>
+    public partial class <#=className#>Color : PoshCode.Pansies.ColorSpaces.<#=className#>
     {
 		public <#=className#>Color(){}
 

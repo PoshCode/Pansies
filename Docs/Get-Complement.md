@@ -1,7 +1,7 @@
 ---
 external help file: Pansies-help.xml
 Module Name: Pansies
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,16 +14,16 @@ Get the Hue complement color
 ## SYNTAX
 
 ```
-Get-Complement [-Color] <RgbColor> [-ForceContrast] [-ConsoleColor] [-Passthru]
+Get-Complement [-Color] <RgbColor> [-HighContrast] [-BlackAndWhite] [-Passthru]
 ```
 
 ## DESCRIPTION
 
 Returns a color that is 180 degrees opposite around the Hue component of the HSL color space.
 
-The primary reason for Get-Complement to exist is for generating contrasting colors for foreground and background. For that reason, it's usually called with `-ForceContrast` mode, which changes the lightness or darkness to increase the contrast of the returned color.
+The primary reason for Get-Complement to exist is for generating contrasting colors for foreground and background. For that reason, it's usually called with `-HighContrast` mode, which changes the lightness or darkness to increase the contrast of the returned color.
 
-It also has a `-ConsoleColor` switch that causes it to assume only 16 colors will work (PowerLine currently uses this mode by default because so many terminals don't support more --including Windows 10 prior to Creators Update). In ConsoleColor mode, it always returns White or Black.
+It also has a `-BlackAndWhite` switch that causes it to assume only 16 colors will work (PowerLine currently uses this mode by default because so many terminals don't support more --including Windows 10 prior to Creators Update). In BlackAndWhite mode, it always returns White or Black.
 
 ## EXAMPLES
 
@@ -39,13 +39,13 @@ Gets the color Red back, as the complement for Cyan.
 ### ---- Example 2 -------------------------------------------------------------
 
 ```
-PS C:\> $Background, $Foreground = Get-Complement Cyan -Passthru -ConsoleColor
-PS C:\> Write-Host " Hello World " -Foreground $Foreground.ConsoleColor -Background $Background.ConsoleColor
+PS C:\> $Background, $Foreground = Get-Complement Cyan -Passthru -BlackAndWhite
+PS C:\> Microsoft.PowerShell.Utility\Write-Host " Hello World " -Foreground $Foreground.ConsoleColor -Background $Background.ConsoleColor
 ```
 
-This example shows how using `-Passthru` returns both the original color and the contrasting color, and how using `-ConsoleColor` results in a better contrast when you're being forced to use ConsoleColor (as with the built-in Write-Host command).
+This example shows how using `-Passthru` returns both the original color and the contrasting color, and how using `-BlackAndWhite` results in a better contrast when you're being forced to use BlackAndWhite (as with the built-in Write-Host command).
 
-You can try the example without `-ConsoleColor` to see the difference: with it, you'll get Black on Cyan, without, you'll get Red on Cyan. Note that using -ForceContrast will make almost no difference if you're using the `ConsoleColor` property, because downsampling to 16 colors has to result in either Red or DarkRed...
+You can try the example without `-BlackAndWhite` to see the difference: with it, you'll get Black on Cyan, without, you'll get Red on Cyan. Note that using -HighContrast will make almost no difference if you're using the `BlackAndWhite` property, because downsampling to 16 colors has to result in either Red or DarkRed...
 
 
 
@@ -58,7 +58,7 @@ The source color to calculate the complement of
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -67,13 +67,14 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -ForceContrast
+### -HighContrast
+
 Force the luminance to have "enough" contrast
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -82,13 +83,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ConsoleColor
-Assume there are only 16 colors. Return either black or white to get a readable contrast color.
+### -BlackAndWhite
+
+Returns either black or white to get a readable contrast color.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +106,7 @@ If set, output the input $Color before the complement
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

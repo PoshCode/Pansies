@@ -1,13 +1,10 @@
-﻿using ColorMine.ColorSpaces;
+﻿using PoshCode.Pansies.ColorSpaces;
 using PoshCode.Pansies.Palettes;
 using System;
 using System.Globalization;
 
 namespace PoshCode.Pansies
 {
-
-    // Thinking about renaming this to AnsiColor to prevent collisions with System.Drawing.Color, as I would
-    // like to add a ctor that takes a System.Drawing.Color.AntiqueWhite, etc.
     public partial class RgbColor : Rgb, IEquatable<RgbColor>
     {
         private int index = -1;
@@ -426,8 +423,41 @@ namespace PoshCode.Pansies
             }
         }
 
-        public override string ToString()
+        public RgbColor GetComplement(bool HighContrast = false, bool BlackAndWhite = false)
         {
+            if (BlackAndWhite)
+            {
+                // Since the point of BlackAndWhite is to ensure contrast in the console
+                // We may need to first convert to the nearest ConsoleColor
+                // new RgbColor(ConsoleColor).To<HunterLab>()
+                if (To<HunterLab>().L < 50)
+                {
+                    return new RgbColor(ConsoleColor.White);
+                }
+                else
+                {
+                    return new RgbColor(ConsoleColor.Black);
+                }
+            }
+
+            var hsl = To<Hsl>();
+            hsl.H = (hsl.H + 180) % 360;
+
+            if (HighContrast)
+            {
+                var result = hsl.To<HunterLab>();
+                result.L = (To<HunterLab>().L + 50) % 100;
+                return result.To<RgbColor>();
+            }
+            return hsl.To<RgbColor>();
+        }
+
+        public string ToString(bool AsOrdinal = false)
+        {
+            if (AsOrdinal) {
+                return base.ToString();
+            }
+
             switch (_mode)
             {
                 case ColorMode.ConsoleColor:
@@ -441,6 +471,11 @@ namespace PoshCode.Pansies
                     return String.Format("#{0:X6}", RGB);
 
             }
+        }
+
+        public override string ToString()
+        {
+            return ToString(false);
         }
 
         public string ToVtEscapeSequence(bool background = false, ColorMode? mode = null)

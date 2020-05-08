@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.0'
+ModuleVersion = '2.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -40,13 +40,13 @@ FormatsToProcess = @("Pansies.format.ps1xml")
 NestedModules = @( "lib\Pansies.dll" )
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-Gradient', 'Get-Complement'
+FunctionsToExport = @()
 
 # A default Prefix for for Cmdlets to export
 # DefaultCommandPrefix = "Pansies"
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = 'New-Text', 'Write-Host'
+CmdletsToExport = @('New-Text', 'Write-Host', 'Get-Gradient', 'Get-Complement', 'Get-ColorWheel')
 
 # Variables to export from this module
 # VariablesToExport = '*'
@@ -76,9 +76,18 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-        1.3.1: Add support for x11 color names to make the drives more useful
-        1.3.0: Add a RgbColor content provider that can convert colors to their escape sequences
-               Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"
+        2.0.0: Breaking change for the library:
+            - Merge the "Colormine" namespace into PoshCode.Pansies
+              Originally, this was a 3rd party MIT licensed library by @THEJoeZack.
+              He pulled his repo, so I am now just integrating it into Pansies
+            - Expose Complement and Gradient in the C# library for others to use
+                - Add GetComplement() method to RgbColor
+                - Add PoshCode.Pansies.Gradient class with GetGradient static method
+                - Add Get-Complement and Get-Gradient wrappers in module assembly
+        1.3.0: The color provider release
+            - Add a RgbColor PSProvider that can convert colors to their escape sequences
+            - Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"
+            - Add support for x11 color names to make the drives more useful
         1.2.2: Use full namespace + class name for RgbColor
         1.2.1: Fix cmdlet export so New-Text and Write-Host show back up
                Make EXTERNALHELP work for functions

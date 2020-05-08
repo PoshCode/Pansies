@@ -2,29 +2,37 @@
 
 <strong>P</strong>owershell <strong>ANSI E</strong>scape <strong>S</strong>equences
 
-This module contains classes and functions for doing ANSI colored output using Virtual Terminal escape sequences in the console from .Net and PowerShell on platforms where they are supported: Windows 10, Linux, OS X, etc.
+This MIT Licensed cross-platform binary module contains classes and functions for doing ANSI colored output, named entities, and more in the console from .NET and PowerShell on platforms where they are supported: Windows 10, Linux, OS X, etc.
 
 ```posh
 I ♥ PS> function prompt { "I $(New-Text "&hearts;" -fg "DarkRed") PS> " }
 ```
 
-The goal of this project is to experiment with some classes and interfaces to try and address [PowerShell #2381](https://github.com/PowerShell/PowerShell/issues/2381) and give PowerShell full RGB support for Write-Host, but also provide full color support in format files, etc.
+The goal of this project was to experiment with some classes and interfaces to address [PowerShell #2381](https://github.com/PowerShell/PowerShell/issues/2381) and give PowerShell full RGB support for Write-Host, but also provide full color support in format files, etc. Along the way, I've incorporated a whole library worth of color space theory to make comparing colors and generating gradients and complementary colors easy.
 
 ## Installing
 
-It requires PowerShell 5 or higher and an ANSI-capable host like xTerm, the Windows 10 Console, or ConEmu. If you can satisfy those requirements, you can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies):
+For terminal output, you require an ANSI-capable host like xTerm, Windows Terminal, ConEmu (Cmder), or PowerShell or Cmd on Windows 10.
+
+For PowerShell support, you need PowerShell 5.x or higher. You can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies):
 
 ```posh
 Install-Module Pansies -AllowClobber
+```
+
+For .NET Projects, you can find PANSIES on NuGet. Install with:
+
+```posh
+dotnet add reference PANSIES
 ```
 
 If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/issues):
 
 ## Building from source.
 
-There are two submodules being used (my personally modified versions of ColorMine and p2f), but it's very simple to get them all and compile them.
-
 Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module.
+
+There is one submodule being used (my [personally modified version](https://github.com/Jaykul/p2f) version of [beefarino/p2f](https://github.com/beefarino/p2f)), but it's very simple to get everything and compile.
 
 With those dependencies preinstalled and on your path, you can just:
 
@@ -33,7 +41,7 @@ git clone --recursive https://github.com/PoshCode/Pansies.git
 .\Pansies\Build.ps1
 ```
 
-Note: I'm including ColorMine and p2f as submodules, you may need to update them with:
+Note: Because I'm including p2f as a submodule, you may need to update it with:
 
 ```posh
 git submodule update --init -recursive
@@ -46,7 +54,7 @@ Cmdlet         | Description
 New-Text       | Creates a `Text` object. Provides parameters for `BackgroundColor` and `ForegroundColor` properties, that renders in console
 Write-Host     | Writes to host just like Write-Host, but with full RGBColor support
 Get-Gradient   | Get a range of colors between two colors
-Get-Complement | Gets the Hue complement color
+Get-Complement | Gets the Hue complement of a color
 
 One key feature is that `New-Text` and `Write-Host` both support [HTML named entities](https://www.w3schools.com/charsets/ref_html_entities_4.asp) like `&hearts;` and `&frac12;` or `&uuml;`, and numerical unicode character entities in both decimal (e.g. `&#926;`) and hexadeximal (`&#x39E;`), so you can easily embed characters, and even color them, so to write out "I ♥ PS" with a red heart you can just:
 
