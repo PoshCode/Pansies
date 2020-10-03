@@ -24,10 +24,13 @@ namespace PoshCode.Pansies.Commands
         [Alias("Bg")]
         public RgbColor BackgroundColor { get; set; }
 
+        [Parameter]
+        public SwitchParameter PersistentColor { get; set; }
+
         protected override void ProcessRecord()
         {
             HostInformationMessage informationMessage = new HostInformationMessage();
-            informationMessage.Message = Text.GetString(ForegroundColor, BackgroundColor, Object, Separator.ToString(), true, true);
+            informationMessage.Message = Text.GetString(ForegroundColor, BackgroundColor, Object, Separator.ToString(), true, true, PersistentColor);
             informationMessage.NoNewLine = NoNewline.IsPresent;
 
             var tags = new string[] { "PSHOST" };

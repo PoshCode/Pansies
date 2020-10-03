@@ -1,6 +1,6 @@
 ---
 external help file: Pansies-help.xml
-online version: 
+online version:
 schema: 2.0.0
 ---
 # Write-Host
@@ -32,6 +32,7 @@ PS C:\> Write-Host (2,4,6,8,10,12) -Separator ", +2= "
 This command displays the even numbers from 2 through 12.
 The *Separator* parameter is used to add the string ", +2= " (comma, space, +, 2, =, space).
 
+
 ### Example 2: Write with different text and background colors
 ```
 PS C:\> Write-Host (2,4,6,8,10,12) -Separator ", -> " -ForegroundColor DarkGreen -BackgroundColor white
@@ -40,10 +41,23 @@ PS C:\> Write-Host (2,4,6,8,10,12) -Separator ", -> " -ForegroundColor DarkGreen
 This command displays the even numbers from 2 through 12.
 It uses the *ForegroundColor* parameter to output dark green text and the *BackgroundColor* parameter to display a white background.
 
+
 ### Example 3: Write with different text and background colors
 ```
 PS C:\> Write-Host "Red on white text." -ForegroundColor "#FF0000" -BackgroundColor "#FFFFFF"
-Red on white text.
+e[48;2;255;255;255m`e[38;2;255;0;0mRed on white text.`e[49m`e[39m
+```
+
+This command displays the string "Red on white text." The text is red, as defined by the *ForegroundColor* parameter.
+The background is white, as defined by the *BackgroundColor* parameter.
+
+
+### Example 4: Write arrays with embedded colors
+```
+PS C:\> Write-Host Check out (New-Hyperlink https://poshcode.org -ForegroundColor Navy) today! -ForegroundColor "#FF0000" -BackgroundColor "#FFFFFF"
+Check out https://poshcode.org today!
+`e[48;2;255;255;255m`e[38;2;255;0;0mCheck`e[48;2;255;255;255m`e[38;2;255;0;0m out`e[48;2;255;255;255m`e[38;2;255;0;0m `e[38;2;0;0;255m`e]8;;https://poshcode.org`ahttps://poshcode.org`e]8;;`a`e[39m`e[48;2;255;255;255m`e[38;2;255;0;0m today!`e[49m`e[39m
+
 ```
 
 This command displays the string "Red on white text." The text is red, as defined by the *ForegroundColor* parameter.
@@ -52,7 +66,7 @@ The background is white, as defined by the *BackgroundColor* parameter.
 ## PARAMETERS
 
 ### -BackgroundColor
-Specifies the background color. 
+Specifies the background color.
 There is no default.
 The acceptable values for this parameter are:
 
@@ -82,7 +96,7 @@ Console Color names:
 ```yaml
 Type: RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +136,7 @@ Console Color names:
 ```yaml
 Type: PoshCode.Pansies.RgbColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -132,12 +146,12 @@ Accept wildcard characters: False
 ```
 
 ### -NoNewline
-Specifies that the content displayed in the console does not end with a newline character.
+Specifies that the content displayed in the host does not end with a newline character.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,17 +161,17 @@ Accept wildcard characters: False
 ```
 
 ### -Object
-Specifies objects to display in the console.
+Specifies objects to display in the host.
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByValue, FromRemainingArguments)
 Accept wildcard characters: False
 ```
 
@@ -167,7 +181,22 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PersistentColor
+Specifies that foreground and background colors will be repeated for each object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
