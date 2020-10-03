@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Management.Automation;
 using System.Text;
@@ -159,7 +159,7 @@ namespace PoshCode.Pansies
         public static string GetString(RgbColor foreground, RgbColor background, object @object, string separator = " ", bool clear = false, bool entities = true)
         {
             var output = new StringBuilder();
-            // There's a bug in Conhost where an advanced 48;2 RGB code followed by a console code doesn't render the RGB value
+            // There was a bug in Conhost where an advanced 48;2 RGB code followed by a console code wouldn't render the RGB value
             // So we try to put the ConsoleColor first, if it's there ...
             if (null != foreground)
             {
@@ -211,7 +211,7 @@ namespace PoshCode.Pansies
                 }
             }
 
-            if(entities)
+            if (entities)
             {
                 return PoshCode.Pansies.Entities.Decode(output.ToString());
             }

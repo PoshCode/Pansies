@@ -74,7 +74,7 @@ namespace PoshCode.Pansies
 
         private RgbColor(int rgb)
         {
-            if (rgb < 0 || rgb > 0x00FFFFFF)
+            if (rgb < 0 || rgb > 0xFFFFFF)
             {
                 throw new ArgumentOutOfRangeException("rgb", "RGB color value must be between 0x000000 and 0xFFFFFF");
             }

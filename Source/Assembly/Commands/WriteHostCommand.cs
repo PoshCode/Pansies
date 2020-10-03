@@ -16,11 +16,12 @@ namespace PoshCode.Pansies.Commands
 
         [Parameter()]
         public object Separator { get; set; } = " ";
-
+        [Alias("Fg")]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public RgbColor ForegroundColor { get; set; }
 
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [Alias("Bg")]
         public RgbColor BackgroundColor { get; set; }
 
         protected override void ProcessRecord()
@@ -30,19 +31,16 @@ namespace PoshCode.Pansies.Commands
             informationMessage.NoNewLine = NoNewline.IsPresent;
 
             var tags = new string[] { "PSHOST" };
-            
+
             // Discuss: is it worth implementing this, even though Cmdlet.WriteHost won't respect it?
             var value = GetVariableValue("HostPreference", ActionPreference.Continue);
-            // NOTE: Anything but Continue and SilentlyContinue (or Ignore) is pointless, since you can set them on Information 
+            // NOTE: Anything but Continue and SilentlyContinue (or Ignore) is pointless, since you can set them on Information
             if (value is ActionPreference preference && (preference == ActionPreference.SilentlyContinue || preference == ActionPreference.Ignore))
-            { 
+            {
                 tags = new string[] { };
             }
 
             WriteInformation(informationMessage, tags);
-            
-            // this.Host.UI.TranscribeResult(result);
-
         }
     }
 }
