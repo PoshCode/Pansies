@@ -1,6 +1,6 @@
 ﻿---
 external help file: Pansies-help.xml
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -16,8 +16,8 @@ New-Text [-Object] <Object> [-BackgroundColor <RgbColor>] [-Separator <Object>] 
 ```
 
 ## DESCRIPTION
-Create a Text object with specified background and foreground colors, and rendering HTML-style entities. 
-When this object is rendered to the host with .ToString(), it inserts ANSI Virtual Terminal escape sequences for the specified colors, 
+Create a Text object with specified background and foreground colors, and rendering HTML-style entities.
+When this object is rendered to the host with .ToString(), it inserts ANSI Virtual Terminal escape sequences for the specified colors,
 and by default, outputs escape sequences to clear those colors after the text.
 
 ## EXAMPLES
@@ -81,7 +81,7 @@ If set, don't render the HTML Entities to characters (i.e. leave "&hearts;" as "
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +96,7 @@ If set, don't clear the colors at the end of the output.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -106,17 +106,17 @@ Accept wildcard characters: False
 ```
 
 ### -Object
-Specifies objects to display in the console.
+Specifies objects to display in the host.
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
+Accept pipeline input: True (ByPropertyName, ByValue, FromRemainingArguments)
 Accept wildcard characters: False
 ```
 
@@ -126,7 +126,7 @@ Specifies a separator string to the output between objects displayed on the cons
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

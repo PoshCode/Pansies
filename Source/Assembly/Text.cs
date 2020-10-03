@@ -103,6 +103,8 @@ namespace PoshCode.Pansies
         public bool Clear { get; set; } = false;
         public bool Entities { get; set; } = true;
 
+        public bool PersistentColor { get; set; } = true;
+
         /// <summary>
         /// This constructor is here so we can allow partial matches to the property names.
         /// </summary>
@@ -136,6 +138,10 @@ namespace PoshCode.Pansies
                 {
                     Separator = values[key].ToString();
                 }
+                else if (Regex.IsMatch("persist", pattern, RegexOptions.IgnoreCase) )
+                {
+                    PersistentColor = (bool)values[key];
+                }
                 else
                 {
                     throw new ArgumentException("Unknown key '" + key + "' in " + values.GetType().Name + ". Allowed values are BackgroundColor (or bg), ForegroundColor (or fg), and Object (also called Content or Text), or Separator, Clear, and Entities");
@@ -153,13 +159,13 @@ namespace PoshCode.Pansies
 
         public override string ToString()
         {
-            return GetString(ForegroundColor, BackgroundColor, Object, Separator.ToString(), Clear, Entities);
+            return GetString(ForegroundColor, BackgroundColor, Object, Separator.ToString(), Clear, Entities, PersistentColor);
         }
 
-        public static string GetString(RgbColor foreground, RgbColor background, object @object, string separator = " ", bool clear = false, bool entities = true)
+        public static string GetString(RgbColor foreground, RgbColor background, object @object, string separator = " ", bool clear = false, bool entities = true, bool persistentColor = true)
         {
             var output = new StringBuilder();
-            // There's a bug in Conhost where an advanced 48;2 RGB code followed by a console code doesn't render the RGB value
+            // There was a bug in Conhost where an advanced 48;2 RGB code followed by a console code wouldn't render the RGB value
             // So we try to put the ConsoleColor first, if it's there ...
             if (null != foreground)
             {
@@ -183,6 +189,11 @@ namespace PoshCode.Pansies
             else if (null != background)
             {
                 output.Append(background.ToVtEscapeSequence(true));
+            }
+
+            // set the color back after each item if Object is an array
+            if (persistentColor) {
+                separator = output.ToString() + separator;
             }
 
             if (null != @object)
@@ -211,7 +222,7 @@ namespace PoshCode.Pansies
                 }
             }
 
-            if(entities)
+            if (entities)
             {
                 return PoshCode.Pansies.Entities.Decode(output.ToString());
             }

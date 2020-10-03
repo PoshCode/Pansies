@@ -9,7 +9,7 @@ namespace PoshCode.Pansies.Commands
         /// Gets or sets the object. The Object will be converted to string when it's set, and this property always returns a string.
         /// </summary>
         /// <value>A string</value>
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true, Position = 0)]
         public object Object { get; set; }
 
         /// <summary>

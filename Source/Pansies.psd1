@@ -46,13 +46,13 @@ FunctionsToExport = @()
 # DefaultCommandPrefix = "Pansies"
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @('New-Text', 'Write-Host', 'Get-Gradient', 'Get-Complement', 'Get-ColorWheel')
+CmdletsToExport = @('New-Text', 'New-Hyperlink', 'Write-Host', 'Get-Gradient', 'Get-Complement', 'Get-ColorWheel')
 
 # Variables to export from this module
 # VariablesToExport = '*'
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = 'Text'
+AliasesToExport = 'Text', 'Url'
 
 # List of all files packaged with this module
 # FileList = @()
@@ -76,6 +76,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        2.1.0: Hyperlinks
+            - Added New-Hyperlink (alias URL) now that Windows Terminal supports them.
+              Note that Windows Console (conhost) _does not_ support hyperlinks, and any terminal which does not will ignore them.
+              For compatibility, always use the Uri as the text (i.e. do not pass the object parameter).
+            - Added -PersistentColor option to reset the Foreground and Background for each object output when outputting arrays.
         2.0.0: Breaking change for the library:
             - Merge the "Colormine" namespace into PoshCode.Pansies
               Originally, this was a 3rd party MIT licensed library by @THEJoeZack.
