@@ -19,6 +19,7 @@ namespace PoshCode.Pansies.Commands
         /// </summary>
         /// <value>A string</value>
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, Position = 1)]
+        [Alias("Text")]
         public object Object { get; set; }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace PoshCode.Pansies.Commands
                 Separator = Separator,
                 Object = Object,
                 Clear = !LeaveColor,
-                Entities = !IgnoreEntities,
+                Entities = !IgnoreEntities
             };
 
             if (Passthru) {

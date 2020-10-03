@@ -47,12 +47,13 @@ Note: Because I'm including p2f as a submodule, you may need to update it with:
 git submodule update --init -recursive
 ```
 
-### Currently Pansies provides four commands:
+### Currently Pansies provides five commands:
 
 Cmdlet         | Description
 ------         | -----------
 New-Text       | Creates a `Text` object. Provides parameters for `BackgroundColor` and `ForegroundColor` properties, that renders in console
-Write-Host     | Writes to host just like Write-Host, but with full RGBColor support
+New-Hyperlink  | Takes a Uri and optional text and writes [a hyperlink](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#file-hyperlinks_in_terminal_emulators-md) supported by most terminals
+Write-Host     | Writes to host just like Write-Host, but with full RGBColor support and a -PersistentColor option
 Get-Gradient   | Get a range of colors between two colors
 Get-Complement | Gets the Hue complement of a color
 

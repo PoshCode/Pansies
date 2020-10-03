@@ -76,6 +76,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        2.1.0: Hyperlinks
+            - Added New-Hyperlink (alias URL) now that Windows Terminal supports them.
+              Note that Windows Console (conhost) _does not_ support hyperlinks, and any terminal which does not will ignore them.
+              For compatibility, always use the Uri as the text (i.e. do not pass the object parameter).
+            - Added -PersistentColor option to reset the Foreground and Background for each object output when outputting arrays.
         2.0.0: Breaking change for the library:
             - Merge the "Colormine" namespace into PoshCode.Pansies
               Originally, this was a 3rd party MIT licensed library by @THEJoeZack.
