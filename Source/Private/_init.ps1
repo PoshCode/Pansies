@@ -12,7 +12,7 @@ if(-not $IsLinux -and -not $IsMacOS) {
     [PoshCode.Pansies.NativeMethods]::EnableVirtualTerminalProcessing()
 }
 
-if(Get-Command Add-MetadataConverter -ErrorAction SilentlyContinue) {
+if(Get-Command Add-MetadataConverter -ErrorAction Ignore) {
     Add-MetadataConverter @{
         RgbColor = { [PoshCode.Pansies.RgbColor]$args[0] }
         [PoshCode.Pansies.RgbColor] = { "RgbColor '$_'" }
