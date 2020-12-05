@@ -12,38 +12,30 @@ param(
 Push-Location $PSScriptRoot -StackName BuildTestStack
 
 if (!$SemVer -and (Get-Command gitversion -ErrorAction Ignore)) {
-    $PSBoundParameters['SemVer'] = $SemVer = gitversion -showvariable nugetversion
+    $SemVer = gitversion -showvariable nugetversion
 }
 
 try {
-    $BuildTimer = New-Object System.Diagnostics.Stopwatch
-    $BuildTimer.Start()
     $ErrorActionPreference = "Stop"
+    Write-Host "## Calling Build-Module" -ForegroundColor Cyan
 
     $Module = Build-Module -Passthru -SemVer $SemVer
     $Folder  = Split-Path $Module.Path
 
     if (!$SkipBinaryBuild) {
-        Write-Host "##  Compiling Pansies binary module" -ForegroundColor Cyan
+        Write-Host "## Compiling Pansies binary module" -ForegroundColor Cyan
         # dotnet restore
-        dotnet build -c $Configuration -o "$($folder)\lib"
-        # The only framework specific assembly we have is for Windows-only functionality, so ...
-        dotnet publish -c $Configuration -o "$($Folder)\lib" -r win10 -f "netstandard2.0"
-
-        # Make sure we never ship SMA
-        Get-ChildItem "$($Folder)\lib" -Filter "System.Management.Automation*" |
-            Remove-Item
+        # dotnet build -c $Configuration -o "$($folder)\lib"
+        dotnet publish -c $Configuration -o "$($Folder)\lib" | Write-Host -ForegroundColor DarkGray
     }
 
-    Write-Host
-    Write-Host "Module build finished." -ForegroundColor Green
+    Write-Host "## Compiling Documentation" -ForegroundColor Cyan
 
     Remove-Item "$($folder)\en-US" -Force -Recurse -ErrorAction SilentlyContinue
-    New-ExternalHelp -Path ".\Docs" -OutputPath  "$($folder)\en-US"
-    Write-Host "PlatyPS Documentation finished." -ForegroundColor Green
+    $null = New-ExternalHelp -Path ".\Docs" -OutputPath  "$($folder)\en-US"
 
-    $BuildTimer.Stop()
-    Write-Host "Total Elapsed $($BuildTimer.Elapsed.ToString("hh\:mm\:ss\.ff"))"
+    $Folder
+
 } catch {
     throw $_
 } finally {
