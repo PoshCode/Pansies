@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>PoshCode.Pansies</RootNamespace>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- We are only referencing this for the sake of compiling, never ship it -->
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" IncludeAssets="Compile" />
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
