@@ -8,14 +8,14 @@ namespace PoshCode.Pansies.Commands
     public class GetGradientCommand : PSCmdlet
     {
         /// <summary>
-        /// Gets or Sets the background color for the block
+        /// Gets or Sets the start color for the gradient
         /// </summary>
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = true, Mandatory = true)]
         [Alias("SC")]
         public RgbColor StartColor { get; set; }
 
         /// <summary>
-        /// Gets or Sets the foreground color for the block
+        /// Gets or Sets the end color for the gradient
         /// </summary>
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = true, Mandatory = true)]
         [Alias("EC")]

@@ -24,9 +24,9 @@ namespace PoshCode.Pansies.Commands
         [Parameter()]
         public SwitchParameter Passthru { get; set; }
 
-        protected override void EndProcessing()
+        protected override void ProcessRecord()
         {
-            base.EndProcessing();
+            base.ProcessRecord();
 
             if (Passthru)
             {
