@@ -602,5 +602,37 @@ namespace PoshCode.Pansies
             // the value with the mode in the lower nibble 0xFF0000FF to get a unique number.
             return (int)(index << 24) | (int)_mode;
         }
+
+        public static string Foreground(string hexColor)
+        {
+            return Foreground(ParseRGB(hexColor));
+        }
+
+        public static string Foreground(int color)
+        {
+            return VtEscapeSequence(color, false);
+        }
+
+        public static string Background(string hexColor)
+        {
+            return Background(ParseRGB(hexColor));
+        }
+
+        public static string Background(int color)
+        {
+            return VtEscapeSequence(color, true);
+        }
+
+        public static string VtEscapeSequence(int color, bool background)
+        {
+            int r = (color >> 16) & 0xff;
+            int g = (color >> 8) & 0xff;
+            int b = color & 0xff;
+
+            return string.Format(background ?
+                "\u001B[48;2;{0:n0};{1:n0};{2:n0}m" :
+                "\u001B[38;2;{0:n0};{1:n0};{2:n0}m",
+                r, g, b);
+        }
     }
 }
