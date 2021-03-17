@@ -13,9 +13,9 @@ branches:
     increment: Patch
     source-branches:
     - master
-  features:
+  feature:
     increment: Minor
     regex: .*?/
     source-branches:
     - master
-    - features
+    - feature
