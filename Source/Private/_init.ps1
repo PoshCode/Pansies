@@ -18,3 +18,27 @@ if(Get-Command Add-MetadataConverter -ErrorAction Ignore) {
         [PoshCode.Pansies.RgbColor] = { "RgbColor '$_'" }
     }
 }
+
+$xlr8r = [psobject].assembly.gettype("System.Management.Automation.TypeAccelerators")
+@{
+    "RGBColor" = [PoshCode.Pansies.RgbColor]
+    "Entities" = [PoshCode.Pansies.Entities]
+}.GetEnumerator().ForEach({
+    $Name = $_.Key
+    $Type = $_.Value
+    if ($xlr8r::AddReplace) {
+        $xlr8r::AddReplace( $Name, $Type)
+    } else {
+        $null = $xlr8r::Remove( $Name )
+        $xlr8r::Add( $Name, $Type)
+    }
+    trap [System.Management.Automation.MethodInvocationException] {
+        if ($xlr8r::get.keys -contains $Name) {
+            if ($xlr8r::get[$Name] -ne $Type) {
+                Write-Error "Cannot add accelerator [$Name] for [$($Type.FullName)]n                  [$Name] is already defined as [$($xlr8r::get[$Name].FullName)]"
+            }
+            Continue;
+        }
+        throw
+    }
+})
