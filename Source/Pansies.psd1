@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0.0'
+ModuleVersion = '2.2.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -59,9 +59,9 @@ AliasesToExport = 'Text', 'Url'
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
-
     PSData = @{
-        Prerelease = ""
+        # ModuleBuilder will set the pre-release value
+        Prerelease = "dev"
 
         # Tags applied to this module. These help with module discovery in online galleries.
         Tags = @("ANSI", "EscapeSequences", "VirtualTerminal", "Color")
