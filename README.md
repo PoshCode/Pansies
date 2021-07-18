@@ -38,13 +38,14 @@ With those dependencies preinstalled and on your path, you can just:
 
 ```posh
 git clone --recursive https://github.com/PoshCode/Pansies.git
-.\Pansies\Build.ps1
+cd Pansies
+.\Build.ps1
 ```
 
-Note: Because I'm including p2f as a submodule, you may need to update it with:
+Note: Because I'm including p2f as a submodule, you may ocassionally need to update it with:
 
 ```posh
-git submodule update --init -recursive
+git submodule update --init --recursive
 ```
 
 ### Currently Pansies provides five commands:
