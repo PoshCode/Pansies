@@ -33,20 +33,28 @@ namespace PoshCode.Pansies
 
         public static string Decode(string value)
         {
-            var output = new StringBuilder();
-            if (value.IndexOf('&') == -1)
+            // Don't create StringBuilder if we don't have anything to encode
+            if ((string.IsNullOrEmpty(value)) || value.IndexOf('&') == -1)
             {
                 return value;
             }
+            int stop = value.Length;
+            var output = new StringBuilder(stop);
 
             int end = 0, start = 0;
             while((start = value.IndexOf('&', end)) != -1)
             {
                 string result;
                 output.Append(value.Substring(end, start - end));
+                // if it's at the end, we're done here
+                if (start == value.Length - 1)
+                {
+                    break;
+                }
+
                 // We found a '&'. Now look for the next ';' or '&'.
+                // If we find another '&' then this is not an entity, but that one might be
                 end = value.IndexOfAny(_entityEndingChars, start + 1);
-                // If we find another '&' then this is not an entity!
                 if (end > 0 && value[end] == ';')
                 {
                     string entity = value.Substring(start + 1, end - start - 1);
@@ -76,10 +84,19 @@ namespace PoshCode.Pansies
                         continue;
                     }
                 }
+                // if we reached the end, stop looking
+                if (end < 0)
+                {
+                    // and don't loose the end of the string
+                    end = start;
+                    break;
+                }
+
             }
             // make sure we don't loose anything off the end
             output.Append(value.Substring(end, value.Length - end));
 
+            // we don't handle &#123; let WebUtility do that
             value = WebUtility.HtmlDecode(output.ToString());
             return value;
         }
