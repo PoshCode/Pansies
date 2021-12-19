@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pansies", "Pansies.csproj", "{A70FB8C2-26DB-45A8-AEFC-CC3496AF1FAD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Paths", "lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj", "{F9F6FA51-1579-4F16-8F5E-3CE16FAA9B43}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeOwls.PowerShell.Provider", "lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj", "{3D3741C8-A7A9-4532-A84A-0E7C90214800}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StyleProvider", "Source\Assembly\StyleProvider\StyleProvider\StyleProvider.csproj", "{63D1AFA1-C267-4690-9F1B-18FA06932150}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3741C8-A7A9-4532-A84A-0E7C90214800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D1AFA1-C267-4690-9F1B-18FA06932150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D1AFA1-C267-4690-9F1B-18FA06932150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D1AFA1-C267-4690-9F1B-18FA06932150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D1AFA1-C267-4690-9F1B-18FA06932150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
