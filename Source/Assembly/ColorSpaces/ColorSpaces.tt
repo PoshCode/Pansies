@@ -27,7 +27,7 @@ var spaceName = space.Attributes["name"].Value;
 var points = space.SelectNodes("dataPoints/dataPoint");#>
 	public interface I<#=spaceName#> : IColorSpace
 	{
-<# foreach(XmlNode  point in points) { 
+<# foreach(XmlNode  point in points) {
 #>
 		double <#=point.Attributes["label"].Value#> { get; set; }
 <# } #>
@@ -92,7 +92,7 @@ var points = space.SelectNodes("dataPoints/dataPoint");#>
 			}
 			set
 			{
-<# var counter = 0; 
+<# var counter = 0;
    foreach(XmlNode point in points) { #>
 				<#=point.Attributes["label"].Value#> = value[<#=counter++#>];
 <# } #>

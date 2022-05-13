@@ -101,14 +101,13 @@ namespace PoshCode.Pansies
             G = green;
             B = blue;
         }
-
         #endregion
 
-        public RgbColor(RgbColor color)
-        {
-            _mode = color._mode;
-            RGB = color.RGB;
-        }
+        //public RgbColor(RgbColor color)
+        //{
+        //    _mode = color._mode;
+        //    RGB = color.RGB;
+        //}
 
         public RgbColor(ConsoleColor consoleColor)
         {
@@ -476,6 +475,11 @@ namespace PoshCode.Pansies
         public override string ToString()
         {
             return ToString(false);
+        }
+
+        public string ToVt(bool background = false, ColorMode? mode = null)
+        {
+            return ToVtEscapeSequence(background, mode);
         }
 
         public string ToVtEscapeSequence(bool background = false, ColorMode? mode = null)
