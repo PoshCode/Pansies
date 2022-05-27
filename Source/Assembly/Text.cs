@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Management.Automation;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -96,7 +97,7 @@ namespace PoshCode.Pansies
         public int Length {
             get {
                 var result = ConvertToString(Object, Separator.ToString());
-                return result != null ? result.Length : 0 ;
+                return result != null ? _escapeCode.Replace(result,"").Length : 0 ;
             }
         }
 
@@ -110,6 +111,11 @@ namespace PoshCode.Pansies
         /// </summary>
         /// <param name="values"></param>
         public Text(IDictionary values) : this()
+        {
+            FromDictionary(values);
+        }
+
+        private void FromDictionary(IDictionary values)
         {
             foreach (string key in values.Keys)
             {
@@ -236,6 +242,46 @@ namespace PoshCode.Pansies
         {
             return other != null && (Object == other.Object && ForegroundColor == other.ForegroundColor && BackgroundColor == other.BackgroundColor);
         }
-    }
 
+
+        public virtual string ToPsMetadata()
+        {
+            var objectString = string.Empty;
+            if (Object is ScriptBlock script)
+            {
+                objectString = "(ScriptBlock '" + script.ToString().Replace("\'", "\'\'") + "')";
+            }
+            else
+            {
+                objectString = "\'" + Object.ToString().Replace("\'", "\'\'") + "\'";
+            }
+
+            return  (ForegroundColor != null ? "\nForegroundColor='" + ForegroundColor.ToString() + "'" : "") +
+                    (BackgroundColor != null ? "\nBackgroundColor='" + BackgroundColor.ToString() + "'" : "") +
+                    "\nSeparator='" + Separator + "'" +
+                    "\nClear=" + (Clear ? 1 : 0) +
+                    "\nEntities=" + (Entities ? 1 : 0) +
+                    "\nPersist=" + (PersistentColor ? 1 : 0) +
+                    "\nObject=" + objectString;
+        }
+
+        public virtual void FromPsMetadata(string metadata)
+        {
+            var ps = PowerShell.Create(RunspaceMode.CurrentRunspace);
+            var languageMode = ps.Runspace.SessionStateProxy.LanguageMode;
+            Hashtable data;
+            try
+            {
+                ps.Runspace.SessionStateProxy.LanguageMode = PSLanguageMode.RestrictedLanguage;
+                ps.AddScript("@{ " + metadata + "}", true);
+                data = ps.Invoke<Hashtable>().FirstOrDefault();
+
+                FromDictionary(data);
+            }
+            finally
+            {
+                ps.Runspace.SessionStateProxy.LanguageMode = languageMode;
+            }
+        }
+    }
 }

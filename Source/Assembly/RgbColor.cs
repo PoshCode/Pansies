@@ -122,6 +122,39 @@ namespace PoshCode.Pansies
 
         public RgbColor(string color)
         {
+            FromPsMetadata(color);
+        }
+
+        public string ToString(bool AsOrdinal = false)
+        {
+            if (AsOrdinal)
+            {
+                return base.ToString();
+            }
+
+            switch (_mode)
+            {
+                case ColorMode.ConsoleColor:
+                    return Enum.GetName(typeof(ConsoleColor), this.ConsoleColor);
+
+                case ColorMode.XTerm256:
+                    return String.Format("xt{0:0}", this.XTerm256Index);
+
+                case ColorMode.Rgb24Bit:
+                default:
+                    return String.Format("#{0:X6}", RGB);
+
+            }
+        }
+
+        public string ToPsMetadata()
+        {
+            return ToString(false);
+        }
+
+        public void FromPsMetadata(string metadata)
+        {
+            string color = metadata;
             Exception nested;
             if (string.IsNullOrWhiteSpace(color))
             {
@@ -199,6 +232,12 @@ namespace PoshCode.Pansies
             {
                 SetConsoleColor(consoleColor);
             }
+        }
+
+
+        public override string ToString()
+        {
+            return ToString(false);
         }
 
         private static int ParseRGB(string rgbHex)
@@ -284,7 +323,6 @@ namespace PoshCode.Pansies
                 BGR = bgr
             };
         }
-
 
         public static RgbColor ConvertFrom(object inputData)
         {
@@ -449,32 +487,6 @@ namespace PoshCode.Pansies
                 return result.To<RgbColor>();
             }
             return hsl.To<RgbColor>();
-        }
-
-        public string ToString(bool AsOrdinal = false)
-        {
-            if (AsOrdinal) {
-                return base.ToString();
-            }
-
-            switch (_mode)
-            {
-                case ColorMode.ConsoleColor:
-                    return Enum.GetName(typeof(ConsoleColor), this.ConsoleColor);
-
-                case ColorMode.XTerm256:
-                    return String.Format("xt{0:0}", this.XTerm256Index);
-
-                case ColorMode.Rgb24Bit:
-                default:
-                    return String.Format("#{0:X6}", RGB);
-
-            }
-        }
-
-        public override string ToString()
-        {
-            return ToString(false);
         }
 
         public string ToVt(bool background = false, ColorMode? mode = null)
