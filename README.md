@@ -48,7 +48,7 @@ Note: Because I'm including p2f as a submodule, you may ocassionally need to upd
 git submodule update --init --recursive
 ```
 
-### Currently Pansies provides five commands:
+### Currently Pansies provides six commands:
 
 Cmdlet         | Description
 ------         | -----------
@@ -56,7 +56,8 @@ New-Text       | Creates a `Text` object. Provides parameters for `BackgroundCol
 New-Hyperlink  | Takes a Uri and optional text and writes [a hyperlink](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#file-hyperlinks_in_terminal_emulators-md) supported by most terminals
 Write-Host     | Writes to host just like Write-Host, but with full RGBColor support and a -PersistentColor option
 Get-Gradient   | Get a range of colors between two colors
-Get-Complement | Gets the Hue complement of a color
+Get-ColorWheel | Like Get-Gradient, but allows you to specify the Hue step and by default adjusts the brightness so you don't get exact color repeatition
+Get-Complement | Get the Hue complement of a color
 
 One key feature is that `New-Text` and `Write-Host` both support [HTML named entities](https://www.w3schools.com/charsets/ref_html_entities_4.asp) like `&hearts;` and `&frac12;` or `&uuml;`, and numerical unicode character entities in both decimal (e.g. `&#926;`) and hexadeximal (`&#x39E;`), so you can easily embed characters, and even color them, so to write out "I ♥ PS" with a red heart you can just:
 

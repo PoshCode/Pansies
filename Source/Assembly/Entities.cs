@@ -7,8 +7,8 @@ namespace PoshCode.Pansies
 {
     public static partial class Entities
     {
-        public static bool EnableEmoji = false;
-        public static bool EnableNerdFonts = false;
+        public static bool EnableEmoji = true;
+        public static bool EnableNerdFonts = true;
         private static readonly char[] _entityEndingChars = new char[] { ';', '&' };
 
         public static SortedList<string, string> EscapeSequences = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)

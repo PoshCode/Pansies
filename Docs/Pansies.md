@@ -17,11 +17,17 @@ It requires PowerShell 5 or higher, and an ANSI-capable host like the Windows 10
 
 ## Cmdlets
 
+### [Get-ColorWheel](Get-ColorWheel.md)
+Like Get-Gradient, but allows you to specify the Hue step and by default adjusts the brightness so you don't get exact color repeatition
+
 ### [Get-Complement](Get-Complement.md)
 Get the Hue complement color
 
 ### [Get-Gradient](Get-Gradient.md)
 Get a range of colors between two colors
+
+### [New-Hyperlink](New-Hyperlink.md)
+Takes a Uri and optional text and writes [a hyperlink](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#file-hyperlinks_in_terminal_emulators-md) supported by most terminals
 
 ### [New-Text](New-Text.md)
 Create a Text object with specified background and foreground colors. Supports [HTML named entities](https://www.w3schools.com/charsets/ref_html_entities_4.asp) like `&hearts;` and `&frac12;` or `&uuml;` and numerical unicode character entities in both decimal (e.g. `&#926;`) and hexadeximal (`&#x39E;`)
@@ -45,13 +51,12 @@ Pansies provides a few important classes:
 
 *Text* is a text class which contains BackgroundColor and ForegroundColor properties and a `ToString()` implementation based on VT escape sequences.  It also supports HTML named enties like the `&hearts;` example above.
 
-There are also *Palette* classes which support the XTerm 256 color palette, the X11 named colors palette (with over 650 named colors), and the default 16 color console palette (which includes loading the actual palette of the console in Windows). Each of these Palettes has the ability to find the closest match to any given RgbColor.
+### Color Spaces
 
-You can play with setting `[PoshCode.Pansies.RgbColor]::ColorMode` to change how the colors are down-sampled, and modify the actual palettes in `[PoshCode.Pansies.RgbColor]::ConsolePalette` and `[PoshCode.Pansies.RgbColor]::XTermPalette`
+Pansies includes versions of all the old Colormine library classes, so it's a very complete library for color spaces regardless of whether you're doing terminal work or color work in graphical or web applications. There are colorspace classes for HSL, HSB, LAB, and Hunter LAB, CMY and CMYK, LCH, LUV, XYZ, YXY, and of course, RGB. These color spaces support converting colors between them, doing color math like measuring distance, calculating midpoints and gradients, etc. There are also color comparison libraries with implementations of [Cie 76]9http://en.wikipedia.org/wiki/Color_difference#CIE76), [Cie 94](http://en.wikipedia.org/wiki/Color_difference#CIE94), [Cie delta-e 2000](http://en.wikipedia.org/wiki/Color_difference#CIEDE2000) and [Cmc l:c](http://en.wikipedia.org/wiki/Color_difference#CMC_l:c_.281984.29).
 
 
-## Contribute
+We also have *palette* classes which support the XTerm 256 color palette, the X11 named colors palette (with over 650 named colors), and the default 16 color console palette (which includes loading the actual palette of the `console` when in Windows console). Any palette has the ability to find the closest match to any given RgbColor (by default, using the Cie De2000 algorithm) so you can downscale nicely from full color to 256 or 16 color.
 
-The end goal for this project is for the Color and Text classes (possibly without the color space conversions) to make it into the core PowerShell product, so what I'm most interested in here is [any ideas](https://github.com/PoshCode/Pansies/issues) people have for a better user experience for writing text and partially colored text, as well as other ANSI Virtual Terminal escape sequences.
+You can play with setting `[PoshCode.Pansies.RgbColor]::ColorMode` to change how the colors are down-sampled, and you can even modify the actual palettes in `[PoshCode.Pansies.RgbColor]::ConsolePalette` and `[PoshCode.Pansies.RgbColor]::XTermPalette`
 
-For the sake of PowerShell 5, I intend to keep this module around. Any features that don't belong in PowerShell core will stay here too, and I may even split some of the Windows-specific features into a `PANSIES.Windows` module or something, to support themes on older versions of PowerShell for Windows (running in ConEmu with ANSI support, or just downsampling everything to ConsoleColors).
