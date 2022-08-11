@@ -77,6 +77,15 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        2.4.0: Switch to IPSMetadata serialization
+            - Also add some cast constructors
+            - Also add pipeline parameterSets for Get-Complement and Get-Cradient
+            - Also minimize the whitespace when outputting color formatted
+            - Also enabled emoji and nerdfont entities by default
+        2.3.1: Fix index problem decoding entities
+        2.3.0: Add emoji support
+            - Also add nerdfont support
+        2.2.0: Add static methods for speed optimization
         2.1.0: Hyperlinks
             - Added New-Hyperlink (alias URL) now that Windows Terminal supports them.
               Note that Windows Console (conhost) _does not_ support hyperlinks, and any terminal which does not will ignore them.

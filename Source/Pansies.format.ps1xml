@@ -28,11 +28,11 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>35</Width>
+            <Width>15</Width>
             <Label>BackgroundColor</Label>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Width>35</Width>
+            <Width>15</Width>
             <Label>ForegroundColor</Label>
           </TableColumnHeader>
           <TableColumnHeader>
@@ -57,7 +57,7 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
-                  [System.Management.Automation.LanguagePrimitives]::ConvertTo($_.Object, [string]) + "$([char]27)[0m"
+                  ("$(if ($_.Object -is [ScriptBlock]) { "{{ {0} }}" } else { "{0}" })" -f ([System.Management.Automation.LanguagePrimitives]::ConvertTo($_.Object, [string]).Trim())) + "$([char]27)[0m"
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>

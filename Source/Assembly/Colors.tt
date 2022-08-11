@@ -22,35 +22,63 @@ namespace PoshCode.Pansies
 		var className = space.Attributes["name"].Value;
 		var points = space.SelectNodes("dataPoints/dataPoint");
 #>
-    public partial class <#=className#>Color : PoshCode.Pansies.ColorSpaces.<#=className#>
-    {
+	public partial class <#=className#>Color : PoshCode.Pansies.ColorSpaces.<#=className#>
+	{
 		public <#=className#>Color(){}
 
 		// IColorSpace means they have To<IColorSpace>() and Initialize(IRgb)
 		// But PowerShell doesn't handle generic methods properly
 		// And we want cast capability
-<# 
-	foreach (XmlNode otherSpace in colorSpaces)
-	{
-		var otherClassName = otherSpace.Attributes["name"].Value;
+<#
+		foreach (XmlNode otherSpace in colorSpaces)
+		{
+			var otherClassName = otherSpace.Attributes["name"].Value;
 #>
 		public <#=className#>Color(I<#=otherClassName#> <#=otherClassName.ToLower()#>)
 		{
-<# 	if(otherClassName == className) { #>
+<# 			if (otherClassName == className)
+			{
+#>
 			Ordinals = <#=otherClassName.ToLower()#>.Ordinals;
-<#  } else { #>
+<#
+			}
+			else
+			{
+#>
 			Initialize(<#=otherClassName.ToLower()#>.ToRgb());
-<#  } #>
+<#
+			}
+#>
 		}
 
-<# if(otherClassName != "Rgb") { #>
-        public I<#=otherClassName#> To<#=otherClassName#>()
+<#
+		if (otherClassName != "Rgb")
 		{
-            return new <#=otherClassName#>Color(this);
-		}
-<# } 
-   } 
 #>
-    }
-<# } #>
+		public I<#=otherClassName#> To<#=otherClassName#>()
+		{
+			return new <#=otherClassName#>Color(this);
+		}
+<#
+		}
+			if (otherClassName != className)
+			{
+#>
+		public static implicit operator <#=className#>Color(<#=otherClassName#> <#=otherClassName.ToLower()#>)
+		{
+			return new <#=className#>Color(<#=otherClassName.ToLower()#>);
+		}
+
+		public static implicit operator <#=className#>Color(<#=otherClassName#>Color <#=otherClassName.ToLower()#>)
+		{
+			return new <#=className#>Color(<#=otherClassName.ToLower()#>);
+		}
+<#
+			}
+		}
+#>
+	}
+<#
+	}
+#>
 }

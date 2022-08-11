@@ -8,6 +8,7 @@ namespace PoshCode.Pansies.Commands
     public class GetComplementCommand : Cmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = true, Position = 0)]
+        [Alias("BackgroundColor")]
         public RgbColor Color { get; set; }
 
         // Force the luminance to have "enough" contrast
@@ -24,16 +25,29 @@ namespace PoshCode.Pansies.Commands
         [Parameter()]
         public SwitchParameter Passthru { get; set; }
 
+        [Parameter()]
+        public SwitchParameter AsObject { get; set; }
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
 
-            if (Passthru)
+            if (!AsObject)
             {
-                WriteObject(Color);
-            }
+                if (Passthru)
+                {
+                    WriteObject(Color);
+                }
 
-            WriteObject(Color.GetComplement(HighContrast, BlackAndWhite));
+                WriteObject(Color.GetComplement(HighContrast, BlackAndWhite));
+            }
+            else
+            {
+                WriteObject(new PSObject(new {
+                    BackgroundColor = Color,
+                    ForegroundColor = Color.GetComplement(HighContrast, BlackAndWhite)
+                }));
+            }
         }
     }
 }

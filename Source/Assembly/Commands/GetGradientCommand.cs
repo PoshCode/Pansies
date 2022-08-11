@@ -36,7 +36,7 @@ namespace PoshCode.Pansies.Commands
         [Parameter]
         public SwitchParameter Flatten { get; set; }
 
-        [Parameter]
+        [Parameter(ValueFromPipeline = true)]
         [ValidateSet("Hsl", "Lch", "Rgb", "Lab", "Xyz")]
         public string ColorSpace { get; set; } = "Lch";
 
@@ -47,9 +47,9 @@ namespace PoshCode.Pansies.Commands
             Get2DGradient = typeof(Gradient).GetMethod("Get2DGradient", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
         }
 
-        protected override void EndProcessing()
+        protected override void ProcessRecord()
         {
-            base.EndProcessing();
+            base.ProcessRecord();
 
             if (Width <= 0)
             {
