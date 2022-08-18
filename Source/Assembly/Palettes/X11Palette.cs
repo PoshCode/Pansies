@@ -1,4 +1,9 @@
-﻿using PoshCode.Pansies.ColorSpaces.Comparisons;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Language;
+using PoshCode.Pansies.ColorSpaces.Comparisons;
 using PoshCode.Pansies.Palettes;
 
 namespace PoshCode.Pansies.Palettes
@@ -665,8 +670,18 @@ namespace PoshCode.Pansies.Palettes
         YellowGreen
     }
 
-    public class X11Palette : Palette<RgbColor>
+    public class X11Palette : Palette<RgbColor>, IArgumentCompleter
     {
+        public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+        {
+            WildcardPattern wildcard = new WildcardPattern(wordToComplete + "*", WildcardOptions.IgnoreCase);
+
+            foreach (var name in typeof(X11ColorName).GetEnumValues().Cast<X11ColorName>().Where(s => wildcard.IsMatch(s.ToString())))
+            {
+                yield return new CompletionResult(name.ToString(), this[(int)name].ToVt(true) + " \u001B[0m " + name.ToString(), CompletionResultType.ParameterValue, name.ToString());
+            }
+        }
+
         public override IColorSpaceComparison ComparisonAlgorithm { get; set; } = new CieDe2000Comparison();
 
         public X11Palette()

@@ -1,7 +1,12 @@
 ﻿using PoshCode.Pansies.ColorSpaces;
 using PoshCode.Pansies.Palettes;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Language;
 
 namespace PoshCode.Pansies
 {
@@ -102,6 +107,11 @@ namespace PoshCode.Pansies
             B = blue;
         }
         #endregion
+
+        public RgbColor(X11ColorName colorName)
+        {
+            SetX11Color(colorName);
+        }
 
         //public RgbColor(RgbColor color)
         //{
@@ -297,6 +307,8 @@ namespace PoshCode.Pansies
             };
         }
 
+
+
         public static RgbColor FromRgb(string rgbHex)
         {
             var result = ParseRGB(rgbHex);
@@ -339,6 +351,11 @@ namespace PoshCode.Pansies
             if (inputData is ConsoleColor)
             {
                 return new RgbColor((ConsoleColor)inputData);
+            }
+
+            if (inputData is X11ColorName)
+            {
+                return new RgbColor((X11ColorName)inputData);
             }
 
             if (inputData is string)
