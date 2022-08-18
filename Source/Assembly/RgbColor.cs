@@ -1,7 +1,12 @@
 ﻿using PoshCode.Pansies.ColorSpaces;
 using PoshCode.Pansies.Palettes;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Language;
 
 namespace PoshCode.Pansies
 {
