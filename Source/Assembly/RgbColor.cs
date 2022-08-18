@@ -103,6 +103,11 @@ namespace PoshCode.Pansies
         }
         #endregion
 
+        public RgbColor(X11ColorName colorName)
+        {
+            SetX11Color(colorName);
+        }
+
         //public RgbColor(RgbColor color)
         //{
         //    _mode = color._mode;
@@ -297,6 +302,8 @@ namespace PoshCode.Pansies
             };
         }
 
+
+
         public static RgbColor FromRgb(string rgbHex)
         {
             var result = ParseRGB(rgbHex);
@@ -339,6 +346,11 @@ namespace PoshCode.Pansies
             if (inputData is ConsoleColor)
             {
                 return new RgbColor((ConsoleColor)inputData);
+            }
+
+            if (inputData is X11ColorName)
+            {
+                return new RgbColor((X11ColorName)inputData);
             }
 
             if (inputData is string)
