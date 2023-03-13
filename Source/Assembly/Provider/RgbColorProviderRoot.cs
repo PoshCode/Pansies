@@ -22,8 +22,8 @@ namespace PoshCode.Pansies.Provider
 
         public override IEnumerable<IPathNode> GetNodeChildren(CodeOwls.PowerShell.Provider.PathNodeProcessors.IProviderContext providerContext)
         {
-            var color = providerContext.Path.Split(new[] { '\\' }, 2).Last();
-            var mode = providerContext.Path.StartsWith("RgbColor::Background:\\") ? RgbColorMode.Background : RgbColorMode.Foreground;
+            var color = providerContext.Path.Split(new[] { System.IO.Path.DirectorySeparatorChar }, 2).Last();
+            var mode = providerContext.Path.StartsWith("RgbColor::Background:" + System.IO.Path.DirectorySeparatorChar ) ? RgbColorMode.Background : RgbColorMode.Foreground;
 
             if (string.IsNullOrEmpty(color) || color.Contains("*"))
             {

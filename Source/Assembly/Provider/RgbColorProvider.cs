@@ -29,10 +29,10 @@ namespace PoshCode.Pansies.Provider
             return new Collection<PSDriveInfo>
             {
                 new RgbColorDrive(
-                    new PSDriveInfo( "Fg", ProviderInfo, "RgbColor::Foreground:\\", "Foreground Colors", null )
+                    new PSDriveInfo( "Fg", ProviderInfo, "RgbColor::Foreground:" + System.IO.Path.DirectorySeparatorChar, "Foreground Colors", null )
                 ),
                 new RgbColorDrive(
-                    new PSDriveInfo( "Bg", ProviderInfo, "RgbColor::Background:\\", "Background Colors", null )
+                    new PSDriveInfo( "Bg", ProviderInfo, "RgbColor::Background:" + System.IO.Path.DirectorySeparatorChar, "Background Colors", null )
                 )
             };
         }
