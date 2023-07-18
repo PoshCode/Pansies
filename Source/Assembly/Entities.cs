@@ -44,13 +44,13 @@ namespace PoshCode.Pansies
             int end = 0, start = 0;
             while((start = value.IndexOf('&', end)) != -1)
             {
-                string result;
-                output.Append(value.Substring(end, start - end));
                 // if it's at the end, we're done here
                 if (start == value.Length - 1)
                 {
                     break;
                 }
+                string result;
+                output.Append(value.Substring(end, start - end));
 
                 // We found a '&'. Now look for the next ';' or '&'.
                 // If we find another '&' then this is not an entity, but that one might be
