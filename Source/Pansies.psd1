@@ -77,6 +77,18 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        2.6.1: Fix a bug decoding entities when the & is the last character in the string
+        2.6.0: Added an argument completer for the X11Palette:
+        function Get-Greeting {
+            param(
+                [ArgumentCompleter([PoshCode.Pansies.Palettes.X11Palette])]
+                [RgbColor]$color,
+                [string]$message = "Hello World"
+            )
+
+            "$($color.ToVt())$message"
+        }
+        2.5.0: Add an X11ColorName constructor so you can cast [RgbColor]"Goldenrod"
         2.4.0: Switch to IPSMetadata serialization
             - Also add some cast constructors
             - Also add pipeline parameterSets for Get-Complement and Get-Cradient
