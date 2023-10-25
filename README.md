@@ -42,7 +42,7 @@ cd Pansies
 .\Build.ps1
 ```
 
-Note: Because I'm including p2f as a submodule, you may ocassionally need to update it with:
+Note: Because I'm including p2f as a submodule, you may occasionally need to update it with:
 
 ```posh
 git submodule update --init --recursive
