@@ -3,5 +3,4 @@
     # The rest of the paths are relative to the manifest
     OutputDirectory          = ".."
     VersionedOutputDirectory = $true
-    CopyDirectories          = @('../assemblies')
 }

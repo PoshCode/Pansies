@@ -48,8 +48,12 @@
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
-    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj" />
+    <ProjectReference
+      Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj"
+      PrivateAssets="All" />
+    <ProjectReference
+      Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj"
+      PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup>

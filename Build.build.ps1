@@ -41,9 +41,6 @@ $InformationPreference = "Continue"
 # The name of the module to publish
 $script:PSModuleName = "TerminalBlocks"
 
-# The DotNetPublishRoot is the "publish" folder within the OutputRoot (used for dotnet publish output)
-$script:DotNetPublishRoot ??= Join-Path $script:BuildRoot assemblies
-
 $Tasks = "Tasks", "../Tasks", "../../Tasks" | Convert-Path -ErrorAction Ignore | Select-Object -First 1
 Write-Information "$($PSStyle.Foreground.BrightCyan)Found shared tasks in $Tasks" -Tag "InvokeBuild"
 ## Self-contained build script - can be invoked directly or via Invoke-Build
