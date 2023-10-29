@@ -18,7 +18,7 @@ ARG --global NUGET_API_KEY
 deps:
     # Dotnet tools and scripts installed by PSGet
     ENV PATH=$HOME/.dotnet/tools:$HOME/.local/share/powershell/Scripts:$PATH
-    RUN mkdir $OUTPUT_ROOT $TEST_ROOT $TEMP_ROOT /Tasks
+    RUN mkdir /Tasks
     # I'm using Invoke-Build tasks from this other repo which rarely changes
     COPY tasks+tasks/* /Tasks
     # Dealing with dependencies first allows docker to cache packages for us
@@ -31,6 +31,7 @@ deps:
 
 build:
     FROM +deps
+    RUN mkdir $OUTPUT_ROOT $TEST_ROOT $TEMP_ROOT
     COPY . .
     # make sure you have bin and obj in .earthlyignore, as their content from context might cause problems
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Build", "-File", "Build.build.ps1"]
