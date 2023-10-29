@@ -25,16 +25,16 @@ deps:
     # So the dependency cach only re-builds when you add a new dependency
     COPY RequiredModules.psd1 .
     COPY *.csproj .
-    RUN ["pwsh", "--file", "/Tasks/_Bootstrap.ps1", "-RequiredModulesPath", "RequiredModules.psd1"]
+    RUN ["pwsh", "--file", "/Tasks/_Bootstrap.ps1", "-RequiredModulesPath", "RequiredModules.psd1", "-Verbose"]
     # Install-RequiredModule does not support pre-release modules
-    RUN ["pwsh", "--command", "Update-Module", "ModuleBuilder", "-AllowPreRelease"]
+    RUN ["pwsh", "--command", "Update-Module", "ModuleBuilder", "-AllowPreRelease", "-Verbose"]
 
 build:
     FROM +deps
     RUN mkdir $OUTPUT_ROOT $TEST_ROOT $TEMP_ROOT
     COPY . .
     # make sure you have bin and obj in .earthlyignore, as their content from context might cause problems
-    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Build", "-File", "Build.build.ps1"]
+    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Build", "-File", "Build.build.ps1", "-Verbose"]
 
     # SAVE ARTIFACT [--keep-ts] [--keep-own] [--if-exists] [--force] <src> [<artifact-dest-path>] [AS LOCAL <local-path>]
     SAVE ARTIFACT $OUTPUT_ROOT/$MODULE_NAME AS LOCAL ./output/$MODULE_NAME
@@ -43,7 +43,7 @@ test:
     FROM +build
     COPY . .
     # make sure you have bin and obj in .earthlyignore, as their content from context might cause problems
-    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Test", "-File", "Build.build.ps1"]
+    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Test", "-File", "Build.build.ps1", "-Verbose"]
 
     # SAVE ARTIFACT [--keep-ts] [--keep-own] [--if-exists] [--force] <src> [<artifact-dest-path>] [AS LOCAL <local-path>]
     SAVE ARTIFACT $TEST_ROOT AS LOCAL ./output/tests
@@ -56,5 +56,5 @@ test:
 
 publish:
     FROM +build
-    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Publish", "-File", "Build.build.ps1"]
+    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Publish", "-File", "Build.build.ps1", "-Verbose"]
     SAVE ARTIFACT $OUTPUT_ROOT/publish AS LOCAL ./output/publish
