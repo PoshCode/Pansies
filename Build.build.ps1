@@ -37,6 +37,7 @@ param(
     }
 )
 $InformationPreference = "Continue"
+$ErrorView = 'DetailedView'
 
 # The name of the module to publish
 $script:PSModuleName = "TerminalBlocks"
