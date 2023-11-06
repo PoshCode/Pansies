@@ -6,7 +6,7 @@ WORKDIR /project
 ARG --global EARTHLY_BUILD_SHA
 ARG --global EARTHLY_GIT_BRANCH
 # These are my common paths, used in my shared /Tasks repo
-ARG --global OUTPUT_ROOT=/output
+ARG --global OUTPUT_ROOT=/Modules
 ARG --global TEST_ROOT=/tests
 ARG --global TEMP_ROOT=/temp
 # These are my common build args, used in my shared /Tasks repo
@@ -26,8 +26,6 @@ deps:
     COPY RequiredModules.psd1 .
     COPY *.csproj .
     RUN ["pwsh", "--file", "/Tasks/_Bootstrap.ps1", "-RequiredModulesPath", "RequiredModules.psd1"]
-    # Install-RequiredModule does not support pre-release modules
-    RUN ["pwsh", "--command", "Update-Module", "ModuleBuilder", "-AllowPreRelease"]
 
 build:
     FROM +deps
@@ -37,7 +35,7 @@ build:
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Build", "-File", "Build.build.ps1"]
 
     # SAVE ARTIFACT [--keep-ts] [--keep-own] [--if-exists] [--force] <src> [<artifact-dest-path>] [AS LOCAL <local-path>]
-    SAVE ARTIFACT $OUTPUT_ROOT/$MODULE_NAME AS LOCAL ./output/$MODULE_NAME
+    SAVE ARTIFACT $OUTPUT_ROOT/$MODULE_NAME AS LOCAL ./Modules/$MODULE_NAME
 
 test:
     FROM +build
@@ -46,15 +44,9 @@ test:
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Test", "-File", "Build.build.ps1"]
 
     # SAVE ARTIFACT [--keep-ts] [--keep-own] [--if-exists] [--force] <src> [<artifact-dest-path>] [AS LOCAL <local-path>]
-    SAVE ARTIFACT $TEST_ROOT AS LOCAL ./output/tests
-# runtime:
-#     FROM mcr.microsoft.com/dotnet/aspnet:7.0
-#     WORKDIR /app
-#     COPY +build/output .
-#     ENTRYPOINT ["dotnet", "ContainerApp.WebApp.dll"]
-#     SAVE IMAGE --push containerapp-webapp:earthly
+    SAVE ARTIFACT $TEST_ROOT AS LOCAL ./Modules/$MODULE_NAME-TestResults
 
 publish:
     FROM +build
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Publish", "-File", "Build.build.ps1", "-Verbose"]
-    SAVE ARTIFACT $OUTPUT_ROOT/publish AS LOCAL ./output/publish
+    SAVE ARTIFACT $OUTPUT_ROOT/publish/*.nupkg AS LOCAL ./Modules/$MODULE_NAME-Packages/

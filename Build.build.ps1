@@ -41,6 +41,8 @@ $ErrorView = 'DetailedView'
 
 # The name of the module to publish
 $script:PSModuleName = "TerminalBlocks"
+# Use Env because Earthly can override it
+$Env:OUTPUT_ROOT ??= Join-Path $BuildRoot Modules
 
 $Tasks = "Tasks", "../Tasks", "../../Tasks" | Convert-Path -ErrorAction Ignore | Select-Object -First 1
 Write-Information "$($PSStyle.Foreground.BrightCyan)Found shared tasks in $Tasks" -Tag "InvokeBuild"
