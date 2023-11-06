@@ -50,3 +50,10 @@ publish:
     FROM +build
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Publish", "-File", "Build.build.ps1", "-Verbose"]
     SAVE ARTIFACT $OUTPUT_ROOT/publish/*.nupkg AS LOCAL ./Modules/$MODULE_NAME-Packages/
+
+# this literally exists just to publish all the artifact from one step
+github:
+    FROM +publish
+    SAVE ARTIFACT $OUTPUT_ROOT/$MODULE_NAME AS LOCAL ./Modules/$MODULE_NAME
+    SAVE ARTIFACT $TEST_ROOT AS LOCAL ./Modules/$MODULE_NAME-TestResults
+    SAVE ARTIFACT $OUTPUT_ROOT/publish/*.nupkg AS LOCAL ./Modules/$MODULE_NAME-Packages/

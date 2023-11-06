@@ -21,17 +21,20 @@ jobs:
         submodules: true
         fetch-depth: 0
 
-    - name: earthly +publish
-      run: earthly --strict +publish
+    - name: earthly +github
+      run: earthly --strict +github
 
     - uses: actions/upload-artifact@v3
       with:
+        name: Pansies
         path: Modules/Pansies
 
     - uses: actions/upload-artifact@v3
       with:
+        name: TestResults
         path: Modules/Pansies-TestResults
 
     - uses: actions/upload-artifact@v3
       with:
+        name: Packages
         path: Modules/Pansies-Packages
