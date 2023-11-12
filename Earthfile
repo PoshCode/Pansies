@@ -1,7 +1,7 @@
 VERSION 0.7
 IMPORT github.com/poshcode/tasks
 FROM mcr.microsoft.com/dotnet/sdk:7.0
-WORKDIR /project
+WORKDIR /work
 
 ARG --global EARTHLY_BUILD_SHA
 ARG --global EARTHLY_GIT_BRANCH
@@ -15,10 +15,12 @@ ARG --global CONFIGURATION=Release
 ARG --global PSMODULE_PUBLISH_KEY
 ARG --global NUGET_API_KEY
 
-deps:
+worker:
     # Dotnet tools and scripts installed by PSGet
     ENV PATH=$HOME/.dotnet/tools:$HOME/.local/share/powershell/Scripts:$PATH
-    RUN mkdir /Tasks
+    RUN mkdir /Tasks \
+        && git config --global user.email "Jaykul@HuddledMasses.org" \
+        && git config --global user.name "Earthly Build"
     # I'm using Invoke-Build tasks from this other repo which rarely changes
     COPY tasks+tasks/* /Tasks
     # Dealing with dependencies first allows docker to cache packages for us
@@ -28,7 +30,7 @@ deps:
     RUN ["pwsh", "--file", "/Tasks/_Bootstrap.ps1", "-RequiredModulesPath", "RequiredModules.psd1"]
 
 build:
-    FROM +deps
+    FROM +worker
     RUN mkdir $OUTPUT_ROOT $TEST_ROOT $TEMP_ROOT
     COPY . .
     # make sure you have bin and obj in .earthlyignore, as their content from context might cause problems
@@ -38,22 +40,25 @@ build:
     SAVE ARTIFACT $OUTPUT_ROOT/$MODULE_NAME AS LOCAL ./Modules/$MODULE_NAME
 
 test:
+    # If we run a target as a reference in FROM or COPY, it's outputs will not be produced
     FROM +build
-    COPY . .
     # make sure you have bin and obj in .earthlyignore, as their content from context might cause problems
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Test", "-File", "Build.build.ps1"]
 
     # SAVE ARTIFACT [--keep-ts] [--keep-own] [--if-exists] [--force] <src> [<artifact-dest-path>] [AS LOCAL <local-path>]
     SAVE ARTIFACT $TEST_ROOT AS LOCAL ./Modules/$MODULE_NAME-TestResults
 
+pack:
+    BUILD +build # So that we get the build artifact too
+    FROM +build
+    RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Pack", "-File", "Build.build.ps1", "-Verbose"]
+    SAVE ARTIFACT $OUTPUT_ROOT/publish/*.nupkg AS LOCAL ./Modules/$MODULE_NAME-Packages/
+
 publish:
     FROM +build
     RUN ["pwsh", "--command", "Invoke-Build", "-Task", "Publish", "-File", "Build.build.ps1", "-Verbose"]
-    SAVE ARTIFACT $OUTPUT_ROOT/publish/*.nupkg AS LOCAL ./Modules/$MODULE_NAME-Packages/
 
-# this literally exists just to publish all the artifact from one step
-github:
-    FROM +publish
-    SAVE ARTIFACT $OUTPUT_ROOT/$MODULE_NAME AS LOCAL ./Modules/$MODULE_NAME
-    SAVE ARTIFACT $TEST_ROOT AS LOCAL ./Modules/$MODULE_NAME-TestResults
-    SAVE ARTIFACT $OUTPUT_ROOT/publish/*.nupkg AS LOCAL ./Modules/$MODULE_NAME-Packages/
+all:
+    # BUILD +build
+    BUILD +test
+    BUILD +pack

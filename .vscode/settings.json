@@ -6,7 +6,6 @@
     "editor.insertSpaces": true,
     "powershell.codeFormatting.preset": "OTBS",
     "powershell.codeFormatting.ignoreOneLineBlock": false,
-    "powershell.codeFormatting.newLineAfterCloseBrace": false,
     "powershell.codeFormatting.useCorrectCasing": true,
     "powershell.codeFormatting.alignPropertyValuePairs": true,
     "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
