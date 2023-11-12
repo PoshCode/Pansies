@@ -1,6 +1,5 @@
-# ignore packages (this is for nuget stuff)
-packages/
 # ignore output (because we put stuff there)
+Modules/
 output/
 
 # Ignore version number folders (these are our intermediate "output" directories for testing)
@@ -10,6 +9,8 @@ output/
 bin/
 obj/
 lib/
+assemblies/
+
 # ignore visual studio artifacts
 *.suo
 /.vs/

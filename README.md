@@ -5,16 +5,17 @@
 This MIT Licensed cross-platform binary module contains classes and functions for doing ANSI colored output, named entities, and more in the console from .NET and PowerShell on platforms where they are supported: Windows 10, Linux, OS X, etc.
 
 ```posh
-I ♥ PS> function prompt { "I $(New-Text "&hearts;" -fg "DarkRed") PS> " }
+PS>function prompt { "I $(Text '&redheart; ' -fg Red) PS> " }
+I ❤️ PS>
 ```
 
 The goal of this project was to experiment with some classes and interfaces to address [PowerShell #2381](https://github.com/PowerShell/PowerShell/issues/2381) and give PowerShell full RGB support for Write-Host, but also provide full color support in format files, etc. Along the way, I've incorporated a whole library worth of color space theory to make comparing colors and generating gradients and complementary colors easy.
 
 ## Installing
 
-For terminal output, you require an ANSI-capable host like xTerm, Windows Terminal, ConEmu (Cmder), or PowerShell or Cmd on Windows 10.
+For terminal output, you require an ANSI-capable host like xTerm, wezterm, contour, ConEmu (Cmder), or Windows Terminal (or just PowerShell.exe) on Windows 10 or later.
 
-For PowerShell support, you need PowerShell 5.x or higher. You can install it from [the gallery](https://www.powershellgallery.com/packages/Pansies):
+For PowerShell support, you need PowerShell 5.x or higher. You can [install PANSIES from the PowerShell Gallery](https://www.powershellgallery.com/packages/Pansies):
 
 ```posh
 Install-Module Pansies -AllowClobber
@@ -23,32 +24,29 @@ Install-Module Pansies -AllowClobber
 For .NET Projects, you can find PANSIES on NuGet. Install with:
 
 ```posh
-dotnet add reference PANSIES
+dotnet add reference PoshCode.Pansies
 ```
 
-If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/issues):
+If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/issues).
 
-## Building from source.
+## Building from source
 
-Compiling Pansies requires the .NET Command Line Tools (v2.0.2 or newer) and my [Configuration](http://github.com/PoshCode/Configuration) module.
+First things first: there is a submodule being used (my [personally modified version](https://github.com/Jaykul/p2f) version of [beefarino/p2f](https://github.com/beefarino/p2f)), so you need to `git clone --recursive` or run `git submodule update --init --recursive` after cloning. You will also occasionally need to update it with `git submodule update --init --recursive`.
 
-There is one submodule being used (my [personally modified version](https://github.com/Jaykul/p2f) version of [beefarino/p2f](https://github.com/beefarino/p2f)), but it's very simple to get everything and compile.
+The easiest, fastest build uses [earthly](https://docs.earthly.dev/). Earthly builds use containers, so on Windows it requires WSL2, Docker Desktop, and then the earthly CLI. If you already have those, you can just run `earthly +build` to build the module.
 
-With those dependencies preinstalled and on your path, you can just:
+### Building without earthly
 
-```posh
-git clone --recursive https://github.com/PoshCode/Pansies.git
-cd Pansies
-.\Build.ps1
+Compiling Pansies requires the [.NET SDK](https://dotnet.microsoft.com/en-us/download), and building the module additionally requires [Invoke-Build](https://github.com/nightroman/Invoke-Build), [ModuleBuilder](https://github.com/PoshCode/ModuleBuilder), and my [Configuration](http://github.com/PoshCode/Configuration) and [Metadata](https://github.com/PoshCode/Metadata) modules. Once you have `dotnet`, you can install all of the PowerShell dependencies with:
+
+```PowerShell
+Install-Script Install-RequiredModule
+Install-RequiredModule
 ```
 
-Note: Because I'm including p2f as a submodule, you may ocassionally need to update it with:
+With those dependencies installed and on your path, you can just run `Invoke-Build`.
 
-```posh
-git submodule update --init --recursive
-```
-
-### Currently Pansies provides six commands:
+### Currently Pansies provides six commands
 
 Cmdlet         | Description
 ------         | -----------

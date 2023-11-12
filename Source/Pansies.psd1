@@ -37,7 +37,7 @@ Description = 'A PowerShell module for handling color and cursor positioning via
 FormatsToProcess = @("Pansies.format.ps1xml")
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @( "lib\Pansies.dll" )
+NestedModules = @( "lib/Pansies.dll" )
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @()
@@ -77,6 +77,18 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        2.6.1: Fix a bug decoding entities when the & is the last character in the string
+        2.6.0: Added an argument completer for the X11Palette:
+        function Get-Greeting {
+            param(
+                [ArgumentCompleter([PoshCode.Pansies.Palettes.X11Palette])]
+                [RgbColor]$color,
+                [string]$message = "Hello World"
+            )
+
+            "$($color.ToVt())$message"
+        }
+        2.5.0: Add an X11ColorName constructor so you can cast [RgbColor]"Goldenrod"
         2.4.0: Switch to IPSMetadata serialization
             - Also add some cast constructors
             - Also add pipeline parameterSets for Get-Complement and Get-Cradient

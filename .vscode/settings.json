@@ -1,0 +1,17 @@
+{
+    "files.encoding": "utf8",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "powershell.codeFormatting.preset": "OTBS",
+    "powershell.codeFormatting.ignoreOneLineBlock": false,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.codeFormatting.alignPropertyValuePairs": true,
+    "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+    "powershell.scriptAnalysis.settingsPath": "ScriptAnalyzerSettings.psd1",
+    "files.associations": {
+        "*.ps1xml": "xml",
+        ".earthlyignore": "ignore"
+    }
+}

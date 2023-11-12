@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: 1
+    steps:
+    - uses: earthly/actions-setup@v1
+      with:
+        # version: v0.7.21
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+        fetch-depth: 0
+
+    - name: earthly +all
+      run: earthly --strict +all
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Pansies
+        path: Modules/Pansies
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: TestResults
+        path: Modules/Pansies-TestResults
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Packages
+        path: Modules/Pansies-Packages

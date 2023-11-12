@@ -3,6 +3,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>PoshCode.Pansies</RootNamespace>
     <DebugType>embedded</DebugType>
+    <PackageId>PoshCode.Pansies</PackageId>
+    <Authors>Joel Bennett</Authors>
+    <Company>HuddledMasses.org</Company>
+    <PackRelease>Release</PackRelease>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <!-- The T4 TextTemplatingFileGenerator Service-->
@@ -27,8 +33,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
     <!-- I wouldn't want to double-compile the stuff in here -->
     <Compile Remove="lib\**" />
+    <Compile Remove="output\**" />
+    <Compile Remove="assemblies\**" />
     <!-- My output folders start with numbers. Make sure we don't "build" them -->
     <Compile Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
     <EmbeddedResource Remove="0*\**;1*\**;2*\**;3*\**;4*\**;5*\**;6*\**;7*\**;8*\**;9*\**" />
@@ -39,7 +48,22 @@
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj" />
-    <ProjectReference Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj" />
+    <ProjectReference
+      Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Paths\CodeOwls.PowerShell.Paths.csproj"
+      PrivateAssets="All" />
+    <ProjectReference
+      Include="lib\p2f\src\CodeOwls.PowerShell\CodeOwls.PowerShell.Provider\CodeOwls.PowerShell.Provider.csproj"
+      PrivateAssets="All" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <!-- Customize the nupkg process by copying some extra files https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets -->
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);PackEverything</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <Target Name="PackEverything">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)CodeOwls.PowerShell.Paths.dll" />
+      <BuildOutputInPackage Include="$(OutputPath)CodeOwls.PowerShell.Provider.dll" />
+    </ItemGroup>
+  </Target>
 </Project>
