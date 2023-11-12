@@ -1,8 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches: [ main ]
+  push: {}
   pull_request:
     branches: [ main ]
 
@@ -14,7 +13,6 @@ jobs:
     steps:
     - uses: earthly/actions-setup@v1
       with:
-        # version: v0.7.21
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: actions/checkout@v4
@@ -22,8 +20,17 @@ jobs:
         submodules: true
         fetch-depth: 0
 
-    - name: earthly +all
-      run: earthly --strict +all
+    - name: earthly +test
+      if: github.ref != 'refs/heads/main'
+      run: earthly --strict +test
+
+    - name: earthly +push
+      if: github.ref == 'refs/heads/main'
+      run: earthly --push --secret NUGET_API_KEY= --secret PSGALLERY_API_KEY --strict +all
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
 
     - uses: actions/upload-artifact@v3
       with:
