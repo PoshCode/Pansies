@@ -1,5 +1,6 @@
 # ignore output (because we put stuff there)
 /output/*
+/Modules/*
 assemblies/
 # ignore binary output files and folders
 bin/

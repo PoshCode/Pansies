@@ -13,8 +13,7 @@ ARG --global TEMP_ROOT=/temp
 # These are my common build args, used in my shared /Tasks repo
 ARG --global MODULE_NAME=Pansies
 ARG --global CONFIGURATION=Release
-# ARG --global PSMODULE_PUBLISH_KEY
-# ARG --global NUGET_API_KEY
+
 
 worker:
     # Dotnet tools and scripts installed by PSGet
