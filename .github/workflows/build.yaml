@@ -26,23 +26,23 @@ jobs:
 
     - name: earthly +push
       if: github.ref == 'refs/heads/main'
-      run: earthly --push --secret NUGET_API_KEY= --secret PSGALLERY_API_KEY --strict +all
+      run: earthly --push --secret NUGET_API_KEY --secret PSGALLERY_API_KEY --strict +all
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: Pansies
         path: Modules/Pansies
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: TestResults
         path: Modules/Pansies-TestResults
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: Packages
         path: Modules/Pansies-Packages

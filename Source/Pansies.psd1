@@ -49,7 +49,7 @@ FunctionsToExport = @()
 CmdletsToExport = @('New-Text', 'New-Hyperlink', 'Write-Host', 'Get-Gradient', 'Get-Complement', 'Get-ColorWheel')
 
 # Variables to export from this module
-# VariablesToExport = '*'
+VariablesToExport = 'RgbColorCompleter'
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = 'Text', 'Url'
@@ -137,5 +137,6 @@ PrivateData = @{
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion       = '5.1'
     CompatiblePSEditions    = @('Core','Desktop')
+
 }
 
