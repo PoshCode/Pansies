@@ -4,7 +4,7 @@
 RootModule = 'Pansies.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.2.0'
+ModuleVersion = '2.11.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -77,54 +77,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-        2.6.1: Fix a bug decoding entities when the & is the last character in the string
-        2.6.0: Added an argument completer for the X11Palette:
-        function Get-Greeting {
-            param(
-                [ArgumentCompleter([PoshCode.Pansies.Palettes.X11Palette])]
-                [RgbColor]$color,
-                [string]$message = "Hello World"
-            )
+        2.11.0 Added a ColorCompleterAttribute (on PowerShell 7 only)
+               On Windows PowerShell, you can still use [ArgumentCompleter([PoshCode.Pansies.Palettes.X11Palette])]
+               Additionally, on module load, will register the ArgumentCompleter for all commands with RGBColor parameters
 
-            "$($color.ToVt())$message"
-        }
-        2.5.0: Add an X11ColorName constructor so you can cast [RgbColor]"Goldenrod"
-        2.4.0: Switch to IPSMetadata serialization
-            - Also add some cast constructors
-            - Also add pipeline parameterSets for Get-Complement and Get-Cradient
-            - Also minimize the whitespace when outputting color formatted
-            - Also enabled emoji and nerdfont entities by default
-        2.3.1: Fix index problem decoding entities
-        2.3.0: Add emoji support
-            - Also add nerdfont support
-        2.2.0: Add static methods for speed optimization
-        2.1.0: Hyperlinks
-            - Added New-Hyperlink (alias URL) now that Windows Terminal supports them.
-              Note that Windows Console (conhost) _does not_ support hyperlinks, and any terminal which does not will ignore them.
-              For compatibility, always use the Uri as the text (i.e. do not pass the object parameter).
-            - Added -PersistentColor option to reset the Foreground and Background for each object output when outputting arrays.
-        2.0.0: Breaking change for the library:
-            - Merge the "Colormine" namespace into PoshCode.Pansies
-              Originally, this was a 3rd party MIT licensed library by @THEJoeZack.
-              He pulled his repo, so I am now just integrating it into Pansies
-            - Expose Complement and Gradient in the C# library for others to use
-                - Add GetComplement() method to RgbColor
-                - Add PoshCode.Pansies.Gradient class with GetGradient static method
-                - Add Get-Complement and Get-Gradient wrappers in module assembly
-        1.3.0: The color provider release
-            - Add a RgbColor PSProvider that can convert colors to their escape sequences
-            - Add Fg: drive and Bg: drive so you can "$Fg:Red$Bg:Blue$YourMessage"
-            - Add support for x11 color names to make the drives more useful
-        1.2.2: Use full namespace + class name for RgbColor
-        1.2.1: Fix cmdlet export so New-Text and Write-Host show back up
-               Make EXTERNALHELP work for functions
-               Provide help for Get-Complement
-        1.2.0: Better support for using ConsoleColors
-               Added Get-Complement to calculate the HSL complement or contrasting colors
-               Fixed ConsolePalette so it reads the current console colors when possible
-        1.1.0: Support for serialization by the Configuration module
-               Fix output of "bright" color object in ConEmu (workaround ConEmu bug)
-        1.0.0: Pre-release version with support for RGB colors
+               Updated the NerdFont characters and code points to deal with the migration of the MDI characters in 2.3.0+
         '
 
     } # End of PSData hashtable
