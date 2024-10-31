@@ -41,14 +41,27 @@ namespace PoshCode.Pansies.Provider
 
     class ColorContentReader : IContentReader
     {
-        private RgbColor Color;
-        private RgbColorMode RgbColorMode;
+        private string Content;
 
         public ColorContentReader(RgbColor color, RgbColorMode mode)
         {
-            Color = color;
-            RgbColorMode = mode;
+            if (color == null)
+            {
+                if (mode == RgbColorMode.Background)
+                {
+                    Content = "\u001B[49m";
+                }
+                else
+                {
+                    Content = "\u001B[39m";
+                }
+            }
+            else
+            {
+                Content = color.ToVtEscapeSequence(mode == RgbColorMode.Background);
+            }
         }
+
         public void Close()
         {
         }
@@ -59,21 +72,12 @@ namespace PoshCode.Pansies.Provider
 
         public IList Read(long readCount)
         {
-            if (Color == null)
-            {
-                if (RgbColorMode == RgbColorMode.Background)
-                {
-                    return new[] { "\u001B[49m" };
-                }
-                else
-                {
-                    return new[] { "\u001B[39m" };
-                }
+            if (Content != null)  {
+                var result = new[] { Content };
+                Content = null;
+                return result;
             }
-            else
-            {
-                return new[] { Color.ToVtEscapeSequence(RgbColorMode == RgbColorMode.Background) };
-            }
+            else return null;
         }
 
         public void Seek(long offset, SeekOrigin origin)
@@ -98,7 +102,7 @@ namespace PoshCode.Pansies.Provider
 
         /// <summary>
         /// supplies the item for the current path value
-        /// 
+        ///
         /// the item it wrapped in either a PathValue instance
         /// that describes the item, its name, and whether it is
         /// a container.
