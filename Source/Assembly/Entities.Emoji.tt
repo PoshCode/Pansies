@@ -1,0 +1,78 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".Generated.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import Namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections.Immutable" #>
+<#@ import namespace="System.Net.Http" #>
+<#@ import namespace="System.Net.Http.Json" #>
+<#@ import namespace="System.Globalization" #>
+<#
+
+Regex TestLinePattern = new(@"
+                ^
+                    (?<codePoints>[0-9A-Z]+(?:\s[0-9A-Z]+)*)
+                    \s*;\s*
+                    (?<status>[^\s]+)
+                    \s*\#\s*
+                    (?<emojiName>.*)
+                $", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+
+(string Emoji, string Status, string Name, string String) ParseEmojiTestLine(string line)
+{
+    Match match = TestLinePattern.Match(line);
+    if (!match.Success)
+    {
+        throw new ArgumentException($"line is malformed. it must match the regex '{TestLinePattern}'. Offending line: {line}");
+    }
+
+    IEnumerable<string> codePointStrings = match.Groups["codePoints"].Value.Split(" ")
+        .Select(str => int.Parse(str, NumberStyles.AllowHexSpecifier))
+        .Select(i => i.ToString("X8"));
+    string status = match.Groups["status"].Value;
+    string[] names = match.Groups["emojiName"].Value.Trim().Split(" ",3);
+    string representation = "\\U" + string.Join("\\U",codePointStrings);
+
+    return (names[0], status, names[2], representation);
+}
+
+HttpClient unicode = new() { BaseAddress = new Uri("https://unicode.org") };
+var emojiTestDoc = unicode.GetStringAsync("/Public/emoji/latest/emoji-test.txt").Result;
+var emojiTestDocLines = emojiTestDoc.Split("\n");
+var emojiSpecs = emojiTestDocLines.Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("#"));
+var emojiList = emojiSpecs
+    .Select(ParseEmojiTestLine)
+    .Where(e => e.Status == "fully-qualified")
+    .ToImmutableList();
+#>
+
+
+// Note: This is a generated file. The source is in Entities.Emoji.tt
+using System;
+using System.Collections.Generic;
+
+namespace PoshCode.Pansies
+{
+    public static partial class Entities
+    {
+        /// <summary>
+        /// Emoji list generated from the emoji-test.txt file.
+        /// </summary>
+        /// <see cref="https://unicode.org/Public/emoji/latest/emoji-test.txt"/>
+        /// <seealso cref="https://unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt"/>
+        public static SortedList<string, string> Emoji = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            // spec length: <#= emojiTestDoc.Length #>
+            // spec lines: <#= emojiTestDocLines.Count() #>
+            // <#= emojiList.Count #> emojis
+<#          foreach(var emoji in emojiList) {
+                Write("            [\"" + emoji.Name.ToLower().Replace('-', '_').Replace(' ', '_').Replace(':','_').Replace(',','_') + "\"] = \"" + emoji.String + "\", // " + emoji.Emoji + "\n");
+            }
+            #>
+        };
+    }
+}

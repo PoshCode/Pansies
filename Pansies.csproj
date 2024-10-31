@@ -10,31 +10,31 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+  <!-- Mono.T4 replaces the TextTemplatingFileGenerator Service-->
   <ItemGroup>
-    <!-- The T4 TextTemplatingFileGenerator Service-->
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-    <Compile Update="Source\Assembly\Colors.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Colors.tt</DependentUpon>
-    </Compile>
-    <None Update="Source\Assembly\Colors.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Colors.cs</LastGenOutput>
-    </None>
-    <Compile Update="Source\Assembly\ColorSpaces\ColorSpaces.cs">
-      <DependentUpon>ColorSpaces.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <None Update="Source\Assembly\ColorSpaces\ColorSpaces.tt">
-      <LastGenOutput>ColorSpaces.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
+    <TextTemplate Include="**\*.tt" />
+    <Generated Include="**\*.Generated.cs" />
   </ItemGroup>
+
+  <Target Name="TextTemplateTransform" BeforeTargets="Compile" Inputs="@(TextTemplate)" Outputs="@(TextTemplate->'%(Filename).Generated.cs')">
+    <!-- <Message Text="rootdir: @(TextTemplate->'%(rootdir)')" />
+    <Message Text="fullpath: @(TextTemplate->'%(fullpath)')" />
+    <Message Text="rootdir + directory + filename + extension: @(TextTemplate->'%(rootdir)%(directory)%(filename)%(extension)')" />
+    <Message Text="identity: @(TextTemplate->'%(identity)')" />
+    <Message Text="filename: @(TextTemplate->'%(filename)')" />
+    <Message Text="directory: @(TextTemplate->'%(directory)')" />
+    <Message Text="relativedir: @(TextTemplate->'%(relativedir)')" />
+    <Message Text="extension: @(TextTemplate->'%(extension)')" /> -->
+    <Exec WorkingDirectory="$(ProjectDir)"
+      Command="dotnet t4 %(TextTemplate.Identity) -o  %(relativedir)%(TextTemplate.Filename).Generated.cs" />
+  </Target>
+  <Target Name="TextTemplateClean" AfterTargets="Clean">
+    <Delete Files="@(Generated)" />
+  </Target>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
     <!-- I wouldn't want to double-compile the stuff in here -->
+    <Compile Remove="**\*.tt" />
     <Compile Remove="lib\**" />
     <Compile Remove="output\**" />
     <Compile Remove="assemblies\**" />
@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- We are only referencing this for the sake of compiling, never ship it -->
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" PrivateAssets="All" />
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.1" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference
@@ -56,8 +56,8 @@
       PrivateAssets="All" />
   </ItemGroup>
 
+  <!-- Customize the nupkg process by copying some extra files https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets -->
   <PropertyGroup>
-    <!-- Customize the nupkg process by copying some extra files https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets -->
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);PackEverything</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
   <Target Name="PackEverything">

@@ -6,6 +6,10 @@ namespace PoshCode.Pansies
 {
     public static partial class Entities
     {
+        /// <summary>
+        /// NerdFont symbol list generated from the glyphnames
+        /// </summary>
+        /// <see cref="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/glyphnames.json"/>
         public static SortedList<string, string> NerdFonts = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
         {
             ["cod-account"] = "\U0000eb99", // 

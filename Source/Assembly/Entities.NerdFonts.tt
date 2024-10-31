@@ -1,0 +1,40 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import Namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Net.Http" #>
+<#@ import namespace="System.Net.Http.Json" #>
+// Note: This is a generated file. The source is in Entities.NerdFonts.tt
+using System;
+using System.Collections.Generic;
+
+namespace PoshCode.Pansies
+{
+    public static partial class Entities
+    {
+        /// <summary>
+        /// NerdFont symbol list generated from the glyphnames
+        /// </summary>
+        /// <see cref="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/glyphnames.json"/>
+        public static SortedList<string, string> NerdFonts = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        {
+<#
+            HttpClient githubClient = new(){ BaseAddress = new Uri("https://raw.githubusercontent.com") };
+            var glyphs = githubClient.GetFromJsonAsync<Dictionary<string, Dictionary<string,string>>>("ryanoasis/nerd-fonts/master/glyphnames.json").Result;
+            foreach(var glyph in glyphs.Skip(1))
+            {
+                var name = glyph.Key;
+                var code = glyph.Value["code"].PadLeft(8, '0');
+                var character = glyph.Value["char"];
+#>
+            ["<#=name#>"] = "\U<#=code#>", // <#=character#>
+<#
+            }
+#>
+        };
+    }
+}

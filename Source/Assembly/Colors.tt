@@ -1,11 +1,12 @@
 ﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ output extension=".cs" #>// Note: This is a generated file.
+<#@ output extension=".cs" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Xml.dll" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import Namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
+// Note: This is a generated file. The source is in Colors.tt
 using PoshCode.Pansies.ColorSpaces.Conversions;
 using PoshCode.Pansies.ColorSpaces;
 

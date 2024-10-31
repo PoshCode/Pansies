@@ -1,12 +1,3 @@
-﻿
-
-
-
-
-
-
-
-
 // Note: This is a generated file.
 using PoshCode.Pansies.ColorSpaces.Conversions;
 using System.Linq;
@@ -17,39 +8,25 @@ namespace PoshCode.Pansies.ColorSpaces
 	{
 		double H { get; set; }
 	}
-
 	public interface IRgb : IColorSpace
 	{
-
 		double R { get; set; }
-
 		double G { get; set; }
-
 		double B { get; set; }
-
 	}
 
-	public class Rgb : ColorSpace, IRgb
-	{
-
+	public class Rgb : ColorSpace, IRgb	{
 		public double R { get; set; }
-
 		public double G { get; set; }
-
 		public double B { get; set; }
-
 
 		public Rgb() { }
 
 		public Rgb(double r, double g, double b)
 		{
-
 			R = r;
-
 			G = g;
-
 			B = b;
-
 		}
 
 		public Rgb(IColorSpace color)
@@ -70,13 +47,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "R=" + R,
-
 			   "G=" + G,
-
 			   "B=" + B,
-
 			});
 		}
 
@@ -100,49 +73,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				R = value[0];
-
 				G = value[1];
-
 				B = value[2];
-
 			}
 		}
 	}
-
 	public interface IXyz : IColorSpace
 	{
-
 		double X { get; set; }
-
 		double Y { get; set; }
-
 		double Z { get; set; }
-
 	}
 
-	public class Xyz : ColorSpace, IXyz
-	{
-
+	public class Xyz : ColorSpace, IXyz	{
 		public double X { get; set; }
-
 		public double Y { get; set; }
-
 		public double Z { get; set; }
-
 
 		public Xyz() { }
 
 		public Xyz(double x, double y, double z)
 		{
-
 			X = x;
-
 			Y = y;
-
 			Z = z;
-
 		}
 
 		public Xyz(IColorSpace color)
@@ -163,13 +118,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "X=" + X,
-
 			   "Y=" + Y,
-
 			   "Z=" + Z,
-
 			});
 		}
 
@@ -193,49 +144,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				X = value[0];
-
 				Y = value[1];
-
 				Z = value[2];
-
 			}
 		}
 	}
-
 	public interface IHsl : IColorSpace
 	{
-
 		double H { get; set; }
-
 		double S { get; set; }
-
 		double L { get; set; }
-
 	}
 
-	public class Hsl : ColorSpace, IHsl, IHue
-	{
-
+	public class Hsl : ColorSpace, IHsl, IHue	{
 		public double H { get; set; }
-
 		public double S { get; set; }
-
 		public double L { get; set; }
-
 
 		public Hsl() { }
 
 		public Hsl(double h, double s, double l)
 		{
-
 			H = h;
-
 			S = s;
-
 			L = l;
-
 		}
 
 		public Hsl(IColorSpace color)
@@ -256,13 +189,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "H=" + H,
-
 			   "S=" + S,
-
 			   "L=" + L,
-
 			});
 		}
 
@@ -286,49 +215,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				H = value[0];
-
 				S = value[1];
-
 				L = value[2];
-
 			}
 		}
 	}
-
 	public interface ILab : IColorSpace
 	{
-
 		double L { get; set; }
-
 		double A { get; set; }
-
 		double B { get; set; }
-
 	}
 
-	public class Lab : ColorSpace, ILab
-	{
-
+	public class Lab : ColorSpace, ILab	{
 		public double L { get; set; }
-
 		public double A { get; set; }
-
 		public double B { get; set; }
-
 
 		public Lab() { }
 
 		public Lab(double l, double a, double b)
 		{
-
 			L = l;
-
 			A = a;
-
 			B = b;
-
 		}
 
 		public Lab(IColorSpace color)
@@ -349,13 +260,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "L=" + L,
-
 			   "A=" + A,
-
 			   "B=" + B,
-
 			});
 		}
 
@@ -379,49 +286,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				L = value[0];
-
 				A = value[1];
-
 				B = value[2];
-
 			}
 		}
 	}
-
 	public interface ILch : IColorSpace
 	{
-
 		double L { get; set; }
-
 		double C { get; set; }
-
 		double H { get; set; }
-
 	}
 
-	public class Lch : ColorSpace, ILch, IHue
-	{
-
+	public class Lch : ColorSpace, ILch, IHue	{
 		public double L { get; set; }
-
 		public double C { get; set; }
-
 		public double H { get; set; }
-
 
 		public Lch() { }
 
 		public Lch(double l, double c, double h)
 		{
-
 			L = l;
-
 			C = c;
-
 			H = h;
-
 		}
 
 		public Lch(IColorSpace color)
@@ -442,13 +331,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "L=" + L,
-
 			   "C=" + C,
-
 			   "H=" + H,
-
 			});
 		}
 
@@ -472,49 +357,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				L = value[0];
-
 				C = value[1];
-
 				H = value[2];
-
 			}
 		}
 	}
-
 	public interface ILuv : IColorSpace
 	{
-
 		double L { get; set; }
-
 		double U { get; set; }
-
 		double V { get; set; }
-
 	}
 
-	public class Luv : ColorSpace, ILuv
-	{
-
+	public class Luv : ColorSpace, ILuv	{
 		public double L { get; set; }
-
 		public double U { get; set; }
-
 		public double V { get; set; }
-
 
 		public Luv() { }
 
 		public Luv(double l, double u, double v)
 		{
-
 			L = l;
-
 			U = u;
-
 			V = v;
-
 		}
 
 		public Luv(IColorSpace color)
@@ -535,13 +402,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "L=" + L,
-
 			   "U=" + U,
-
 			   "V=" + V,
-
 			});
 		}
 
@@ -565,49 +428,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				L = value[0];
-
 				U = value[1];
-
 				V = value[2];
-
 			}
 		}
 	}
-
 	public interface IYxy : IColorSpace
 	{
-
 		double Y1 { get; set; }
-
 		double X { get; set; }
-
 		double Y2 { get; set; }
-
 	}
 
-	public class Yxy : ColorSpace, IYxy
-	{
-
+	public class Yxy : ColorSpace, IYxy	{
 		public double Y1 { get; set; }
-
 		public double X { get; set; }
-
 		public double Y2 { get; set; }
-
 
 		public Yxy() { }
 
 		public Yxy(double y1, double x, double y2)
 		{
-
 			Y1 = y1;
-
 			X = x;
-
 			Y2 = y2;
-
 		}
 
 		public Yxy(IColorSpace color)
@@ -628,13 +473,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "Y1=" + Y1,
-
 			   "X=" + X,
-
 			   "Y2=" + Y2,
-
 			});
 		}
 
@@ -658,49 +499,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				Y1 = value[0];
-
 				X = value[1];
-
 				Y2 = value[2];
-
 			}
 		}
 	}
-
 	public interface ICmy : IColorSpace
 	{
-
 		double C { get; set; }
-
 		double M { get; set; }
-
 		double Y { get; set; }
-
 	}
 
-	public class Cmy : ColorSpace, ICmy
-	{
-
+	public class Cmy : ColorSpace, ICmy	{
 		public double C { get; set; }
-
 		public double M { get; set; }
-
 		public double Y { get; set; }
-
 
 		public Cmy() { }
 
 		public Cmy(double c, double m, double y)
 		{
-
 			C = c;
-
 			M = m;
-
 			Y = y;
-
 		}
 
 		public Cmy(IColorSpace color)
@@ -721,13 +544,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "C=" + C,
-
 			   "M=" + M,
-
 			   "Y=" + Y,
-
 			});
 		}
 
@@ -751,55 +570,34 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				C = value[0];
-
 				M = value[1];
-
 				Y = value[2];
-
 			}
 		}
 	}
-
 	public interface ICmyk : IColorSpace
 	{
-
 		double C { get; set; }
-
 		double M { get; set; }
-
 		double Y { get; set; }
-
 		double K { get; set; }
-
 	}
 
-	public class Cmyk : ColorSpace, ICmyk
-	{
-
+	public class Cmyk : ColorSpace, ICmyk	{
 		public double C { get; set; }
-
 		public double M { get; set; }
-
 		public double Y { get; set; }
-
 		public double K { get; set; }
-
 
 		public Cmyk() { }
 
 		public Cmyk(double c, double m, double y, double k)
 		{
-
 			C = c;
-
 			M = m;
-
 			Y = y;
-
 			K = k;
-
 		}
 
 		public Cmyk(IColorSpace color)
@@ -820,15 +618,10 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "C=" + C,
-
 			   "M=" + M,
-
 			   "Y=" + Y,
-
 			   "K=" + K,
-
 			});
 		}
 
@@ -852,51 +645,32 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				C = value[0];
-
 				M = value[1];
-
 				Y = value[2];
-
 				K = value[3];
-
 			}
 		}
 	}
-
 	public interface IHsv : IColorSpace
 	{
-
 		double H { get; set; }
-
 		double S { get; set; }
-
 		double V { get; set; }
-
 	}
 
-	public class Hsv : ColorSpace, IHsv, IHue
-	{
-
+	public class Hsv : ColorSpace, IHsv, IHue	{
 		public double H { get; set; }
-
 		public double S { get; set; }
-
 		public double V { get; set; }
-
 
 		public Hsv() { }
 
 		public Hsv(double h, double s, double v)
 		{
-
 			H = h;
-
 			S = s;
-
 			V = v;
-
 		}
 
 		public Hsv(IColorSpace color)
@@ -917,13 +691,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "H=" + H,
-
 			   "S=" + S,
-
 			   "V=" + V,
-
 			});
 		}
 
@@ -947,49 +717,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				H = value[0];
-
 				S = value[1];
-
 				V = value[2];
-
 			}
 		}
 	}
-
 	public interface IHsb : IColorSpace
 	{
-
 		double H { get; set; }
-
 		double S { get; set; }
-
 		double B { get; set; }
-
 	}
 
-	public class Hsb : ColorSpace, IHsb, IHue
-	{
-
+	public class Hsb : ColorSpace, IHsb, IHue	{
 		public double H { get; set; }
-
 		public double S { get; set; }
-
 		public double B { get; set; }
-
 
 		public Hsb() { }
 
 		public Hsb(double h, double s, double b)
 		{
-
 			H = h;
-
 			S = s;
-
 			B = b;
-
 		}
 
 		public Hsb(IColorSpace color)
@@ -1010,13 +762,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "H=" + H,
-
 			   "S=" + S,
-
 			   "B=" + B,
-
 			});
 		}
 
@@ -1040,49 +788,31 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				H = value[0];
-
 				S = value[1];
-
 				B = value[2];
-
 			}
 		}
 	}
-
 	public interface IHunterLab : IColorSpace
 	{
-
 		double L { get; set; }
-
 		double A { get; set; }
-
 		double B { get; set; }
-
 	}
 
-	public class HunterLab : ColorSpace, IHunterLab
-	{
-
+	public class HunterLab : ColorSpace, IHunterLab	{
 		public double L { get; set; }
-
 		public double A { get; set; }
-
 		public double B { get; set; }
-
 
 		public HunterLab() { }
 
 		public HunterLab(double l, double a, double b)
 		{
-
 			L = l;
-
 			A = a;
-
 			B = b;
-
 		}
 
 		public HunterLab(IColorSpace color)
@@ -1103,13 +833,9 @@ namespace PoshCode.Pansies.ColorSpaces
 		public override string ToString()
 		{
 			return string.Join("; ", new []{
-
 			   "L=" + L,
-
 			   "A=" + A,
-
 			   "B=" + B,
-
 			});
 		}
 
@@ -1133,13 +859,9 @@ namespace PoshCode.Pansies.ColorSpaces
 			}
 			set
 			{
-
 				L = value[0];
-
 				A = value[1];
-
 				B = value[2];
-
 			}
 		}
 	}

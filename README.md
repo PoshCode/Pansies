@@ -33,6 +33,9 @@ If you have troubles, please file [issues](https://github.com/PoshCode/Pansies/i
 
 First things first: there is a submodule being used (my [personally modified version](https://github.com/Jaykul/p2f) version of [beefarino/p2f](https://github.com/beefarino/p2f)), so you need to `git clone --recursive` or run `git submodule update --init --recursive` after cloning. You will also occasionally need to update it with `git submodule update --init --recursive`.
 
+Secondly, this project uses [T4 templates](https://github.com/mono/t4) for design time code generation. To get it to work automatically I've used a tools file, so you can `dotnet tool restore` and then just run the build.
+
+
 The easiest, fastest build uses [earthly](https://docs.earthly.dev/). Earthly builds use containers, so on Windows it requires WSL2, Docker Desktop, and then the earthly CLI. If you already have those, you can just run `earthly +build` to build the module.
 
 ### Building without earthly
