@@ -78,13 +78,13 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>14</Width> <!-- LightGoldenrodYellow? -->
-            <Label>Mode</Label>
-          </TableColumnHeader>
-          <TableColumnHeader>
             <Width>9</Width>
             <Alignment>Left</Alignment>
             <Label>RGB (hex)</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>12</Width> <!-- ConsoleColor | X11 | XTerm256 -->
+            <Label>Mode</Label>
           </TableColumnHeader>
           <TableColumnHeader>
             <Width>20</Width>
@@ -113,11 +113,13 @@ This is Joel "Jaykul" Bennett's coloring format file for PowerShell 5.1
               <TableColumnItem>
                 <ScriptBlock>
                   ([PoshCode.Pansies.RgbColor]$_).ToVtEscapeSequence($true) + " $([char]27)[0m " +
-                  $(if ($_ -is [PoshCode.Pansies.RgbColor]) { $_.Mode } else { $_.GetType().Name })
+                  ("#{0:X6}" -f ([PoshCode.Pansies.RgbColor]$_).RGB)
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>"#{0:X6}" -f ([PoshCode.Pansies.RgbColor]$_).RGB</ScriptBlock>
+                <ScriptBlock>
+                  if ($_ -is [PoshCode.Pansies.RgbColor]) { $_.Mode } else { $_.GetType().Name }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>([PoshCode.Pansies.RgbColor]$_).X11ColorName</ScriptBlock>
