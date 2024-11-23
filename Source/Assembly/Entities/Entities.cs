@@ -13,10 +13,28 @@ namespace PoshCode.Pansies
 
         public static SortedList<string, string> EscapeSequences = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
         {
-            ["Clear"] = "\u001B[0m",
-            ["Esc"] = "\u001B[",
-            ["Store"] = "\u001B[s",
-            ["Recall"] = "\u001B[u",
+            ["Store"] = "\e7",  //DECSC
+            ["Recall"] = "\e8", //DECSR
+            ["Clear"] = "\e[0m",
+            ["Reset"] = "\e[0m",
+            ["BlinkOff"] = "\e[25m",
+            ["Blink"] = "\e[5m",
+            ["BoldOff"] = "\e[22m",
+            ["Bold"] = "\e[1m",
+            ["DimOff"] = "\e[22m",
+            ["Dim"] = "\e[2m",
+            ["Hidden"] = "\e[8m",
+            ["HiddenOff"] = "\e[28m",
+            ["Reverse"] = "\e[7m",
+            ["ReverseOff"] = "\e[27m",
+            ["ItalicOff"] = "\e[23m",
+            ["Italic"] = "\e[3m",
+            ["UnderlineOff"] = "\e[24m",
+            ["Underline"] = "\e[4m",
+            ["StrikethroughOff"] = "\e[29m",
+            ["Strikethrough"] = "\e[9m",
+
+
         };
 
         public static SortedList<string, string> ExtendedCharacters = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
@@ -96,7 +114,7 @@ namespace PoshCode.Pansies
             // make sure we don't loose anything off the end
             output.Append(value.Substring(end, value.Length - end));
 
-            // we don't handle &#123; let WebUtility do that
+            // we don't handle { let WebUtility do that
             value = WebUtility.HtmlDecode(output.ToString());
             return value;
         }

@@ -20,7 +20,7 @@ namespace PoshCode.Pansies
         /// NerdFont symbol list generated from the glyphnames
         /// </summary>
         /// <see cref="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/glyphnames.json"/>
-        public static SortedList<string, string> NerdFonts = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        public static SortedList<string, string> NerdFontSymbols = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
         {
 <#
             HttpClient githubClient = new(){ BaseAddress = new Uri("https://raw.githubusercontent.com") };

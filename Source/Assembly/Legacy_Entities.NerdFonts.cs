@@ -8,7 +8,7 @@ namespace PoshCode.Pansies
         /// The NerdFont glyphs
         /// (irm https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/glyphnames.json).PSObject.Properties.ForEach{ "[`"nf-$($char.Name)`"] = `"\u$($char.Value.code)`", // $($char.Value.char)" } | scb
         /// Last Updated "version":"3.2.1", "date":"2024-04-12 14:40:46+00:00"
-        public static SortedList<string, string> LegacyNerdFonts = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        public static SortedList<string, string> NerdFonts = new SortedList<string, string>(StringComparer.InvariantCultureIgnoreCase)
         {
             ["nf-cod-account"] = "\U0000eb99", // 
             ["nf-cod-activate_breakpoints"] = "\U0000ea97", // 

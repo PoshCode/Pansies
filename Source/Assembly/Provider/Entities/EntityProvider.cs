@@ -38,7 +38,7 @@ namespace PoshCode.Pansies.Provider
             if (Entities.EnableNerdFonts) {
                 drives.Add(
                     new EntityDrive(
-                        new PSDriveInfo( "NF", ProviderInfo, "Entity::NerdFont:" + System.IO.Path.DirectorySeparatorChar, "NerdFont Symbols", null, "NF:" )
+                        new PSDriveInfo( "NF", ProviderInfo, "Entity::NerdFontSymbols:" + System.IO.Path.DirectorySeparatorChar, "NerdFont Symbols", null, "NF:" )
                     )
                 );
             }

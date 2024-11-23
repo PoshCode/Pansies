@@ -9,7 +9,6 @@ namespace PoshCode.Pansies.Provider
 {
     class EntityProviderRoot : PathNodeBase
     {
-        #region unchanged code from previous version
         public override IPathValue GetNodeValue()
         {
             return new ContainerPathValue(this, Name);
@@ -22,12 +21,11 @@ namespace PoshCode.Pansies.Provider
 
         public override IEnumerable<IPathNode> GetNodeChildren(CodeOwls.PowerShell.Provider.PathNodeProcessors.IProviderContext providerContext)
         {
+            //Console.WriteLine("PathNodeBase.GetNodeChildren: " + providerContext.Drive.Name);
             EntityType type = (EntityType)Enum.Parse(typeof(EntityType), providerContext.Drive.Name);
             var drive = new EntityContainer(type);
 
             return drive.GetNodeChildren(providerContext);
         }
-        #endregion
-
     }
 }

@@ -70,7 +70,11 @@ namespace PoshCode.Pansies
             // spec lines: <#= emojiTestDocLines.Count() #>
             // <#= emojiList.Count #> emojis
 <#          foreach(var emoji in emojiList) {
-                Write("            [\"" + emoji.Name.ToLower().Replace('-', '_').Replace(' ', '_').Replace(':','_').Replace(',','_') + "\"] = \"" + emoji.String + "\", // " + emoji.Emoji + "\n");
+                // Remove these characters completely
+                var name = String.Join("", emoji.Name.Split('(',')','“','”','’'));
+                // And replace these with underscores
+                name = String.Join("_", name.Split('-',' ',':',','));
+                Write("            [\"" + name.ToLower() + "\"] = \"" + emoji.String + "\", // " + emoji.Emoji + "\n");
             }
             #>
         };

@@ -1,7 +1,7 @@
+// Note: This is a generated file. The source is in Colors.tt
 using PoshCode.Pansies.ColorSpaces.Conversions;
 using PoshCode.Pansies.ColorSpaces;
 
-// Note: This is a generated file. The source is in Colors.tt
 namespace PoshCode.Pansies
 {
 	public partial class RgbColor : PoshCode.Pansies.ColorSpaces.Rgb

@@ -9,22 +9,26 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation.Provider;
 using System.Text;
+using PoshCode.Pansies;
 
 namespace PoshCode.Pansies.Provider
 {
-    enum RgbColorMode { Foreground, Background }
-
-    class RgbColorItem : PathNodeBase, IGetItemContent
+    public class Grapheme : PathNodeBase, IGetItemContent
     {
-        private readonly string name;
-        private RgbColor Color;
-        private RgbColorMode RgbColorMode;
+        private string name;
+        public string Value { get; set; }
 
-        public RgbColorItem(RgbColor color, RgbColorMode mode, string name = null)
+
+        public Grapheme(KeyValuePair<string, string> item)
         {
-            Color = color;
-            RgbColorMode = mode;
-            this.name = name ?? Color.ToString();
+            name = item.Key;
+            Value = item.Value;
+        }
+
+        public Grapheme(string name, string value)
+        {
+            this.name = name;
+            Value = value;
         }
 
         /// <summary>
@@ -39,12 +43,12 @@ namespace PoshCode.Pansies.Provider
         /// <seealso cref="ContainerPathValue"/>
         public override IPathValue GetNodeValue()
         {
-            return new LeafPathValue(Color, Name);
+            return new LeafPathValue(this, name);
         }
 
         public IContentReader GetContentReader(IProviderContext providerContext)
         {
-            return new ColorContentReader(Color, RgbColorMode);
+            return new GraphemeReader(this);
         }
 
         public object GetContentReaderDynamicParameters(IProviderContext providerContext)
