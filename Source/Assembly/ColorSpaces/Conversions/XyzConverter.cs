@@ -4,17 +4,70 @@ namespace PoshCode.Pansies.ColorSpaces.Conversions
 {
     internal static class XyzConverter
     {
+        private static readonly object WhiteReferenceLock = new object();
+        private static readonly Xyz DefaultWhiteReference = new Xyz
+        {
+            X = 95.047,
+            Y = 100.000,
+            Z = 108.883
+        };
+
         #region Constants/Helper methods for Xyz related spaces
-        internal static IXyz WhiteReference { get; private set; } // TODO: Hard-coded!
+        internal static IXyz WhiteReference { get; private set; }
         internal const double Epsilon = 0.008856; // Intent is 216/24389
         internal const double Kappa = 903.3; // Intent is 24389/27
+
         static XyzConverter()
         {
-            WhiteReference = new Xyz
+            ResetWhiteReference();
+        }
+
+        public static IXyz GetWhiteReference()
+        {
+            lock (WhiteReferenceLock)
             {
-                X = 95.047,
-                Y = 100.000,
-                Z = 108.883
+                return Clone(WhiteReference ?? DefaultWhiteReference);
+            }
+        }
+
+        public static void SetWhiteReference(IXyz whiteReference)
+        {
+            if (whiteReference is null)
+            {
+                throw new ArgumentNullException(nameof(whiteReference));
+            }
+
+            lock (WhiteReferenceLock)
+            {
+                WhiteReference = Clone(whiteReference);
+            }
+        }
+
+        public static void ResetWhiteReference()
+        {
+            lock (WhiteReferenceLock)
+            {
+                WhiteReference = Clone(DefaultWhiteReference);
+            }
+        }
+
+        private static Xyz Clone(IXyz source)
+        {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (source is Xyz xyz)
+            {
+                return new Xyz(xyz.X, xyz.Y, xyz.Z);
+            }
+
+            return new Xyz
+            {
+                X = source.X,
+                Y = source.Y,
+                Z = source.Z
             };
         }
 
