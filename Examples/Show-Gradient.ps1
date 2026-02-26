@@ -1,15 +1,26 @@
 using namespace PoshCode.Pansies
 [CmdletBinding()]
 param(
-    [PoshCode.Pansies.RgbColor]
-    $LeftColor = "DarkBlue",
+    [RgbColor]
+    $StartColor = "DarkBlue",
 
-    [PoshCode.Pansies.RgbColor]
-    $RightColor = "Red",
+    [RgbColor]
+    $EndColor = "Red",
 
-    [ValidateSet("CMYK","LAB","LUV","HunterLAB","HSL","HSLReverse","RGB","XYZ")]
-    $ColorSpace = "LAB"
+    [ValidateSet("LAB", "LUV", "HunterLAB", "HSL", "HSLReverse", "RGB", "XYZ")]
+    $ColorSpace = "LAB",
+
+    [int]$Width = $Host.UI.RawUI.WindowSize.Width,
+
+    [int]$Height = $Host.UI.RawUI.WindowSize.Height
 )
 
-Get-Gradient $LeftColor $RightColor -ColorSpace $ColorSpace -Flatten |
-    ForEach-Object { Write-Host " " -BackgroundColor $_ -NoNewline}
+Get-Gradient -StartColor $StartColor -EndColor $EndColor -ColorSpace $ColorSpace -Width $Width -Height $Height
+| ForEach-Object { $_
+    | ForEach-Object { $_
+        | ForEach-Object {
+            Write-Host " " -Background $_ -NoNewline
+        }
+        Write-Host
+    }
+}
