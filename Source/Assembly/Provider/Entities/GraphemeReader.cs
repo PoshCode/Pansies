@@ -6,9 +6,9 @@ namespace PoshCode.Pansies.Provider
 {
     class GraphemeReader : IContentReader
     {
-        private Grapheme Item;
+        private NamedGrapheme Item;
 
-        public GraphemeReader(Grapheme item)
+        public GraphemeReader(NamedGrapheme item)
         {
             Item = item;
         }

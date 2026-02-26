@@ -41,6 +41,7 @@ namespace PoshCode.Pansies.Commands
             }
 
             var resolvedProviderPath = GetResolvedProviderPathFromPSPath(Path, out ProviderInfo provider);
+            WriteDebug($"Resolved '{Path}' to {resolvedProviderPath.Length} path(s) in provider '{provider.Name}'");
             foreach (var file in resolvedProviderPath)
             {
                 string fullName = file;
@@ -48,7 +49,9 @@ namespace PoshCode.Pansies.Commands
                 {
                     fullName = $"{provider.Name}:{file}";
                 }
+                WriteVerbose($"Expanding variables in '{fullName}'");
                 string code = GetVariableValue(fullName).ToString();
+                WriteDebug($"# {fullName}\n{code}");
                 var result = ExpandVariable(code, fullName);
 
                 if (result != null)

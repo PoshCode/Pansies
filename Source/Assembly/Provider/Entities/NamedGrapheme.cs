@@ -10,7 +10,7 @@ using System.Text;
 
 namespace PoshCode.Pansies
 {
-    public class Grapheme : PathNodeBase, IGetItemContent //, ISetItemContent
+    public class NamedGrapheme : PathNodeBase, IGetItemContent //, ISetItemContent
     {
         private string name;
         public string Value { get; set; }
@@ -23,13 +23,13 @@ namespace PoshCode.Pansies
             get { return name; }
         }
 
-        public Grapheme(KeyValuePair<string, string> item)
+        public NamedGrapheme(KeyValuePair<string, string> item)
         {
             name = item.Key;
             Value = item.Value;
         }
 
-        public Grapheme(string name, string value)
+        public NamedGrapheme(string name, string value)
         {
             this.name = name;
             Value = value;
