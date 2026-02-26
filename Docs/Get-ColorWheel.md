@@ -14,7 +14,7 @@ Get a range of colors from a starting point aiming to avoid repetition. Doesn't 
 ## SYNTAX
 
 ```
-Get-Gradient [[-Color] <RgbColor>] [-Count <int>] [-HueStep <int>] [[-BrightStep] <int>]
+Get-ColorWheel [[-Color] <RgbColor>] [-Count <int>] [-HueStep <int>] [[-BrightStep] <int>]
 ```
 
 ## DESCRIPTION
