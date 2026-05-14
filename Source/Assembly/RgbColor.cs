@@ -273,6 +273,8 @@ namespace PoshCode.Pansies
             }
 
             // It could be a named Terminal Color
+            // What about named Console Colors
+            // Basically, what about DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow?
             int found;
             if ((found = TerminalPalette.IndexOf(color)) >= 0)
             {
@@ -280,7 +282,7 @@ namespace PoshCode.Pansies
                 return;
             }
 
-            // It could be a named X11 Color
+            // Or a named X11 Color
             if ((found = X11Palette.IndexOf(color)) >= 0)
             {
                 SetX11Color(found);

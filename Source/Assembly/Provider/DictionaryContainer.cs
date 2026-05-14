@@ -34,11 +34,11 @@ namespace PoshCode.Pansies.Provider
 
             if (string.IsNullOrEmpty(name))
             {
-                return dictionary.Select(i => new Grapheme(i));
+                return dictionary.Select(i => new NamedGrapheme(i));
             }
             else if (dictionary.ContainsKey(name))
             {
-                return [new Grapheme(name, dictionary[name])];
+                return [new NamedGrapheme(name, dictionary[name])];
             }
             else
             {

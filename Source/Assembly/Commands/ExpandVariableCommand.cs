@@ -41,7 +41,7 @@ namespace PoshCode.Pansies.Commands
             }
 
             var resolvedProviderPath = GetResolvedProviderPathFromPSPath(Path, out ProviderInfo provider);
-            WriteDebug($"Resolved '{Path}' to {resolvedProviderPath.Length} path(s) in provider '{provider.Name}'");
+            WriteDebug($"Resolved '{Path}' to {resolvedProviderPath.Count()} path(s) in provider '{provider.Name}'");
             foreach (var file in resolvedProviderPath)
             {
                 string fullName = file;
@@ -50,7 +50,7 @@ namespace PoshCode.Pansies.Commands
                     fullName = $"{provider.Name}:{file}";
                 }
                 WriteVerbose($"Expanding variables in '{fullName}'");
-                string code = GetVariableValue(fullName).ToString();
+                string code = string.Join(Environment.NewLine, Enumerable.Cast<string>((Array)GetVariableValue(fullName)));
                 WriteDebug($"# {fullName}\n{code}");
                 var result = ExpandVariable(code, fullName);
 
@@ -78,9 +78,9 @@ namespace PoshCode.Pansies.Commands
             var replacements = new List<TextReplacement>();
             Ast ast = null;
             ast = Parser.ParseInput(code, fullName, out var tokens, out var parseErrors);
-            if (parseErrors.Length > 0)
+            if (parseErrors.Count() > 0)
             {
-                WriteError(new ErrorRecord(new Exception($"{parseErrors.Length} Parse Errors in {fullName}, cannot expand."), "ParseErrors", ErrorCategory.InvalidOperation, fullName));
+                WriteError(new ErrorRecord(new Exception($"{parseErrors.Count()} Parse Errors in {fullName}, cannot expand."), "ParseErrors", ErrorCategory.InvalidOperation, fullName));
                 return null;
             }
 

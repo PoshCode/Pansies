@@ -44,12 +44,12 @@ namespace PoshCode.Pansies.Provider
             // Console.WriteLine("EntityContainer.GetNodeChildren: " + name);
 
             if (string.IsNullOrEmpty(name)) {
-                return items.Select(i => new Grapheme(i));
+                return items.Select(i => new NamedGrapheme(i));
             } /* else if (System.Management.Automation.WildCardPattern.ContainsWildcardCharacters(name)) {
                 var pattern = new System.Management.Automation.WildCardPattern(name);
                 return items.Where(i => pattern.IsMatch(i.Key)).Select(i => new EntityItem(i));
             } */ else {
-                return items.Where(i => i.Key == name).Select(i => new Grapheme(i));
+                return items.Where(i => i.Key == name).Select(i => new NamedGrapheme(i));
             }
         }
 
@@ -58,7 +58,7 @@ namespace PoshCode.Pansies.Provider
             var name = path.Split([Path.DirectorySeparatorChar], 2).LastOrDefault();
             items.Add(name, newItemValue.ToString());
 
-            return new LeafPathValue(new Grapheme(name, newItemValue.ToString()), name);
+            return new LeafPathValue(new NamedGrapheme(name, newItemValue.ToString()), name);
         }
     }
 }
